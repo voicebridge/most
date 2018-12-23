@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\common\src\VoiceBridge.Common.csproj" />
+      <ProjectReference Include="..\..\voicemodel\src\VoiceBridge.Most.VoiceModel.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="xunit" Version="2.4.1" />
+      <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="TestFiles\SampleAlexaRequest.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="TestFiles\SampleAlexaRequest.json" />
+      <None Remove="TestFiles\ActionSDKSimpleResponse.json" />
+      <EmbeddedResource Include="TestFiles\ActionSDKSimpleResponse.json" />
+      <None Remove="TestFiles\SampleActionRequest.json" />
+      <EmbeddedResource Include="TestFiles\SampleActionRequest.json" />
+      <None Remove="TestFiles\DialogFlowRequest.json" />
+      <EmbeddedResource Include="TestFiles\DialogFlowRequest.json" />
+      <None Remove="TestFiles\DialogFlowResponse.json" />
+      <EmbeddedResource Include="TestFiles\DialogFlowResponse.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="TestFiles\SampleAlexaResponse.json" />
+    </ItemGroup>
+
+</Project>

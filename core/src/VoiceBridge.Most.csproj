@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <PackageId>Most</PackageId>
+        <Version>0.1.1</Version>
+        <Authors>Abdellah Elamiri</Authors>
+        <Company>Voice Bridge Inc.</Company>
+        <IsPackable>true</IsPackable>
+        <Description>Most is a framework for building voice apps on Alexa and Google Assistant</Description>
+        <PackageDescription>Most is a open-source framework for building voice apps on Alexa and Google Assistant</PackageDescription>
+        <PackageLicenseUrl>https://github.com/voicebridge/most/blob/master/LICENSE</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/voicebridge/most</PackageProjectUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="coverlet.msbuild" Version="2.5.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\voicemodel\src\VoiceBridge.Most.VoiceModel.csproj" />
+    </ItemGroup>
+
+</Project>

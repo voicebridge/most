@@ -1,0 +1,68 @@
+{
+  "version": "1.0",
+  "session": {
+    "new": true,
+    "sessionId": "session_id",
+    "application": {
+      "applicationId": "app_id"
+    },
+    "attributes": {
+      "key1": "value1",
+      "key2": "value2"
+    },
+    "user": {
+      "userId": "user_id",
+      "accessToken": "access_token",
+      "permissions": {
+        "consentToken": "consent_token"
+      }
+    }
+  },
+  "context": {
+    "System": {
+      "device": {
+        "deviceId": "device_id",
+        "supportedInterfaces": {
+          "AudioPlayer": {}
+        }
+      },
+      "application": {
+        "applicationId": "app_id_2"
+      },
+      "Viewport": {
+        "experiences": [
+          {
+            "arcMinuteWidth": 246,
+            "arcMinuteHeight": 144,
+            "canRotate": false,
+            "canResize": true
+          }
+        ],
+        "shape": "RECTANGLE",
+        "pixelWidth": 1024,
+        "pixelHeight": 600,
+        "dpi": 160,
+        "currentPixelWidth": 1024,
+        "currentPixelHeight": 600,
+        "touch": [
+          "SINGLE"
+        ]
+      },
+      "user": {
+        "userId": "user_id2",
+        "accessToken": "access_token2",
+        "permissions": {
+          "consentToken": "consent_token2"
+        }
+      },
+      "apiEndpoint": "api_url",
+      "apiAccessToken": "api_token"
+    },
+    "AudioPlayer": {
+      "playerActivity": "PLAYING",
+      "token": "audioplayer-token",
+      "offsetInMilliseconds": 5
+    }
+  },
+  "request": {}
+}

@@ -1,0 +1,137 @@
+{
+  "responseId": "7fd031c7-7551-4035-92f3-bb4e6ae8d116",
+  "queryResult": {
+    "queryText": "whatr is the latest scores",
+    "parameters": {
+      "team_name": ""
+    },
+    "fulfillmentText": "What is the team_name?",
+    "fulfillmentMessages": [
+      {
+        "text": {
+          "text": [
+            "What is the team_name?"
+          ]
+        }
+      }
+    ],
+    "outputContexts": [
+      {
+        "name": "projects/sampleapp-8f8cf/agent/sessions/ABwppHEZHSH3I4V9PyUyH6FiZMd2dsn-/contexts/hockeyintent_dialog_context",
+        "lifespanCount": 2,
+        "parameters": {
+          "team_name.original": "",
+          "team_name": ""
+        }
+      },
+      {
+        "name": "projects/sampleapp-8f8cf/agent/sessions/-Q3yl6VbnPaPEaLBowp9LU9eWEPInzETqA3AhRGa3_epq40X_Qz6b/contexts/google_assistant_input_type_voice",
+        "lifespanCount": 1,
+        "parameters": {
+          "team_name.original": "",
+          "team_name": ""
+        }
+      },
+      {
+        "name": "projects/sampleapp-8f8cf/agent/sessions/-Q3yl6VbnPaPEaLBowp9LU9eWEPInzETqA3AhRGa3_epq40X_Qz6b/contexts/hockeyintent_dialog_params_team_name",
+        "lifespanCount": 1,
+        "parameters": {
+          "team_name.original": "",
+          "team_name": ""
+        }
+      },
+      {
+        "name": "projects/sampleapp-8f8cf/agent/sessions/-Q3yl6VbnPaPEaLBowp9LU9eWEPInzETqA3AhRGa3_epq40X_Qz6b/contexts/actions_capability_audio_output",
+        "lifespanCount": 1,
+        "parameters": {
+          "team_name.original": "",
+          "team_name": ""
+        }
+      },
+      {
+        "name": "projects/sampleapp-8f8cf/agent/sessions/-Q3yl6VbnPaPEaLBowp9LU9eWEPInzETqA3AhRGa3_epq40X_Qz6b/contexts/a8963b59-c8a9-4aa7-a5e1-84c37d967877_id_dialog_context",
+        "lifespanCount": 2,
+        "parameters": {
+          "team_name.original": "",
+          "team_name": ""
+        }
+      },
+      {
+        "name": "projects/sampleapp-8f8cf/agent/sessions/-Q3yl6VbnPaPEaLBowp9LU9eWEPInzETqA3AhRGa3_epq40X_Qz6b/contexts/actions_capability_media_response_audio",
+        "lifespanCount": 1,
+        "parameters": {
+          "team_name.original": "",
+          "team_name": ""
+        }
+      }
+    ],
+    "intent": {
+      "name": "projects/sampleapp-8f8cf/agent/intents/a8963b59-c8a9-4aa7-a5e1-84c37d967877",
+      "displayName": "HockeyIntent"
+    },
+    "intentDetectionConfidence": 0.94,
+    "languageCode": "en-us"
+  },
+  "originalDetectIntentRequest": {
+    "source": "google",
+    "version": "2",
+    "payload": {
+      "isInSandbox": true,
+      "surface": {
+        "capabilities": [
+          {
+            "name": "actions.capability.AUDIO_OUTPUT"
+          },
+          {
+            "name": "actions.capability.MEDIA_RESPONSE_AUDIO"
+          }
+        ]
+      },
+      "requestType": "SIMULATOR",
+      "inputs": [
+        {
+          "rawInputs": [
+            {
+              "query": "whatr is the latest scores",
+              "inputType": "VOICE"
+            }
+          ],
+          "arguments": [
+            {
+              "rawText": "whatr is the latest scores",
+              "textValue": "whatr is the latest scores",
+              "name": "text"
+            }
+          ],
+          "intent": "actions.intent.TEXT"
+        }
+      ],
+      "user": {
+        "lastSeen": "2018-12-20T07:25:17Z",
+        "locale": "en-US",
+        "userId": "ssddsds-5xSl_c"
+      },
+      "conversation": {
+        "conversationId": "ffdd-Q3yl6VbnPaPEaLBowp9LU9eWEPInzETqA3AhRGa3_epq40X_Qz6b",
+        "type": "ACTIVE",
+        "conversationToken": "[]"
+      },
+      "availableSurfaces": [
+        {
+          "capabilities": [
+            {
+              "name": "actions.capability.AUDIO_OUTPUT"
+            },
+            {
+              "name": "actions.capability.SCREEN_OUTPUT"
+            },
+            {
+              "name": "actions.capability.WEB_BROWSER"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "session": "projects/sampleapp-8f8cf/agent/sessions/fdff-gdd"
+}

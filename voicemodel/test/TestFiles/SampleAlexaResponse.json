@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "response": {
+    "outputSpeech": {
+      "type": "PlainText",
+      "text": "Hello! What can I get started for you?"
+    },
+    "directives": [
+      {
+        "type": "Dialog.ElicitSlot",
+        "slotToElicit": "drink_size",
+        "updatedIntent": {
+          "name": "PlaceOrderIntent",
+          "confirmationStatus": "NONE",
+          "slots": {
+            "drink_size": {
+              "name": "drink_size",
+              "confirmationStatus": "NONE"
+            }
+          }
+        }
+      }
+    ],
+    "shouldEndSession": false
+  },
+  "sessionAttributes": {
+    "turn_index": "1"
+  }
+}

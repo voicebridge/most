@@ -1,0 +1,24 @@
+{
+  "expectUserResponse": true,
+  "expectedInputs": [
+    {
+      "inputPrompt": {
+        "richInitialPrompt": {
+          "items": [
+            {
+              "simpleResponse": {
+                "textToSpeech": "Howdy!",
+                "displayText": "Howdy!"
+              }
+            }
+          ]
+        }
+      },
+      "possibleIntents": [
+        {
+          "intent": "actions.intent.TEXT"
+        }
+      ]
+    }
+  ]
+}

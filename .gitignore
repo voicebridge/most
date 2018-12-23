@@ -1,0 +1,13 @@
+**/bin
+**/obj
+*.pdb
+*.dll
+*.zip
+*.key
+*.csr
+*.crt
+*.nupkg
+*.data
+**/out
+**/tmp
+**/.idea
