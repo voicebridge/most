@@ -106,7 +106,7 @@ namespace VoiceBridge.Most.Test
         [Fact]
         public async Task Do()
         {
-            var dir = Util.QuickMock<IVirtualDirective>();
+            var dir = Util.QuickStub<IVirtualDirective>();
             var directive = await ExecuteHandle<IVirtualDirective>(intent => { intent.Do(() => dir); });
             Assert.Same(dir, directive);
         }
@@ -114,7 +114,7 @@ namespace VoiceBridge.Most.Test
         [Fact]
         public async Task DoIgnoresOtherDirectives()
         {
-            var dir = Util.QuickMock<IVirtualDirective>();
+            var dir = Util.QuickStub<IVirtualDirective>();
             var directive = await ExecuteHandle<IVirtualDirective>(intent =>
             {
                 intent

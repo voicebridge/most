@@ -18,7 +18,7 @@ namespace VoiceBridge.Most.Test.Alexa
         public void RequestIdIsSet()
         {
             var context = BuildModel();
-            Assert.Equal(RequestId, context.RequestModel.InteractionId);
+            Assert.Equal(RequestId, context.RequestModel.RequestId);
         }
 
         [Fact]

@@ -7,7 +7,7 @@ namespace VoiceBridge.Most.Alexa
     {
         public void Build(ConversationContext context, SkillRequest request)
         {
-            context.RequestModel.InteractionId = request.Content.RequestId;
+            context.RequestModel.RequestId = request.Content.RequestId;
             context.RequestModel.SessionId = request.Session.SessionId;
             context.RequestModel.UserId = request.Session.User.UserId;
             context.RequestModel.IntentName = 

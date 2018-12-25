@@ -19,8 +19,13 @@ namespace VoiceBridge.Most.Test
 
         public void Log(LogLevel level, string message, params object[] formattingArgs)
         {
-            var msg = string.Format(message, formattingArgs);
-            msg = string.Format("[{0}] {1}", level, msg);
+            var msg = message;
+            if (formattingArgs?.Length > 0)
+            {
+                msg = string.Format(message, formattingArgs);
+                msg = $"[{level}] {msg}";
+            }
+
             this.LogMessage(msg);
         }
     }

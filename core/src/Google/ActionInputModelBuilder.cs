@@ -12,7 +12,7 @@ namespace VoiceBridge.Most.Google
         {
             context.RequestModel.UserId = request.OriginalDetectIntentRequest.Content.User.UserId;
             context.RequestModel.Locale = request.Result.LanguageCode;
-            context.RequestModel.InteractionId = request.ResponseId;
+            context.RequestModel.RequestId = request.ResponseId;
             context.RequestModel.IntentName = request.Result.Intent.DisplayName;
             if (request.Result.Parameters == null)
             {

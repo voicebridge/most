@@ -9,7 +9,7 @@ namespace VoiceBridge.Most.Test
 {
     public static class Util
     {
-        public static T QuickMock<T>() where T : class
+        public static T QuickStub<T>() where T : class
         {
             return new Mock<T>().Object;
         }
@@ -46,7 +46,7 @@ namespace VoiceBridge.Most.Test
         public static Mock<IDirectiveProcessor<SkillRequest, SkillResponse>> CreateDirectiveProcessor(
             SkillResponse response,
             IVirtualDirective directive,
-            Action<IVirtualDirective, SkillResponse> action = null)
+            Action<IVirtualDirective, SkillRequest, SkillResponse> action = null)
         {
             var m = new Mock<IDirectiveProcessor<SkillRequest, SkillResponse>>();
             m.Setup(x => x.CanHandle(directive)).Returns(true);

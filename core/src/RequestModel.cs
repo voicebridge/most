@@ -14,7 +14,7 @@ namespace VoiceBridge.Most
         public string IntentName { get; set; }
         public string SessionId { get; set; }
         public string UserId { get; set; }
-        public string InteractionId { get; set; }
+        public string RequestId { get; set; }
         public string Locale { get; set; }
         
         public Dictionary<string, ParameterValue> Parameters { get; }

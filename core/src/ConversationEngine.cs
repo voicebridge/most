@@ -37,6 +37,7 @@ namespace VoiceBridge.Most
         
         public async Task<TResponse> Evaluate(TRequest request)
         {
+            
             this.logger.Debug("BEGIN REQUEST PROCESSING");
             var context = CreateConversationContext(request);
             await ProcessRequest(context);

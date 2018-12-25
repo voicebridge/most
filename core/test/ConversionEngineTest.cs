@@ -12,83 +12,92 @@ namespace VoiceBridge.Most.Test
 {
     public class ConversionEngineTest : TestBase
     {
+        private readonly string requestId = Generic.Id();
+
         [Fact]
-        public async Task EvaluateHappyPathThroughBuilder()
+        public async Task HappyPath()
         {
-            var request = new SkillRequest();
-            var context = new ConversationContext();
-            var response = AlexaResponses.Boilerplate();
-            var vDirective = Util.QuickMock<IVirtualDirective>();
-            var handler = new FakeCompositeHandler(context.RequestModel, vDirective);
-            var flagName = Generic.Id();
-            
-            var inputModelBuilder = CreateInputModelBuilder(request, context);
-            var directiveProcessor = Util.CreateDirectiveProcessor(
-                                        response, 
-                                        vDirective,
-                                        (d, r) =>
-                                        {
-                                            Assert.Same(response, r);
-                                            Assert.Same(vDirective, d);
-                                            response.SessionAttributes[flagName] = "true";
-                                        });
-            
+            var request = AlexaRequests.CreateBoilerplateRequest();
+            request.Content.RequestId = requestId;
+            var virtualDirective = Util.QuickStub<IVirtualDirective>();
             var builder = new EngineBuilder<SkillRequest, SkillResponse>();
-            builder.AddInputModelBuilder(inputModelBuilder);
-            builder.SetResponseFactory(CreateResponseFactory(context.RequestModel, response));
-            builder.AddRequestHandler(handler); 
-            builder.AddDirectiveProcessor(directiveProcessor.Object);
-            builder.SetLogger(this);
-            
+            builder
+                .SetLogger(this)
+                .SetResponseFactory(new AlexaResponseFactory())
+                .AddInputModelBuilder(new FakeInputModelBuilder())
+                .AddDirectiveProcessor(new FakeDirectiveProcessor(virtualDirective))
+                .AddRequestHandler(new FakeRequestHandler(requestId, virtualDirective));
             var engine = builder.Build();
-            var actualResponse = await engine.Evaluate(request);
-            Assert.Same(response, actualResponse);
-            Assert.Equal("true", response.SessionAttributes[flagName]);   
-        }
-
-        private IResponseFactory<SkillResponse> CreateResponseFactory(RequestModel requestModel, SkillResponse response)
-        {
-            var mock = new Mock<IResponseFactory<SkillResponse>>();
-            mock.Setup(x => x.Create(It.Is<ConversationContext>(ctx => ctx.RequestModel == requestModel))).Returns(response);
-            return mock.Object;
-        }
-
-        private IInputModelBuilder<SkillRequest> CreateInputModelBuilder(
-            SkillRequest request, 
-            ConversationContext context)
-        {
-            var mock = new Mock<IInputModelBuilder<SkillRequest>>();
-            mock.Setup(x => x.Build(context, request));
-            return mock.Object;
-        }
-
-        private class FakeCompositeHandler : IRequestHandler
-        {
-            private readonly RequestModel expectedInputRequestModel;
-            private readonly IVirtualDirective directive;
-
-            public FakeCompositeHandler(
-                RequestModel expectedInputRequestModel, 
-                IVirtualDirective directive)
-            {
-                this.expectedInputRequestModel = expectedInputRequestModel;
-                this.directive = directive;
-            }
-
-            public bool CanHandle(ConversationContext context)
-            {
-                return context.RequestModel == expectedInputRequestModel;
-            }
-
-            public async Task Handle(ConversationContext context)
-            {
-                Assert.Empty(context.OutputDirectives);
-                await Task.Run(() => context.OutputDirectives.Add(directive));
-            }
+            var response = await engine.Evaluate(request);
+            Assert.Equal(requestId, ((PlainTextOutputSpeech)response.Content.OutputSpeech).Text);
         }
 
         public ConversionEngineTest(ITestOutputHelper output) : base(output)
         {
+        }
+
+        private class FakeRequestHandler : IRequestHandler
+        {
+            private readonly string expectedRequestId;
+            private readonly IVirtualDirective directiveToOutput;
+
+            public FakeRequestHandler(
+                string expectedRequestId,
+                IVirtualDirective directiveToOutput)
+            {
+                this.expectedRequestId = expectedRequestId;
+                this.directiveToOutput = directiveToOutput;
+            }
+            
+            public bool CanHandle(ConversationContext context)
+            {
+                return context.RequestModel.RequestId == this.expectedRequestId;
+            }
+
+            public async Task Handle(ConversationContext context)
+            {
+                await Task.Factory.StartNew(() =>
+                {
+                    if (this.CanHandle(context))
+                    {
+                        context.OutputDirectives.Add(this.directiveToOutput);
+                    }
+                });
+            }
+        }
+
+        private class FakeInputModelBuilder : IInputModelBuilder<SkillRequest>
+        {
+            public void Build(ConversationContext context, SkillRequest request)
+            {
+                context.RequestModel.RequestId = request.Content.RequestId;
+            }
+        }
+
+        private class FakeDirectiveProcessor : IDirectiveProcessor<SkillRequest, SkillResponse>
+        {
+            private readonly IVirtualDirective targetDirective;
+
+            public FakeDirectiveProcessor(IVirtualDirective targetDirective)
+            {
+                this.targetDirective = targetDirective;
+            }
+            
+            public bool CanHandle(IVirtualDirective directive)
+            {
+                return targetDirective == directive;
+            }
+
+            public void Process(IVirtualDirective virtualDirective, SkillRequest request, SkillResponse response)
+            {
+                if (this.CanHandle(virtualDirective))
+                {
+                    response.Content.OutputSpeech = new PlainTextOutputSpeech
+                    {
+                        Text = request.Content.RequestId
+                    };
+                }
+            }
         }
     }
 }
