@@ -6,7 +6,7 @@ namespace VoiceBridge.Most.Logging
     {
         public void Log(LogLevel level, string message, params object[] formattingArgs)
         {
-            var text = string.Format(message, formattingArgs);
+            var text = formattingArgs?.Length == 0 ? message : string.Format(message, formattingArgs);
             Console.WriteLine("[{0}]: {1}", level, text);
         }
 
