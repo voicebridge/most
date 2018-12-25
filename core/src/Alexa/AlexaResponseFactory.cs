@@ -16,7 +16,16 @@ namespace VoiceBridge.Most.Alexa
                 },
                 SessionAttributes = new Dictionary<string, string>()
             };
+            TransferSessionValues(context, response);
             return response;
+        }
+
+        private void TransferSessionValues(ConversationContext context, SkillResponse response)
+        {
+            foreach (var key in context.SessionStore.Keys)
+            {
+                response.SessionAttributes[key] = context.SessionStore[key];
+            }
         }
     }
 }

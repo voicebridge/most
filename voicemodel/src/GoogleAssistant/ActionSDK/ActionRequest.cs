@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK
@@ -20,9 +21,10 @@ namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK
         public bool IsInSandbox { get; set; }
         
         [JsonProperty("availableSurfaces")]
-        public Surface[] AvailableSurfaces { get; set; }
+        
+        public List<Surface> AvailableSurfaces { get; set; }
         
         [JsonProperty("inputs")]
-        public Input[] Inputs { get; set; }
+        public List<Input> Inputs { get; set; }
     }
 }

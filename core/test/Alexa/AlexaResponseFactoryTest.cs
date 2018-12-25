@@ -17,5 +17,17 @@ namespace VoiceBridge.Most.Test.Alexa
             Assert.NotNull(response.Content.Directives);
             Assert.NotNull(response.SessionAttributes);
         }
+
+        [Fact]
+        public void SessionIsTransferred()
+        {
+            var context = new ConversationContext();
+            context.SessionStore["s1"] = "v1";
+            context.SessionStore["s2"] = "v2";
+            var factory = new AlexaResponseFactory();
+            var response = factory.Create(context);
+            Assert.Equal("v1", response.SessionAttributes["s1"]);
+            Assert.Equal("v2", response.SessionAttributes["s2"]);
+        }
     }
 }

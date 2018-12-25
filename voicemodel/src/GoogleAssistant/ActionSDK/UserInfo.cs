@@ -5,7 +5,6 @@ namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK
 {
     public class UserInfo
     {
-        [Obsolete("Google has deprecated this property")]
         [JsonProperty("userId")]
         public string UserId { get; set; }
         

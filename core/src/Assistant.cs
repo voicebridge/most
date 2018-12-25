@@ -46,7 +46,7 @@ namespace VoiceBridge.Most
 
         public EngineBuilder<AppRequest, AppResponse> GoogleEngineBuilder()
         {
-            return CreateBuilder(new ActionResponseBuilder(), new ActionInputModelBuilder());
+            return CreateBuilder(new ActionResponseFactory(), new ActionInputModelBuilder());
         }
 
         private EngineBuilder<TRequest, TResponse> CreateBuilder<TRequest, TResponse>(
