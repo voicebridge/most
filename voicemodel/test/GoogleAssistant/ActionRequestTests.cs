@@ -21,18 +21,18 @@ namespace VoiceBridge.Most.VoiceModel.Test.GoogleAssistant
         public void VerifyUser()
         {
             var request = GetRequest();
-            Assert.Equal("token-1", request.User.IdToken);
-            Assert.Equal("2018-03-21T21:02:13Z", request.User.LastSeen);
+            Assert.Equal("ssddsds-5xSl_c", request.User.UserId);
+            Assert.Equal("2018-12-20T07:25:17Z", request.User.LastSeen);
             Assert.Equal("en-US", request.User.Locale);
-            Assert.Equal("{\"data\":{}}", request.User.UserStorage);
+            Assert.Equal("fake-data", request.User.UserStorage);
         }
 
         [Fact]
         public void VerifyConversation()
         {
             var request = GetRequest();
-            Assert.Equal("token-2", request.Conversation.Token);
-            Assert.Equal("1524602877583", request.Conversation.Id);
+            Assert.Equal("[]", request.Conversation.Token);
+            Assert.Equal("ffdd-Q3yl6VbnPaPEaLBowp9LU9eWEPInzETqA3AhRGa3_epq40X_Qz6b", request.Conversation.Id);
             Assert.Equal(GoogleAssistantConstants.ConversationType.Active, request.Conversation.Type);
         }
 
@@ -49,9 +49,7 @@ namespace VoiceBridge.Most.VoiceModel.Test.GoogleAssistant
         public void SurfaceCapabilities()
         {
             AssertSurfaceCapable(GoogleAssistantConstants.Capabilities.AudioOut);
-            AssertSurfaceCapable(GoogleAssistantConstants.Capabilities.WebBrowser);
             AssertSurfaceCapable(GoogleAssistantConstants.Capabilities.AudioMediaResponse);
-            AssertSurfaceCapable(GoogleAssistantConstants.Capabilities.ScreenOut);
         }
         
         [Fact]
@@ -71,7 +69,7 @@ namespace VoiceBridge.Most.VoiceModel.Test.GoogleAssistant
                     return;
                 }
             }
-            throw new Exception("Failed to find capability");
+            throw new Exception("Failed to find capability " + capabilityName);
         }
 
         private static void AssertSurfaceAvailable(string capabilityName)
@@ -84,7 +82,7 @@ namespace VoiceBridge.Most.VoiceModel.Test.GoogleAssistant
                     return;
                 }
             }
-            throw new Exception("Failed to find capability");
+            throw new Exception("Failed to find capability: " + capabilityName);
         }
         
         private static ActionRequest GetRequest()

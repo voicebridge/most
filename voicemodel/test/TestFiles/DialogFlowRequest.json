@@ -109,7 +109,8 @@
       "user": {
         "lastSeen": "2018-12-20T07:25:17Z",
         "locale": "en-US",
-        "userId": "ssddsds-5xSl_c"
+        "userId": "ssddsds-5xSl_c",
+        "userStorage": "fake-data"
       },
       "conversation": {
         "conversationId": "ffdd-Q3yl6VbnPaPEaLBowp9LU9eWEPInzETqA3AhRGa3_epq40X_Qz6b",
