@@ -72,8 +72,24 @@ namespace VoiceBridge.Most.Test.Alexa
         [Fact]
         public void SlotWithCannonicalValueMatchButValueIsNull()
         {
-            //Real use case which was encountered in Alexa
-            throw new Exception("fix me!");
+            const string name = "p1";
+            const string spokenValue = "value one";
+            
+            var request = CreateRequest();
+            request.Content.Intent.Slots["p1"] = 
+                BuildSlot(
+                    name,
+                    spokenValue,
+                    AlexaConstants.SlotResolutionStatus.SuccessfulMatch,
+                    null,
+                    null);
+            
+            var context = BuildModel(request);                   
+            var param = context.RequestModel.Parameters["p1"];
+            Assert.Equal(spokenValue, context.RequestModel.GetParameterValue("p1"));
+            Assert.Equal(spokenValue, param.ResolvedValue);
+            Assert.Equal(spokenValue, param.ResolvedId);
+            Assert.Equal(spokenValue, param.ProvidedValue);
         }
         
         [Fact]
@@ -160,11 +176,6 @@ namespace VoiceBridge.Most.Test.Alexa
             if (resolutionCode == null)
             {
                 slot.Resolutions = null;
-            }
-
-            if (resolutionCode != null && resolvedId == null)
-            {
-                slot.Resolutions.ResolutionsByAuthority.First().Values = null;
             }
 
             return slot;
