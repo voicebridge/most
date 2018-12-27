@@ -6,7 +6,8 @@ namespace VoiceBridge.Most.Test
         {
             return new ConversationContext
             {
-                RequestModel = this
+                RequestModel = this,
+                RequestType = RequestType.Intent
             };
         }
     }

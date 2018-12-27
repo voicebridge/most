@@ -9,6 +9,30 @@ namespace VoiceBridge.Most.Test
     public class IntentConfigurationTest
     {
         [Fact]
+        public void ThrowsIfIntentTypeIsPassedIn()
+        {
+            Assert.Throws<ArgumentException>(() => new IntentConfiguration(RequestType.Intent));
+        }
+        
+        [Fact]
+        public void CanHandleMatchedType()
+        {
+            var intent = new IntentConfiguration(RequestType.Launch);
+            var context = new TestRequestModel {IntentName = "one"}.AsConversationContext();
+            context.RequestType = RequestType.Launch;
+            Assert.True(intent.CanHandle(context));       
+        }
+        
+        [Fact]
+        public void CanHandleTypeDoesNotMatch()
+        {
+            var intent = new IntentConfiguration(RequestType.Error);
+            var context = new TestRequestModel {IntentName = "one"}.AsConversationContext();
+            context.RequestType = RequestType.Launch;
+            Assert.False(intent.CanHandle(context));       
+        }
+        
+        [Fact]
         public void CanHandleIntentMatch()
         {
             var intent = new IntentConfiguration("one");
@@ -133,7 +157,8 @@ namespace VoiceBridge.Most.Test
                 RequestModel = new TestRequestModel
                 {
                     IntentName = "one"
-                }
+                },
+                RequestType = RequestType.Intent
             };
             var intent =new IntentConfiguration(context.RequestModel.IntentName);
             action(intent);

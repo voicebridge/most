@@ -15,5 +15,6 @@ namespace VoiceBridge.Most.VoiceModel.Alexa
 
         [JsonProperty("request")]
         public RequestContent Content {get; set;}
+        
     }
 }

@@ -7,11 +7,58 @@ namespace VoiceBridge.Most.Alexa
     {
         public void Build(ConversationContext context, SkillRequest request)
         {
-            PopulateRequestMetadata(context, request);
-            PopulateParameters(context, request);
+            ReadRequestType(context, request);
+            ReadRequestMetadata(context, request);
+            ReadSlots(context, request);
+            ReadIntent(context, request);
         }
 
-        private static void PopulateParameters(ConversationContext context, SkillRequest request)
+        private void ReadIntent(ConversationContext context, SkillRequest request)
+        {
+            if (context.RequestType != RequestType.Intent)
+            {
+                return;
+            }
+
+            context.RequestModel.IntentName = request.Content.Intent.Name;
+        }
+
+        private void ReadRequestType(ConversationContext context, SkillRequest request)
+        {
+            switch (request.Content.Type)
+            {
+                case AlexaConstants.RequestType.SessionEndedRequest:
+                    if (request.Content.Reason == AlexaConstants.SessionTerminationReasons.UserInitiated)
+                    {
+                        context.RequestType = RequestType.UserInitiatedTermination;
+                    }
+
+                    if (request.Content.Reason == AlexaConstants.SessionTerminationReasons.Error)
+                    {
+                        context.RequestType = RequestType.Error;
+                    }
+
+                    if (request.Content.Reason == AlexaConstants.SessionTerminationReasons.MaxPrepromptsExceeded)
+                    {
+                        context.RequestType = RequestType.Error;
+                    }
+                    
+                    break;
+                case AlexaConstants.RequestType.IntentRequest:
+                    context.RequestType = RequestType.Intent;
+                    break;
+                
+                case AlexaConstants.RequestType.LaunchRequest:
+                    context.RequestType = RequestType.Launch;
+                    break;
+                
+                case AlexaConstants.RequestType.CanFulfillIntentRequest:
+                    context.RequestType = RequestType.FulfillmentQuery;
+                    break;
+            }
+        }
+
+        private static void ReadSlots(ConversationContext context, SkillRequest request)
         {
             if (request.Content.Intent?.Slots == null)
             {
@@ -41,13 +88,11 @@ namespace VoiceBridge.Most.Alexa
             }
         }
 
-        private static void PopulateRequestMetadata(ConversationContext context, SkillRequest request)
+        private static void ReadRequestMetadata(ConversationContext context, SkillRequest request)
         {
             context.RequestModel.RequestId = request.Content.RequestId;
             context.RequestModel.SessionId = request.Session.SessionId;
             context.RequestModel.UserId = request.Session.User.UserId;
-            context.RequestModel.IntentName =
-                request.Content.Intent != null ? request.Content.Intent.Name : request.Content.Type;
         }
     }
 }

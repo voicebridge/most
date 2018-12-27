@@ -14,7 +14,7 @@ namespace VoiceBridge.Most
         private readonly List<string> intentNames = new List<string>();
         private readonly List<Func<ConversationContext, bool>> conditions = new List<Func<ConversationContext, bool>>();
         private Func<IVirtualDirective> actionToPerform;
-
+        private RequestType typeOfRequestToMatch = RequestType.Intent;
         /// <summary>
         /// Initialize with a single intent match
         /// </summary>
@@ -32,6 +32,21 @@ namespace VoiceBridge.Most
         public IntentConfiguration(IEnumerable<string> intentNames)
         {
             this.intentNames.AddRange(intentNames);
+        }
+        
+        /// <summary>
+        /// Match on any non-intent request. Will throw an exception if you pass
+        /// Intent as request type
+        /// </summary>
+        /// <param name="requestType">Request Type</param>
+        public IntentConfiguration(RequestType requestType)
+        {
+            if (requestType == RequestType.Intent)
+            {
+                throw new ArgumentException("Must be a non-intent type");
+            }
+
+            this.typeOfRequestToMatch = requestType;
         }
 
         /// <summary>
@@ -126,6 +141,11 @@ namespace VoiceBridge.Most
         /// <returns>True if this request handler can handle</returns>
         public bool CanHandle(ConversationContext context)
         {
+            if (context.RequestType != typeOfRequestToMatch)
+            {
+                return false;
+            }
+            
             if (this.intentNames.Count != 0 && 
                 this.intentNames.All(x => string.Compare(x, context.RequestModel.IntentName, StringComparison.InvariantCultureIgnoreCase) != 0))
             {
@@ -149,6 +169,11 @@ namespace VoiceBridge.Most
         {
             return Task.Run(() =>
             {
+                if (!this.CanHandle(context))
+                {
+                    return;
+                }
+                
                 if (this.actionToPerform != null)
                 {
                     context.OutputDirectives.Add(this.actionToPerform());

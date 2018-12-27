@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace VoiceBridge.Most.VoiceModel.Alexa
 {
@@ -28,5 +29,8 @@ namespace VoiceBridge.Most.VoiceModel.Alexa
 
         [JsonProperty("dialogState")]
         public string DialogState { get; set; }
+
+        [JsonProperty("error")]
+        public AlexaError Error { get; set; }
     }
 }

@@ -28,5 +28,8 @@ namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow
         
         [JsonProperty("languageCode")]
         public string LanguageCode { get; set; }
+        
+        [JsonProperty("action")]
+        public string Action { get; set; }
     }
 }

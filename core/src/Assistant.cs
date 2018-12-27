@@ -14,9 +14,35 @@ using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 
 namespace VoiceBridge.Most
 {
+    /// <summary>
+    /// Builds rules for a virtual assistant
+    /// </summary>
     public class Assistant
     {
         private readonly List<IntentConfiguration> intents = new List<IntentConfiguration>();
+
+        /// <summary>
+        /// On first launch. This is the MAIN intent for Google Actions
+        /// and Launch Request for Alexa
+        /// </summary>
+        /// <returns>Itself</returns>
+        public IntentConfiguration OnLaunch()
+        {
+            var intent = new IntentConfiguration(RequestType.Launch);
+            intents.Add(intent);
+            return intent;
+        }
+
+        /// <summary>
+        /// Triggered when the user quits (says quit, cancel, stop)
+        /// </summary>
+        /// <returns>Itself</returns>
+        public IntentConfiguration OnUserInitiatedTermination()
+        {
+            var intent = new IntentConfiguration(RequestType.UserInitiatedTermination);
+            intents.Add(intent);
+            return intent;
+        }
         
         public IntentConfiguration OnIntent(string intentName)
         {

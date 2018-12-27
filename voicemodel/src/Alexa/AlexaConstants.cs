@@ -4,6 +4,20 @@ namespace VoiceBridge.Most.VoiceModel.Alexa
 {
     public static class AlexaConstants
     {
+        public static class SessionTerminationReasons
+        {
+            public const string UserInitiated = "USER_INITIATED";
+            public const string Error = "Error";
+            public const string MaxPrepromptsExceeded = "EXCEEDED_MAX_REPROMPTS";
+        }
+
+        public static class ErrorType
+        {
+            public const string InvalidResponse = "INVALID_RESPONSE";
+            public const string DeviceCommunicationError = "DEVICE_COMMUNICATION_ERROR";
+            public const string InternalError = "INTERNAL_ERROR";
+        }
+        
         public static class AudioPlayerStatus
         {
             public const string Idle = "IDLE";

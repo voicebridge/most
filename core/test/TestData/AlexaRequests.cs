@@ -37,6 +37,7 @@ namespace VoiceBridge.Most.Test.TestData
             var content = new RequestContent
             {
                 RequestId = Known.RequestId,
+                Type = AlexaConstants.RequestType.IntentRequest,
                 Intent = new Intent
                 {
                     Slots = new Dictionary<string, Slot>()

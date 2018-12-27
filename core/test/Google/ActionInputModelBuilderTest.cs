@@ -2,12 +2,32 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using VoiceBridge.Most.Google;
 using VoiceBridge.Most.Test.TestData;
+using VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK;
+using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 using Xunit;
 
 namespace VoiceBridge.Most.Test.Google
 {
     public class ActionInputModelBuilderTest
     {
+        [Fact]
+        public void WelcomeIntent()
+        {
+            var appRequest = CreateRequestWithIntent("actions.intent.MAIN");
+            var context = new ConversationContext();
+            new ActionInputModelBuilder().Build(context, appRequest);
+            Assert.Equal(RequestType.Launch, context.RequestType);
+        }
+
+        [Fact]
+        public void UserInitiatedTermination()
+        {
+            var appRequest = CreateRequestWithIntent("actions.intent.CANCEL");
+            var context = new ConversationContext();
+            new ActionInputModelBuilder().Build(context, appRequest);
+            Assert.Equal(RequestType.UserInitiatedTermination, context.RequestType);
+        }
+        
         [Fact]
         public void Metadata()
         {
@@ -24,6 +44,7 @@ namespace VoiceBridge.Most.Test.Google
             Assert.Equal("en-US", context.RequestModel.Locale);
             Assert.Equal("uid", context.RequestModel.UserId);
             Assert.Equal("intent", context.RequestModel.IntentName);
+            Assert.Equal(RequestType.Intent, context.RequestType);
         }
 
         [Fact]
@@ -49,6 +70,19 @@ namespace VoiceBridge.Most.Test.Google
             new ActionInputModelBuilder().Build(context, appRequest);
             Assert.Equal("v1", context.SessionStore["s1"]);
             Assert.Equal("v2", context.SessionStore["s2"]);
+        }
+
+        private static AppRequest CreateRequestWithIntent(string intentName)
+        {
+            var request = AppRequests.CreateBoileRequest();
+            var input = new Input
+            {
+                Intent = intentName,
+                RawInputs = new List<RawInput>(),
+                Arguments = new List<Argument>()
+            };
+            request.OriginalDetectIntentRequest.Content.Inputs.Add(input);
+            return request;
         }
     }
 }

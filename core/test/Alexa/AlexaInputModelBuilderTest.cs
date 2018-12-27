@@ -40,16 +40,60 @@ namespace VoiceBridge.Most.Test.Alexa
         {
             var context = BuildModel();
             Assert.Equal(IntentName, context.RequestModel.IntentName);
+            Assert.Equal(RequestType.Intent, context.RequestType);
+        }
+        
+        [Fact]
+        public void LaunchRequest()
+        {
+            var request = CreateRequest();
+            request.Content.Type = AlexaConstants.RequestType.LaunchRequest;
+            request.Content.Intent = null;
+            var context = BuildModel(request);
+            Assert.Equal(RequestType.Launch, context.RequestType);
+        }
+        
+        [Fact]
+        public void CanFulfillRequest()
+        {
+            var request = CreateRequest();
+            request.Content.Type = AlexaConstants.RequestType.CanFulfillIntentRequest;
+            request.Content.Intent = null;
+            var context = BuildModel(request);
+            Assert.Equal(RequestType.FulfillmentQuery, context.RequestType);
         }
 
         [Fact]
-        public void NonIntentRequest()
+        public void UserTerminationRequest()
         {
             var request = CreateRequest();
             request.Content.Type = AlexaConstants.RequestType.SessionEndedRequest;
+            request.Content.Reason = AlexaConstants.SessionTerminationReasons.UserInitiated;
             request.Content.Intent = null;
             var context = BuildModel(request);
-            Assert.Equal(AlexaConstants.RequestType.SessionEndedRequest, context.RequestModel.IntentName);
+            Assert.Equal(RequestType.UserInitiatedTermination, context.RequestType);
+        }
+        
+        [Fact]
+        public void ErrorRequest()
+        {
+            var request = CreateRequest();
+            request.Content.Type = AlexaConstants.RequestType.SessionEndedRequest;
+            request.Content.Reason = AlexaConstants.SessionTerminationReasons.Error;
+            request.Content.Intent = null;
+            var context = BuildModel(request);
+            Assert.Equal(RequestType.Error, context.RequestType);
+        }
+        
+        [Fact]
+        public void RepromptsExceededRequest()
+        {
+            var request = CreateRequest();
+            request.Content.Type = AlexaConstants.RequestType.SessionEndedRequest;
+            request.Content.Reason = AlexaConstants.SessionTerminationReasons.MaxPrepromptsExceeded;
+            request.Content.Intent = null;
+            var context = BuildModel(request);
+            Assert.Equal(RequestType.Error, context.RequestType);
         }
 
         [Fact]
