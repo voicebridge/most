@@ -37,7 +37,7 @@ namespace VoiceBridge.Most
         /// Triggered when the user quits (says quit, cancel, stop)
         /// </summary>
         /// <returns>Itself</returns>
-        public IntentConfiguration OnUserInitiatedTermination()
+        public IntentConfiguration OnExit()
         {
             var intent = new IntentConfiguration(RequestType.UserInitiatedTermination);
             intents.Add(intent);
