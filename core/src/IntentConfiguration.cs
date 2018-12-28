@@ -15,6 +15,7 @@ namespace VoiceBridge.Most
         private readonly List<Func<ConversationContext, bool>> conditions = new List<Func<ConversationContext, bool>>();
         private Func<IVirtualDirective> actionToPerform;
         private RequestType typeOfRequestToMatch = RequestType.Intent;
+
         /// <summary>
         /// Initialize with a single intent match
         /// </summary>
@@ -100,25 +101,28 @@ namespace VoiceBridge.Most
         }
 
         /// <summary>
-        /// Tell the user. (Terminal)
+        /// Tell the user
         /// </summary>
         /// <param name="promptText">Plain text to tell the user</param>
+        /// <param name="isQuestion">Determines whether to wait for a user response</param>
         /// <returns>Itself</returns>
-        public IntentConfiguration Say(string promptText)
+        public IntentConfiguration Say(string promptText, bool isQuestion = false)
         {
-            return this.Say(promptText.AsPrompt());
+            return this.Say(promptText.AsPrompt(), isQuestion);
         }
 
         /// <summary>
-        /// Tell the use (Terminal)
+        /// Tell the use
         /// </summary>
         /// <param name="prompt">Prompt to send back</param>
+        /// <param name="isQuestion">Determines whether to wait for a user response</param>
         /// <returns>Itself</returns>
-        public IntentConfiguration Say(Prompt prompt)
+        public IntentConfiguration Say(Prompt prompt, bool isQuestion = false)
         {
             this.Do(() => new SayDirective
             {
-                Prompt = prompt
+                Prompt = prompt,
+                IsQuestion = isQuestion
             });
             return this;
         }
