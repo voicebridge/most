@@ -112,7 +112,7 @@ namespace VoiceBridge.Most
         }
 
         /// <summary>
-        /// Tell the use
+        /// Tell the user
         /// </summary>
         /// <param name="prompt">Prompt to send back</param>
         /// <param name="isQuestion">Determines whether to wait for a user response</param>
