@@ -12,12 +12,13 @@ namespace VoiceBridge.Most.Directives.Processors
         protected override void Process(SayDirective directive, SkillRequest request, SkillResponse response)
         {
             response.Content.OutputSpeech = directive.Prompt.ToAlexaSpeech();
-            response.Content.ShouldEndSession = true;
+            response.Content.ShouldEndSession = !directive.IsQuestion;
         }
 
         protected override void Process(SayDirective directive, AppRequest request, AppResponse response)
         {
-            response.Payload.Body.ExpectUserResponse = false;
+            response.Payload.Body.ExpectUserResponse = directive.IsQuestion;
+
             response.Payload.Body.RichResponse.Items.Add(new SimpleResponseItem
             {
                 Value = new SimpleResponse

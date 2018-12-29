@@ -94,18 +94,38 @@ namespace VoiceBridge.Most.Test
         public async Task HandleSay()
         {
             var directive = await ExecuteHandle<SayDirective>(i => i.Say("hello"));
-            Assert.Equal(directive.Prompt.Content, "hello");
+            Assert.Equal("hello", directive.Prompt.Content);
+            Assert.False(directive.IsQuestion);
             Assert.False(directive.Prompt.IsSSML);
         }
-        
+
+        [Fact]
+        public async Task HandleSayAsQuestion()
+        {
+            var directive = await ExecuteHandle<SayDirective>(i => i.Say("hello", true));
+            Assert.Equal("hello", directive.Prompt.Content);
+            Assert.True(directive.IsQuestion);
+            Assert.False(directive.Prompt.IsSSML);
+        }
+
         [Fact]
         public async Task HandleSayPrompt()
         {
             var prompt = new Prompt();
             var directive = await ExecuteHandle<SayDirective>(i => i.Say(prompt));
+            Assert.False(directive.IsQuestion);
             Assert.Same(prompt, directive.Prompt);
         }
-        
+
+        [Fact]
+        public async Task HandleSayPromptAsQuestion()
+        {
+            var prompt = new Prompt();
+            var directive = await ExecuteHandle<SayDirective>(i => i.Say(prompt, true));
+            Assert.True(directive.IsQuestion);
+            Assert.Same(prompt, directive.Prompt);
+        }
+
         [Fact]
         public async Task HandleAsk()
         {
