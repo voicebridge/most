@@ -4,6 +4,6 @@ namespace VoiceBridge.Most.Directives
     {
         public Prompt Prompt { get; set; }
 
-        public bool IsQuestion { get; set; }
+        public bool KeepSessionOpen { get; set; }
     }
 }

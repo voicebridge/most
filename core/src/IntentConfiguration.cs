@@ -104,25 +104,25 @@ namespace VoiceBridge.Most
         /// Tell the user
         /// </summary>
         /// <param name="promptText">Plain text to tell the user</param>
-        /// <param name="isQuestion">Determines whether to wait for a user response</param>
+        /// <param name="keepSessionOpen">False by default, if true, will not end session</param>
         /// <returns>Itself</returns>
-        public IntentConfiguration Say(string promptText, bool isQuestion = false)
+        public IntentConfiguration Say(string promptText, bool keepSessionOpen = false)
         {
-            return this.Say(promptText.AsPrompt(), isQuestion);
+            return this.Say(promptText.AsPrompt(), keepSessionOpen);
         }
 
         /// <summary>
         /// Tell the user
         /// </summary>
         /// <param name="prompt">Prompt to send back</param>
-        /// <param name="isQuestion">Determines whether to wait for a user response</param>
+        /// <param name="keepSessionOpen">False by default, if true, will not end session</param>
         /// <returns>Itself</returns>
-        public IntentConfiguration Say(Prompt prompt, bool isQuestion = false)
+        public IntentConfiguration Say(Prompt prompt, bool keepSessionOpen = false)
         {
             this.Do(() => new SayDirective
             {
                 Prompt = prompt,
-                IsQuestion = isQuestion
+                KeepSessionOpen = keepSessionOpen
             });
             return this;
         }

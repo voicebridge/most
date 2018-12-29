@@ -95,7 +95,7 @@ namespace VoiceBridge.Most.Test
         {
             var directive = await ExecuteHandle<SayDirective>(i => i.Say("hello"));
             Assert.Equal("hello", directive.Prompt.Content);
-            Assert.False(directive.IsQuestion);
+            Assert.False(directive.KeepSessionOpen);
             Assert.False(directive.Prompt.IsSSML);
         }
 
@@ -104,7 +104,7 @@ namespace VoiceBridge.Most.Test
         {
             var directive = await ExecuteHandle<SayDirective>(i => i.Say("hello", true));
             Assert.Equal("hello", directive.Prompt.Content);
-            Assert.True(directive.IsQuestion);
+            Assert.True(directive.KeepSessionOpen);
             Assert.False(directive.Prompt.IsSSML);
         }
 
@@ -113,7 +113,7 @@ namespace VoiceBridge.Most.Test
         {
             var prompt = new Prompt();
             var directive = await ExecuteHandle<SayDirective>(i => i.Say(prompt));
-            Assert.False(directive.IsQuestion);
+            Assert.False(directive.KeepSessionOpen);
             Assert.Same(prompt, directive.Prompt);
         }
 
@@ -122,7 +122,7 @@ namespace VoiceBridge.Most.Test
         {
             var prompt = new Prompt();
             var directive = await ExecuteHandle<SayDirective>(i => i.Say(prompt, true));
-            Assert.True(directive.IsQuestion);
+            Assert.True(directive.KeepSessionOpen);
             Assert.Same(prompt, directive.Prompt);
         }
 

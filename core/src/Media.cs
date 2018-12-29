@@ -11,7 +11,9 @@ namespace VoiceBridge.Most
         
         public string Author { get; set; }
         
-        public Uri ArtUrl { get; set; }
+        public Uri LargeImageUrl { get; set; }
+        
+        public Uri SmallImageUrl { get; set; }
         
         public string Token { get; set; }
     }
