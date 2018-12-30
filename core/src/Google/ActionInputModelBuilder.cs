@@ -84,7 +84,7 @@ namespace VoiceBridge.Most.Google
         private static void ReadMetadata(ConversationContext context, AppRequest request)
         {
             context.RequestModel.SessionId = request.SessionId;
-            context.RequestModel.UserId = request.OriginalDetectIntentRequest.Content.User.UserId;
+            context.RequestModel.UserId = request.OriginalDetectIntentRequest?.Content?.User?.UserId ?? "";
             context.RequestModel.Locale = request.Result.LanguageCode;
             context.RequestModel.RequestId = request.ResponseId;
         }
