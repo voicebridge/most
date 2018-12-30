@@ -1,9 +1,8 @@
 using System.IO;
-using System.Runtime.InteropServices;
 using Amazon.Lambda.Core;
 using Amazon.Lambda.Serialization.Json;
 
-namespace SampleSkill
+namespace Sample
 {
     public class DebuggingSerializer : ILambdaSerializer
     {

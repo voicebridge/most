@@ -3,7 +3,7 @@ using System.Linq;
 using Amazon.Lambda.Core;
 using VoiceBridge.Most.Logging;
 
-namespace SampleSkill
+namespace Sample
 {
     public class Logger : ILogger
     {
