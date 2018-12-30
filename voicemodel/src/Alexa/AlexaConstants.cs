@@ -18,15 +18,34 @@ namespace VoiceBridge.Most.VoiceModel.Alexa
             public const string InternalError = "INTERNAL_ERROR";
         }
         
-        public static class AudioPlayerStatus
+        public static class AudioPlayer
         {
-            public const string Idle = "IDLE";
-            public const string Paused = "PAUSED";
-            public const string Playing = "PLAYING";
-            public const string BufferUnderrun = "BUFFER_UNDERRUN";
-            public const string Finished = "FINISHED";
-            public const string Stopped = "STOPPED";
+            public static class AudioPlayerBehavior
+            {
+                public const string ReplaceAll = "REPLACE_ALL";
+                public const string Enqueue = "ENQUEUE";
+                public const string ReplaceEnqueued = "REPLACE_ENQUEUED";
+            }
+            
+            public static class Status
+            {
+                public const string Idle = "IDLE";
+                public const string Paused = "PAUSED";
+                public const string Playing = "PLAYING";
+                public const string BufferUnderrun = "BUFFER_UNDERRUN";
+                public const string Finished = "FINISHED";
+                public const string Stopped = "STOPPED";
+            }
+
+            public static class Directives
+            {
+                public const string Play = "AudioPlayer.Play";
+                public const string Stop = "AudioPlayer.Stop";
+                public const string ClearQueue = "AudioPlayer.ClearQueue";
+            }
         }
+        
+        
         public static class Dialog
         {
             public const string Delegate = "Dialog.Delegate";

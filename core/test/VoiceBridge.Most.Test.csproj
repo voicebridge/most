@@ -11,8 +11,14 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\common\src\VoiceBridge.Common.csproj" />
       <ProjectReference Include="..\..\voicemodel\src\VoiceBridge.Most.VoiceModel.csproj" />
       <ProjectReference Include="..\src\VoiceBridge.Most.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="TestFiles\HockeyScoreIntentRequest.json" />
+      <EmbeddedResource Include="TestFiles\HockeyScoreIntentRequest.json" />
     </ItemGroup>
 
 </Project>

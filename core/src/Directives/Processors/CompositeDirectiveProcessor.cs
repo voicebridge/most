@@ -3,7 +3,7 @@ using System.Linq;
 using VoiceBridge.Most.Logging;
 using VoiceBridge.Most.VoiceModel;
 
-namespace VoiceBridge.Most
+namespace VoiceBridge.Most.Directives.Processors
 {
     public class CompositeDirectiveProcessor<TRequest, TResponse> : IDirectiveProcessor<TRequest, TResponse>
         where TRequest : IRequest

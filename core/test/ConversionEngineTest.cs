@@ -17,7 +17,7 @@ namespace VoiceBridge.Most.Test
         [Fact]
         public async Task HappyPath()
         {
-            var request = AlexaRequests.CreateBoilerplateRequest();
+            var request = AlexaRequests.Boilerplate();
             request.Content.RequestId = requestId;
             var virtualDirective = Util.QuickStub<IVirtualDirective>();
             var builder = new EngineBuilder<SkillRequest, SkillResponse>();

@@ -82,7 +82,7 @@ namespace VoiceBridge.Most.Alexa
                     continue;
                 }
                 
-                var resolutionValue = resolution.Values.First();
+                var resolutionValue = resolution.Values.First().Value;
                 value.ResolvedId = resolutionValue.Id ?? value.ResolvedId;
                 value.ResolvedValue = resolutionValue.Name ?? value.ResolvedValue;
             }

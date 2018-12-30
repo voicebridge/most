@@ -8,5 +8,9 @@ namespace VoiceBridge.Most.Directives
         {
             this.media = media;
         }
+
+        public bool ResponseExpected { get; set; }
+ 
+        public Media Media => media;
     }
 }

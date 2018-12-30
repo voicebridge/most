@@ -46,7 +46,7 @@ namespace VoiceBridge.Most.VoiceModel.Test.Alexa
         public void ContextAudioPlayer()
         {
             var player = GetTestRequest().Context.AudioPlayer;
-            Assert.Equal(AlexaConstants.AudioPlayerStatus.Playing,
+            Assert.Equal(AlexaConstants.AudioPlayer.Status.Playing,
                 player.Activity);
             Assert.Equal("audioplayer-token", player.Token);
             Assert.Equal(5, player.OffsetInMilliseconds);

@@ -203,13 +203,17 @@ namespace VoiceBridge.Most.Test.Alexa
                             {
                                 Code = resolutionCode
                             },
-                            Values = new List<SlotResolutionValue>
+                            Values = new List<SlotResolution>
                             {
-                                new SlotResolutionValue
+                                new SlotResolution
                                 {
-                                    Name = resolvedValue,
-                                    Id = resolvedId
+                                    Value = new SlotResolutionValue
+                                    {
+                                        Name = resolvedValue,
+                                        Id = resolvedId
+                                    }
                                 }
+                                
                             }
                             
                         }

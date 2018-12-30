@@ -13,7 +13,7 @@ namespace VoiceBridge.Most
     {
         private readonly List<string> intentNames = new List<string>();
         private readonly List<Func<ConversationContext, bool>> conditions = new List<Func<ConversationContext, bool>>();
-        private Func<IVirtualDirective> actionToPerform;
+        private Func<ConversationContext, IVirtualDirective> actionToPerform;
         private RequestType typeOfRequestToMatch = RequestType.Intent;
 
         /// <summary>
@@ -68,6 +68,26 @@ namespace VoiceBridge.Most
             this.conditions.Add(condition);
             return this;
         }
+        
+        /// <summary>
+        /// True when a parameter is missing
+        /// </summary>
+        /// <param name="parameterName">parameter name</param>
+        /// <returns>Itself</returns>
+        public IntentConfiguration WhenParameterIsMissing(string parameterName)
+        {
+            return When(context => !context.RequestModel.ParameterHasValue(parameterName));
+        }
+        
+        /// <summary>
+        /// True when a parameter has a value
+        /// </summary>
+        /// <param name="parameterName">parameter name</param>
+        /// <returns>Itself</returns>
+        public IntentConfiguration WhenParameterIsSupplied(string parameterName)
+        {
+            return When(context => context.RequestModel.ParameterHasValue(parameterName));
+        }
 
         /// <summary>
         /// Ask user for input
@@ -91,7 +111,7 @@ namespace VoiceBridge.Most
         /// <returns>Itself</returns>
         public IntentConfiguration AskFor(string parameterName, Prompt prompt, string expectedIntentName = null)
         {
-            this.Do(() => new AskForValueDirective
+            this.Do(context => new AskForValueDirective
             {
                 ParameterName = parameterName,
                 Prompt = prompt,
@@ -110,20 +130,30 @@ namespace VoiceBridge.Most
         {
             return this.Say(promptText.AsPrompt(), keepSessionOpen);
         }
-
-        /// <summary>
-        /// Tell the user
-        /// </summary>
-        /// <param name="prompt">Prompt to send back</param>
-        /// <param name="keepSessionOpen">False by default, if true, will not end session</param>
-        /// <returns>Itself</returns>
+        
         public IntentConfiguration Say(Prompt prompt, bool keepSessionOpen = false)
         {
-            this.Do(() => new SayDirective
+            this.Do(context => new SayDirective
             {
                 Prompt = prompt,
                 KeepSessionOpen = keepSessionOpen
             });
+            return this;
+        }
+        
+        /// <summary>
+        /// Play audio
+        /// </summary>
+        /// <param name="media">Audio to play</param>
+        /// <param name="keepSessionOpenAfterPlayEnds">After the media play is complete, keep session open for further interactions</param>
+        /// <returns></returns>
+        public IntentConfiguration PlayAudio(Media media, bool keepSessionOpenAfterPlayEnds = false)
+        {
+            this.Do(context => new PlayMediaDirective(media)
+            {
+                ResponseExpected = keepSessionOpenAfterPlayEnds
+            });
+            
             return this;
         }
 
@@ -132,7 +162,7 @@ namespace VoiceBridge.Most
         /// </summary>
         /// <param name="func">Function to execute (must return a virtual directive)</param>
         /// <returns>Itself</returns>
-        public IntentConfiguration Do(Func<IVirtualDirective> func)
+        public IntentConfiguration Do(Func<ConversationContext, IVirtualDirective> func)
         {
             this.actionToPerform = func;
             return this;
@@ -180,7 +210,7 @@ namespace VoiceBridge.Most
                 
                 if (this.actionToPerform != null)
                 {
-                    context.OutputDirectives.Add(this.actionToPerform());
+                    context.OutputDirectives.Add(this.actionToPerform(context));
                 }
             });
         }

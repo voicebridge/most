@@ -8,7 +8,7 @@ namespace VoiceBridge.Most.Test.TestData
         public static SkillResponse Boilerplate()
         {
             var factory = new AlexaResponseFactory();
-            return factory.Create(null);
+            return factory.Create(new ConversationContext());
         }
     }
 }

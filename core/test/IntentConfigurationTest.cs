@@ -151,7 +151,7 @@ namespace VoiceBridge.Most.Test
         public async Task Do()
         {
             var dir = Util.QuickStub<IVirtualDirective>();
-            var directive = await ExecuteHandle<IVirtualDirective>(intent => { intent.Do(() => dir); });
+            var directive = await ExecuteHandle<IVirtualDirective>(intent => { intent.Do(c => dir); });
             Assert.Same(dir, directive);
         }
         
@@ -163,7 +163,7 @@ namespace VoiceBridge.Most.Test
             {
                 intent
                     .Say("I should not be executed!")
-                    .Do(() => dir);
+                    .Do(context => dir);
             });
             
             Assert.Same(dir, directive);

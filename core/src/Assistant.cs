@@ -8,6 +8,7 @@ using VoiceBridge.Most.Google;
 using VoiceBridge.Most.Logging;
 using VoiceBridge.Most.VoiceModel;
 using VoiceBridge.Most.VoiceModel.Alexa;
+using VoiceBridge.Most.VoiceModel.Alexa.Directives;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
@@ -96,6 +97,7 @@ namespace VoiceBridge.Most
         {
             builder.AddDirectiveProcessor((IDirectiveProcessor<TRequest, TResponse>)new AskForValueProcessor());
             builder.AddDirectiveProcessor((IDirectiveProcessor<TRequest, TResponse>)new SayProcessor());
+            builder.AddDirectiveProcessor((IDirectiveProcessor<TRequest, TResponse>)new PlayMediaProcessor());
         }
 
         private void RegisterIntents<TRequest, TResponse>(EngineBuilder<TRequest, TResponse> engine) 
