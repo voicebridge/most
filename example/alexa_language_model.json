@@ -1,0 +1,314 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "hockey",
+      "intents": [
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "GetScoreIntent",
+          "slots": [
+            {
+              "name": "team_name",
+              "type": "NHLTeam"
+            }
+          ],
+          "samples": [
+            "What's the latest",
+            "Tell me the latest scores",
+            "{team_name} scores",
+            "latest score score for {team_name}",
+            "What is the latest score"
+          ]
+        },
+        {
+          "name": "TeamNameIntent",
+          "slots": [
+            {
+              "name": "city_name",
+              "type": "NHLCity"
+            }
+          ],
+          "samples": [
+            "team name",
+            "I need the team name",
+            "I need a team name",
+            "tell me the name of {city_name} team",
+            "what's {city_name} team called",
+            "what's the name of {city_name} team",
+            "what team is in {city_name}"
+          ]
+        },
+        {
+          "name": "AMAZON.PauseIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ResumeIntent",
+          "samples": []
+        },
+        {
+          "name": "SoundIntent",
+          "slots": [],
+          "samples": [
+            "what sound is played when the sharks score",
+            "what sound is played when the san jose sharks score"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "name": "NHLTeam",
+          "values": [
+            {
+              "id": "azc",
+              "name": {
+                "value": "coyotes",
+                "synonyms": [
+                  "glendale coyotes",
+                  "phoenix coyotes",
+                  "arizona coyotes",
+                  "phoenix",
+                  "glendale",
+                  "arizona"
+                ]
+              }
+            },
+            {
+              "id": "cyf",
+              "name": {
+                "value": "flames",
+                "synonyms": [
+                  "clagary flames",
+                  "calgary"
+                ]
+              }
+            },
+            {
+              "id": "wgj",
+              "name": {
+                "value": "jets",
+                "synonyms": [
+                  "winnipeg jets",
+                  "winnipeg"
+                ]
+              }
+            },
+            {
+              "id": "edo",
+              "name": {
+                "value": "oilers",
+                "synonyms": [
+                  "edmonton oilers",
+                  "edmonton"
+                ]
+              }
+            },
+            {
+              "id": "and",
+              "name": {
+                "value": "ducks",
+                "synonyms": [
+                  "anaheim ducks",
+                  "anaheim"
+                ]
+              }
+            },
+            {
+              "id": "lak",
+              "name": {
+                "value": "kings",
+                "synonyms": [
+                  "la",
+                  "los angeles",
+                  "los angeles kings",
+                  "la kings"
+                ]
+              }
+            },
+            {
+              "id": "sjs",
+              "name": {
+                "value": "sharks",
+                "synonyms": [
+                  "san jose sharks",
+                  "san jose"
+                ]
+              }
+            },
+            {
+              "id": "vnc",
+              "name": {
+                "value": "canucks",
+                "synonyms": [
+                  "vancouver canucks",
+                  "vancouver"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "NHLCity",
+          "values": [
+            {
+              "id": "yeg",
+              "name": {
+                "value": "edmonton",
+                "synonyms": [
+                  "edmonton alberta"
+                ]
+              }
+            },
+            {
+              "id": "yvr",
+              "name": {
+                "value": "vancouver",
+                "synonyms": [
+                  "british columbia",
+                  "Vancouver British Columbia"
+                ]
+              }
+            },
+            {
+              "id": "lax",
+              "name": {
+                "value": "los angeles",
+                "synonyms": [
+                  "los angeles california",
+                  "l.a.",
+                  "la"
+                ]
+              }
+            },
+            {
+              "id": "ywg",
+              "name": {
+                "value": "winnipeg",
+                "synonyms": [
+                  "manitoba",
+                  "winnepeg manitoba"
+                ]
+              }
+            },
+            {
+              "id": "phx",
+              "name": {
+                "value": "glendale",
+                "synonyms": [
+                  "phoenix arizona",
+                  "phoenix",
+                  "glendale arizona",
+                  "arizona"
+                ]
+              }
+            },
+            {
+              "id": "sna",
+              "name": {
+                "value": "anaheim",
+                "synonyms": [
+                  "anaheim california"
+                ]
+              }
+            },
+            {
+              "id": "sjc",
+              "name": {
+                "value": "san jose",
+                "synonyms": [
+                  "san francisco bay area",
+                  "bay area",
+                  "san jose california"
+                ]
+              }
+            },
+            {
+              "id": "yyc",
+              "name": {
+                "value": "calgary",
+                "synonyms": [
+                  "calgary alberta"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "GetScoreIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "team_name",
+              "type": "NHLTeam",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "dummy"
+              }
+            }
+          ]
+        },
+        {
+          "name": "TeamNameIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "city_name",
+              "type": "NHLCity",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.819250167132.901381666086"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "prompts": [
+      {
+        "id": "dummy",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "This is a dummy prompt"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.819250167132.901381666086",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Dummy_Prompt"
+          }
+        ]
+      }
+    ]
+  }
+}

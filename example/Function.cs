@@ -1,30 +1,32 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Amazon.Lambda.Core;
 using Newtonsoft.Json;
-using SampleSkill;
 using VoiceBridge.Most;
 using VoiceBridge.Most.Directives;
-using VoiceBridge.Most.Logging;
 using VoiceBridge.Most.VoiceModel;
 using VoiceBridge.Most.VoiceModel.Alexa;
-using VoiceBridge.Most.VoiceModel.GoogleAssistant;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
 
-namespace SampleSkill
+namespace Sample
 {  
     public class Function
     {
+        private static class IntentNames
+        {
+            public const string Score = "GetScoreIntent";
+            public const string TeamName = "TeamNameIntent";
+            public const string AudioSampleIntent = "SoundIntent";
+        }
+        
         private static class ParamNames
         {
             public const string Team = "team_name";
+            public const string City = "city_name";
         }
         
         public async Task<SkillResponse> FunctionHandler(SkillRequest input, ILambdaContext context)
@@ -72,31 +74,84 @@ namespace SampleSkill
         private Assistant GetAssistant()
         {
             var assistant = new Assistant();
-            assistant
-                .OnIntents("ScoreIntent", "HockeyIntent")
-                .When(x => x.RequestModel.GetParameterValue(ParamNames.Team) == "sj")
-                .Say("Sharks beat the wild! Today they will play the jets");
-
-            assistant
-                .OnIntents("ScoreIntent", "HockeyIntent", "actions.intent.Text")
-                .When(x => x.RequestModel.GetParameterValue(ParamNames.Team) == "vn")
-                .Say("Not sure about vancouver");
-
-            assistant
-                .OnIntent("LatestHockeyScoresIntent")
-                .Do(CreatePlayMediaDirective);
-
-            assistant
-                .OnAnyIntent()
-                .When(x => !x.RequestModel.ParameterHasValue(ParamNames.Team))
-                .AskFor(ParamNames.Team, "What team would you like?");
-
+            ConfigureScoreIntent(assistant);
+            ConfigureSoundIntent(assistant);
+            ConfigureWelcomeMessage(assistant);
+            ConfigureTeamNameIntent(assistant);
             return assistant;
         }
 
-        private IVirtualDirective CreatePlayMediaDirective()
+        private static Assistant ConfigureSoundIntent(Assistant assistant)
         {
-            return null;
+            var media = new Media
+            {
+                Author = "San Jose Sharks",
+                LargeImageUrl = new Uri("https://s3.amazonaws.com/voicebridge-assets/sharks_logo.png"),
+                SmallImageUrl = new Uri("https://s3.amazonaws.com/voicebridge-assets/sharks_logo.png"),
+                StreamUrl = new Uri("https://s3.amazonaws.com/voicebridge-assets/sample_file.mp3"),
+                Title = "San Jose Goal Score Horn",
+                Subtitle = "This is a sample audio"
+            };
+
+            assistant
+                .OnIntent(IntentNames.AudioSampleIntent)
+                .PlayAudio(media);
+            
+            return assistant;
+        }
+
+        private static Assistant ConfigureWelcomeMessage(Assistant assistant)
+        {
+            assistant
+                .OnLaunch()
+                .Say("Hello! My name is Fakey, and I will give you fake scores for the NHL's pacific division", keepSessionOpen: true);
+            return assistant;      
+        }
+        
+        private static Assistant ConfigureTeamNameIntent(Assistant assistant)
+        {
+            assistant
+                .OnIntent(IntentNames.TeamName)
+                .WhenParameterIsSupplied(ParamNames.City)
+                .Do(context =>
+                {
+                    var cityId = context.RequestModel.GetParameterValue(ParamNames.City);
+                    var team = Teams.GetTeamByCity(cityId);
+                    if (team != null)
+                    {
+                        return Result.Say($"The name of the team is {team.Name}");
+                    }
+
+                    return Result.Say("I should know this but sadly I don't!");
+                });
+
+            assistant
+                .OnIntent(IntentNames.TeamName)
+                .WhenParameterIsMissing(ParamNames.City)
+                .AskFor(ParamNames.City, "What city would you like?");
+
+            return assistant;
+        }
+        
+        private static Assistant ConfigureScoreIntent(Assistant assistant)
+        {
+            assistant
+                .OnIntent(IntentNames.Score)
+                .WhenParameterIsSupplied(ParamNames.Team)
+                .Do(context =>
+                {
+                    var targetTeamId = context.RequestModel.GetParameterValue(ParamNames.Team);
+                    var team = Teams.GetTeam(targetTeamId);
+                    var fakeScore = Teams.GenerateAFakeScore(team);
+                    return Result.Say(fakeScore);
+                });
+
+            assistant
+                .OnIntent(IntentNames.Score)
+                .WhenParameterIsMissing(ParamNames.Team)
+                .Do(context => Result.Ask("What team would you like?", ParamNames.Team));
+
+            return assistant;
         }
 
         private static void Log<TModel>(TModel input)

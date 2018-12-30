@@ -8,7 +8,7 @@ namespace VoiceBridge.Most.Test.TestData
     {
         public static SkillRequest Weather(string city)
         {
-            var request = CreateBoilerplateRequest();
+            var request = Boilerplate();
             request.Content.Intent.Name = TestIntents.Weather;
             request.Content.Intent.Slots["city"] = new Slot
             {
@@ -18,7 +18,7 @@ namespace VoiceBridge.Most.Test.TestData
             return request;
         }
 
-        public static SkillRequest CreateBoilerplateRequest()
+        public static SkillRequest Boilerplate()
         {
             var user = CreateUser();
             var app = CreateAppInfo();

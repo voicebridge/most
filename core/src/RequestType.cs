@@ -25,6 +25,11 @@ namespace VoiceBridge.Most
         /// <summary>
         /// Can Fulfill Query. This is only used by Alexa
         /// </summary>
-        FulfillmentQuery
+        FulfillmentQuery,
+        
+        /// <summary>
+        /// Request is a notification of state change when playing media on device
+        /// </summary>
+        AudioPlayerActivity
     }
 }

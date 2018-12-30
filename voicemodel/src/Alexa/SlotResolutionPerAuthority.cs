@@ -13,6 +13,6 @@ namespace VoiceBridge.Most.VoiceModel.Alexa
         public SlotResolutionStatus Status { get; set; }
         
         [JsonProperty("values")]
-        public List<SlotResolutionValue> Values { get; set; }
+        public List<SlotResolution> Values { get; set; }
     }
 }
