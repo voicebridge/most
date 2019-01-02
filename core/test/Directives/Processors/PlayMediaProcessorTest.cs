@@ -71,7 +71,7 @@ namespace VoiceBridge.Most.Test.Directives.Processors
         private Media ExecuteProcessor(Action<IVirtualDirective, PlayMediaProcessor> action)
         {
             var media = CreateTestMedia();
-            var virtualDirective = new PlayMediaDirective(media);
+            var virtualDirective = new PlayMediaDirective(media, null);
             var processor = new PlayMediaProcessor();
             action(virtualDirective, processor);
             return media;

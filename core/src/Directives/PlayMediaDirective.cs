@@ -2,15 +2,16 @@ namespace VoiceBridge.Most.Directives
 {
     public class PlayMediaDirective : IVirtualDirective
     {
-        private readonly Media media;
-
-        public PlayMediaDirective(Media media)
+        public PlayMediaDirective(Media media, Prompt prompt)
         {
-            this.media = media;
+            this.Prompt = prompt;
+            this.Media = media;
         }
 
-        public bool ResponseExpected { get; set; }
- 
-        public Media Media => media;
+        public bool KeepSessionOpen { get; set; }
+        
+        public Prompt Prompt { get; }
+
+        public Media Media { get; }
     }
 }

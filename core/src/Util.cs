@@ -6,16 +6,6 @@ namespace VoiceBridge.Most
 {
     internal static class Util
     {
-        public static Prompt AsPrompt(this string s)
-        {
-            return new Prompt
-            {
-                Id = "transient-prompt",
-                Content = s,
-                IsSSML = false
-            };
-        }
-
         public static void AssertNotNull<T>(T obj, string name)
         {
             if (obj == null)

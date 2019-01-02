@@ -41,7 +41,7 @@ namespace VoiceBridge.Most.Directives.Processors
                 }
             };
 
-            response.Payload.Body.ExpectUserResponse = directive.ResponseExpected;
+            response.Payload.Body.ExpectUserResponse = directive.KeepSessionOpen;
             response.Payload.Body.RichResponse.Items.Add(new SimpleResponseItem
             {
                 Value = new SimpleResponse

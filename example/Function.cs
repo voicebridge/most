@@ -95,7 +95,7 @@ namespace Sample
 
             assistant
                 .OnIntent(IntentNames.AudioSampleIntent)
-                .PlayAudio(media);
+                .PlayAudio(media, null);
             
             return assistant;
         }
@@ -104,7 +104,9 @@ namespace Sample
         {
             assistant
                 .OnLaunch()
-                .Say("Hello! My name is Fakey, and I will give you fake scores for the NHL's pacific division", keepSessionOpen: true);
+                .Say(
+                    "Hello! My name is Fakey, and I will give you fake scores for the NHL's pacific division"
+                        .AsPrompt(), keepSessionOpen: true);
             return assistant;      
         }
         
@@ -119,16 +121,16 @@ namespace Sample
                     var team = Teams.GetTeamByCity(cityId);
                     if (team != null)
                     {
-                        return Result.Say($"The name of the team is {team.Name}");
+                        return Result.Say($"The name of the team is {team.Name}".AsPrompt());
                     }
 
-                    return Result.Say("I should know this but sadly I don't!");
+                    return Result.Say("I should know this but sadly I don't!".AsPrompt());
                 });
 
             assistant
                 .OnIntent(IntentNames.TeamName)
                 .WhenParameterIsMissing(ParamNames.City)
-                .AskFor(ParamNames.City, "What city would you like?");
+                .AskFor(ParamNames.City, "What city would you like?".AsPrompt());
 
             return assistant;
         }
@@ -143,13 +145,13 @@ namespace Sample
                     var targetTeamId = context.RequestModel.GetParameterValue(ParamNames.Team);
                     var team = Teams.GetTeam(targetTeamId);
                     var fakeScore = Teams.GenerateAFakeScore(team);
-                    return Result.Say(fakeScore);
+                    return Result.Say(fakeScore.AsPrompt());
                 });
 
             assistant
                 .OnIntent(IntentNames.Score)
                 .WhenParameterIsMissing(ParamNames.Team)
-                .Do(context => Result.Ask("What team would you like?", ParamNames.Team));
+                .Do(context => Result.AskFor(ParamNames.Team, "What team would you like?".AsPrompt()));
 
             return assistant;
         }

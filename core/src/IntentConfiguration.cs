@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using VoiceBridge.Most.Directives;
 
 namespace VoiceBridge.Most
 {
@@ -14,7 +13,7 @@ namespace VoiceBridge.Most
         private readonly List<string> intentNames = new List<string>();
         private readonly List<Func<ConversationContext, bool>> conditions = new List<Func<ConversationContext, bool>>();
         private Func<ConversationContext, IVirtualDirective> actionToPerform;
-        private RequestType typeOfRequestToMatch = RequestType.Intent;
+        private readonly RequestType typeOfRequestToMatch = RequestType.Intent;
 
         /// <summary>
         /// Initialize with a single intent match
@@ -88,75 +87,7 @@ namespace VoiceBridge.Most
         {
             return When(context => context.RequestModel.ParameterHasValue(parameterName));
         }
-
-        /// <summary>
-        /// Ask user for input
-        /// </summary>
-        /// <param name="parameterName">Parameter name (or slot name) to populate</param>
-        /// <param name="promptText">Prompt plain text</param>
-        /// <param name="expectedIntentName">Expected intent (optional)</param>
-        /// <returns>Itself</returns>
-        public IntentConfiguration AskFor(string parameterName, string promptText, string expectedIntentName = null)
-        {
-            var prompt = promptText.AsPrompt();
-            return this.AskFor(parameterName, prompt, expectedIntentName);
-        }
-
-        /// <summary>
-        /// Ask for user for input
-        /// </summary>
-        /// <param name="parameterName">Parameter name (or slot name) to populate</param>
-        /// <param name="prompt">Prompt</param>
-        /// <param name="expectedIntentName">Expected intent (optional)</param>
-        /// <returns>Itself</returns>
-        public IntentConfiguration AskFor(string parameterName, Prompt prompt, string expectedIntentName = null)
-        {
-            this.Do(context => new AskForValueDirective
-            {
-                ParameterName = parameterName,
-                Prompt = prompt,
-                ExpectedIntentName = expectedIntentName
-            });
-            return this;
-        }
-
-        /// <summary>
-        /// Tell the user
-        /// </summary>
-        /// <param name="promptText">Plain text to tell the user</param>
-        /// <param name="keepSessionOpen">False by default, if true, will not end session</param>
-        /// <returns>Itself</returns>
-        public IntentConfiguration Say(string promptText, bool keepSessionOpen = false)
-        {
-            return this.Say(promptText.AsPrompt(), keepSessionOpen);
-        }
         
-        public IntentConfiguration Say(Prompt prompt, bool keepSessionOpen = false)
-        {
-            this.Do(context => new SayDirective
-            {
-                Prompt = prompt,
-                KeepSessionOpen = keepSessionOpen
-            });
-            return this;
-        }
-        
-        /// <summary>
-        /// Play audio
-        /// </summary>
-        /// <param name="media">Audio to play</param>
-        /// <param name="keepSessionOpenAfterPlayEnds">After the media play is complete, keep session open for further interactions</param>
-        /// <returns></returns>
-        public IntentConfiguration PlayAudio(Media media, bool keepSessionOpenAfterPlayEnds = false)
-        {
-            this.Do(context => new PlayMediaDirective(media)
-            {
-                ResponseExpected = keepSessionOpenAfterPlayEnds
-            });
-            
-            return this;
-        }
-
         /// <summary>
         /// Perform an action if all conditions match
         /// </summary>

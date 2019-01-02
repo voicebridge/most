@@ -35,7 +35,7 @@ namespace VoiceBridge.Most.Test
             assistant
                 .OnIntent(TestIntents.Weather)
                 .When(x => x.RequestModel.ParameterHasValue("city"))
-                .Say(promptText);
+                .Say(promptText.AsPrompt());
             var engine = assistant.AlexaEngineBuilder().Build();
             
             var response = await engine.Evaluate(request);
@@ -88,14 +88,16 @@ namespace VoiceBridge.Most.Test
 
             assistant
                 .OnIntent(IntentNames.AudioSampleIntent)
-                .PlayAudio(media);
+                .PlayAudio(media, null);
         }
 
         private static void ConfigureWelcomeMessage(Assistant assistant)
         {
             assistant
                 .OnLaunch()
-                .Say("Hello! My name is Fakey, and I will give you fake scores for the NHL's pacific division", keepSessionOpen: true);     
+                .Say(
+                    "Hello! My name is Fakey, and I will give you fake scores for the NHL's pacific division"
+                        .AsPrompt(), keepSessionOpen: true);
         }
         
         private static Assistant ConfigureTeamNameIntent(Assistant assistant)
@@ -103,12 +105,12 @@ namespace VoiceBridge.Most.Test
             assistant
                 .OnIntent(IntentNames.TeamName)
                 .WhenParameterIsSupplied(ParamNames.City)
-                .Do(context => Result.Say("I should know this but sadly I don't!"));
+                .Do(context => Result.Say("I should know this but sadly I don't!".AsPrompt()));
 
             assistant
                 .OnIntent(IntentNames.TeamName)
                 .WhenParameterIsMissing(ParamNames.City)
-                .AskFor(ParamNames.City, "What city would you like?");
+                .AskFor(ParamNames.City, "What city would you like?".AsPrompt());
 
             return assistant;
         }
@@ -118,12 +120,12 @@ namespace VoiceBridge.Most.Test
             assistant
                 .OnIntent(IntentNames.Score)
                 .WhenParameterIsSupplied(ParamNames.Team)
-                .Do(context => Result.Say("2 and 2!"));
+                .Do(context => Result.Say("2 and 2!".AsPrompt()));
 
             assistant
                 .OnIntent(IntentNames.Score)
                 .WhenParameterIsMissing(ParamNames.Team)
-                .Do(context => Result.Ask("What team would you like?", ParamNames.Team));
+                .Do(context => Result.AskFor(ParamNames.Team, "What team would you like?".AsPrompt()));
 
             return assistant;
         }

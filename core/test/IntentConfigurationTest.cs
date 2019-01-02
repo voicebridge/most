@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using VoiceBridge.Most.Directives;
+using VoiceBridge.Most.VoiceModel.Alexa.Directives;
 using Xunit;
 
 namespace VoiceBridge.Most.Test
@@ -91,67 +92,10 @@ namespace VoiceBridge.Most.Test
         }
 
         [Fact]
-        public async Task HandleSay()
-        {
-            var directive = await ExecuteHandle<SayDirective>(i => i.Say("hello"));
-            Assert.Equal("hello", directive.Prompt.Content);
-            Assert.False(directive.KeepSessionOpen);
-            Assert.False(directive.Prompt.IsSSML);
-        }
-
-        [Fact]
-        public async Task HandleSayAsQuestion()
-        {
-            var directive = await ExecuteHandle<SayDirective>(i => i.Say("hello", true));
-            Assert.Equal("hello", directive.Prompt.Content);
-            Assert.True(directive.KeepSessionOpen);
-            Assert.False(directive.Prompt.IsSSML);
-        }
-
-        [Fact]
-        public async Task HandleSayPrompt()
-        {
-            var prompt = new Prompt();
-            var directive = await ExecuteHandle<SayDirective>(i => i.Say(prompt));
-            Assert.False(directive.KeepSessionOpen);
-            Assert.Same(prompt, directive.Prompt);
-        }
-
-        [Fact]
-        public async Task HandleSayPromptAsQuestion()
-        {
-            var prompt = new Prompt();
-            var directive = await ExecuteHandle<SayDirective>(i => i.Say(prompt, true));
-            Assert.True(directive.KeepSessionOpen);
-            Assert.Same(prompt, directive.Prompt);
-        }
-
-        [Fact]
-        public async Task HandleAsk()
-        {
-            const string parameterName = "a";
-            const string text = "b";
-            var directive = await ExecuteHandle<AskForValueDirective>(i => i.AskFor(parameterName, text));
-            Assert.Equal(directive.Prompt.Content, text);
-            Assert.False(directive.Prompt.IsSSML);
-            Assert.Equal(parameterName, directive.ParameterName);
-        }
-        
-        [Fact]
-        public async Task HandleAskWithPrompt()
-        {
-            const string parameterName = "a";
-            var prompt = new Prompt();
-            var directive = await ExecuteHandle<AskForValueDirective>(i => i.AskFor(parameterName, prompt));
-            Assert.Same(prompt, directive.Prompt);
-            Assert.Equal(parameterName, directive.ParameterName);
-        }
-
-        [Fact]
         public async Task Do()
         {
             var dir = Util.QuickStub<IVirtualDirective>();
-            var directive = await ExecuteHandle<IVirtualDirective>(intent => { intent.Do(c => dir); });
+            var directive = await DynamicHandlerHelper.ExecuteHandle<IVirtualDirective>(intent => { intent.Do(c => dir); });
             Assert.Same(dir, directive);
         }
         
@@ -159,31 +103,14 @@ namespace VoiceBridge.Most.Test
         public async Task DoIgnoresOtherDirectives()
         {
             var dir = Util.QuickStub<IVirtualDirective>();
-            var directive = await ExecuteHandle<IVirtualDirective>(intent =>
+            var directive = await DynamicHandlerHelper.ExecuteHandle<IVirtualDirective>(intent =>
             {
                 intent
-                    .Say("I should not be executed!")
+                    .Say("I should not be executed!".AsPrompt())
                     .Do(context => dir);
             });
             
             Assert.Same(dir, directive);
-        }
-
-        private static async Task<TDirective> ExecuteHandle<TDirective>(Action<IntentConfiguration> action)
-            where TDirective : IVirtualDirective
-        {
-            var context = new ConversationContext
-            {
-                RequestModel = new TestRequestModel
-                {
-                    IntentName = "one"
-                },
-                RequestType = RequestType.Intent
-            };
-            var intent =new IntentConfiguration(context.RequestModel.IntentName);
-            action(intent);
-            await intent.Handle(context);
-            return (TDirective)context.OutputDirectives.Single();
         }
     }
 }
