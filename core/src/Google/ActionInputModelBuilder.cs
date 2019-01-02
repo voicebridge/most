@@ -24,7 +24,7 @@ namespace VoiceBridge.Most.Google
         {
             context.RequestType = RequestType.Intent;
             var intents = GetIntents(request);
-            if (intents.Contains("actions.intent.MAIN"))
+            if (IsWelcomeIntent(request))
             {
                 context.RequestType = RequestType.Launch;
             }
@@ -33,6 +33,13 @@ namespace VoiceBridge.Most.Google
             {
                 context.RequestType = RequestType.UserInitiatedTermination;
             }
+        }
+
+        private bool IsWelcomeIntent(AppRequest request)
+        {
+            return string.Compare(request.Result?.Action, "input.welcome",
+                       StringComparison.InvariantCultureIgnoreCase) ==
+                   0;
         }
 
         private void ReadIntent(ConversationContext context, AppRequest request)

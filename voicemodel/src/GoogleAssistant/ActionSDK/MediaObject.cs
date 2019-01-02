@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 
 namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK
@@ -11,6 +12,6 @@ namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK
         public string Description { get; set; }
         
         [JsonProperty("contentUrl")]
-        public string ContentUrl { get; set; }
+        public Uri ContentUrl { get; set; }
     }
 }

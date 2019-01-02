@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK
@@ -8,6 +9,6 @@ namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK
         public string MediaType { get; set; }
         
         [JsonProperty("mediaObjects")]
-        public MediaObject[] MediaObjects { get; set; }
+        public List<MediaObject> MediaObjects { get; set; }
     }
 }

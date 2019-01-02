@@ -1,0 +1,94 @@
+{
+  "responseId": "8ba6a3e0-b84fa972f",
+  "session": "projects/sampleapp-8f8cf/agent/sessions/ABwppHFWLyJ3uRPLhY_p",
+  "queryResult": {
+    "fulfillmentText": null,
+    "fulfillmentMessages": [
+      {}
+    ],
+    "queryText": "play the sound",
+    "parameters": {},
+    "outputContext": null,
+    "intent": {
+      "name": "projects/sampleapp-8f8cf/agent/intents/8e2dsds",
+      "displayName": "SoundIntent"
+    },
+    "intentDetectionConfidence": 0.82,
+    "languageCode": "en-us",
+    "action": null
+  },
+  "originalDetectIntentRequest": {
+    "source": "google",
+    "version": "2",
+    "payload": {
+      "user": {
+        "userId": "dssds",
+        "idToken": null,
+        "accessToken": null,
+        "permissions": null,
+        "locale": "en-US",
+        "lastSeen": "2019-01-01T22:49:55Z",
+        "userStorage": null,
+        "profile": null,
+        "packageEntitlements": null
+      },
+      "device": null,
+      "surface": {
+        "capabilities": [
+          {
+            "name": "actions.capability.AUDIO_OUTPUT"
+          },
+          {
+            "name": "actions.capability.WEB_BROWSER"
+          },
+          {
+            "name": "actions.capability.MEDIA_RESPONSE_AUDIO"
+          },
+          {
+            "name": "actions.capability.SCREEN_OUTPUT"
+          }
+        ]
+      },
+      "conversation": {
+        "conversationId": "ssdss",
+        "type": "NEW",
+        "conversationToken": null
+      },
+      "isInSandbox": true,
+      "availableSurfaces": [
+        {
+          "capabilities": [
+            {
+              "name": "actions.capability.AUDIO_OUTPUT"
+            },
+            {
+              "name": "actions.capability.WEB_BROWSER"
+            },
+            {
+              "name": "actions.capability.SCREEN_OUTPUT"
+            }
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "rawInputs": [
+            {
+              "query": "ask Bridge sample to play the sound",
+              "inputType": "VOICE"
+            }
+          ],
+          "intent": "actions.intent.MAIN",
+          "arguments": [
+            {
+              "name": "trigger_query",
+              "rawText": "play the sound",
+              "textValue": "play the sound",
+              "status": null
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

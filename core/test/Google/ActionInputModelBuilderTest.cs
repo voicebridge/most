@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using VoiceBridge.Most.Google;
@@ -10,10 +11,22 @@ namespace VoiceBridge.Most.Test.Google
 {
     public class ActionInputModelBuilderTest
     {
+
+        [Fact]
+        public void ImplicitIntentRequest()
+        {
+            var appRequest = JsonConvert.DeserializeObject<AppRequest>(Files.GoogleImplicitRequestSample);
+            var context = new ConversationContext();
+            new ActionInputModelBuilder().Build(context, appRequest);
+            Assert.Equal(RequestType.Intent, context.RequestType);
+        }
+        
         [Fact]
         public void WelcomeIntent()
         {
             var appRequest = CreateRequestWithIntent("actions.intent.MAIN");
+            appRequest.Result.Action = "input.welcome";
+            appRequest.Result.Text = "GOOGLE_ASSISTANT_WELCOME";
             var context = new ConversationContext();
             new ActionInputModelBuilder().Build(context, appRequest);
             Assert.Equal(RequestType.Launch, context.RequestType);
@@ -81,6 +94,7 @@ namespace VoiceBridge.Most.Test.Google
                 RawInputs = new List<RawInput>(),
                 Arguments = new List<Argument>()
             };
+            request.Result.Intent.DisplayName = intentName;
             request.OriginalDetectIntentRequest.Content.Inputs.Add(input);
             return request;
         }

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using VoiceBridge.Most.VoiceModel.Alexa;
 using VoiceBridge.Most.VoiceModel.Alexa.Directives;
+using VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 
 namespace VoiceBridge.Most.Directives.Processors
@@ -17,7 +19,37 @@ namespace VoiceBridge.Most.Directives.Processors
 
         protected override void Process(PlayMediaDirective directive, AppRequest request, AppResponse response)
         {
-            throw new System.NotImplementedException();
+            var item = new MediaResponseItem
+            {
+                Value = new MediaResponse
+                {
+                    MediaType = GoogleAssistantConstants.MediaType.Audio,
+                    MediaObjects = new List<MediaObject>
+                    {
+                        new MediaObjectWithLargeImage
+                        {
+                            ContentUrl = directive.Media.StreamUrl,
+                            Description = directive.Media.Subtitle,
+                            Name = directive.Media.Title,
+                            Image = new Image
+                            {
+                                AccessibilityText = directive.Media.Title,
+                                Url = directive.Media.LargeImageUrl
+                            }
+                        }
+                    }
+                }
+            };
+
+            response.Payload.Body.ExpectUserResponse = directive.ResponseExpected;
+            response.Payload.Body.RichResponse.Items.Add(new SimpleResponseItem
+            {
+                Value = new SimpleResponse
+                {
+                    TextToSpeech = "Here is the audio"
+                }
+            });
+            response.Payload.Body.RichResponse.Items.Add(item);
         }
 
         private static PlayAudioDirective CreateAlexaPlayAudioDirective()

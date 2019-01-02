@@ -3,6 +3,9 @@ using VoiceBridge.Most.VoiceModel;
 
 namespace VoiceBridge.Most
 {
+    /// <summary>
+    /// Describes media object
+    /// </summary>
     public class Media
     {
         public Media()
@@ -10,18 +13,39 @@ namespace VoiceBridge.Most
             this.Token = Guid.NewGuid().ToString("N");
         }
         
+        /// <summary>
+        /// Media file Url (must be https)
+        /// </summary>
         public Uri StreamUrl { get; set; }
         
+        /// <summary>
+        /// Title
+        /// </summary>
         public string Title { get; set; }
         
+        /// <summary>
+        /// Subtitle
+        /// </summary>
         public string Subtitle { get; set; }
         
+        /// <summary>
+        /// Content Author
+        /// </summary>
         public string Author { get; set; }
         
+        /// <summary>
+        /// Album Art Url
+        /// </summary>
         public Uri LargeImageUrl { get; set; }
         
+        /// <summary>
+        /// Icon Album Art Url
+        /// </summary>
         public Uri SmallImageUrl { get; set; }
         
+        /// <summary>
+        /// Opaque Token to identify content
+        /// </summary>
         public string Token { get; set; }
     }
 }

@@ -2,9 +2,9 @@ using Newtonsoft.Json;
 
 namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK
 {
-    public class Icon : MediaObject
+    public class MediaObjectWithLargeImage : MediaObject
     {
-        [JsonProperty("icon")]
+        [JsonProperty("largeImage")]
         public Image Image { get; set; }
     }
 }

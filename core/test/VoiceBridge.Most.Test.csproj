@@ -19,6 +19,8 @@
     <ItemGroup>
       <None Remove="TestFiles\HockeyScoreIntentRequest.json" />
       <EmbeddedResource Include="TestFiles\HockeyScoreIntentRequest.json" />
+      <None Remove="TestFiles\GoogleImplicitRequestSample.json" />
+      <EmbeddedResource Include="TestFiles\GoogleImplicitRequestSample.json" />
     </ItemGroup>
 
 </Project>
