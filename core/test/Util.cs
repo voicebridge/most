@@ -29,19 +29,6 @@ namespace VoiceBridge.Most.Test
                 yield return m.Object;
             }
         }
-        
-        public static Mock<IResponseBuilder<SkillResponse>>CreateResponseBuilder(ConversationContext target)
-        {
-            return CreateResponseBuilder(target, new SkillResponse());
-        }
-
-        public static Mock<IResponseBuilder<SkillResponse>> CreateResponseBuilder(ConversationContext target, SkillResponse response)
-        {    
-            var m = new Mock<IResponseBuilder<SkillResponse>>();
-            m.Setup(x => x.CanHandle(target)).Returns(true);      
-            m.Setup(y => y.Build(target)).Returns(response);
-            return m;
-        }
 
         public static Mock<IDirectiveProcessor<SkillRequest, SkillResponse>> CreateDirectiveProcessor(
             SkillResponse response,
