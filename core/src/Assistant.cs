@@ -98,6 +98,7 @@ namespace VoiceBridge.Most
             builder.AddDirectiveProcessor((IDirectiveProcessor<TRequest, TResponse>)new AskForValueProcessor());
             builder.AddDirectiveProcessor((IDirectiveProcessor<TRequest, TResponse>)new SayProcessor());
             builder.AddDirectiveProcessor((IDirectiveProcessor<TRequest, TResponse>)new PlayMediaProcessor());
+            builder.AddDirectiveProcessor((IDirectiveProcessor<TRequest, TResponse>)new ImageProcessor());
         }
 
         private void RegisterIntents<TRequest, TResponse>(EngineBuilder<TRequest, TResponse> engine) 
