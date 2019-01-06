@@ -1,0 +1,41 @@
+{
+  "version": "1.0",
+  "session": null,
+  "context": {
+    "System": {
+      "user": {
+        "userId": "amzn1.ask.account.user-9090",
+        "accessToken": null,
+        "permissions": null
+      },
+      "device": {
+        "supportedInterfaces": {
+          "AudioPlayer": {}
+        },
+        "deviceId": "amzn1.ask.device.dvc32"
+      },
+      "application": {
+        "applicationID": "amzn1.ask.skill.id"
+      },
+      "apiEndpoint": "https://api.amazonalexa.com",
+      "apiAccessToken": "token.token.token-token-token-token",
+      "ViewPort": null
+    },
+    "AudioPlayer": {
+      "token": "ac27252224c74b1ebfabfcf852fdd47d",
+      "playerActivity": "FINISHED",
+      "offsetInMilliseconds": 8047
+    }
+  },
+  "request": {
+    "type": "AudioPlayer.PlaybackFinished",
+    "requestId": "amzn1.echo-api.request.7839373",
+    "timestamp": "2019-01-03T18:56:30Z",
+    "locale": "en-US",
+    "intent": null,
+    "updatedintent": null,
+    "reason": null,
+    "dialogState": null,
+    "error": null
+  }
+}

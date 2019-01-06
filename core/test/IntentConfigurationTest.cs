@@ -42,6 +42,15 @@ namespace VoiceBridge.Most.Test
         }
         
         [Fact]
+        public void CanHandleIntentMatchButWrongType()
+        {
+            var intent = new IntentConfiguration("one");
+            var model = new TestRequestModel {IntentName = "one"}.AsConversationContext();
+            model.RequestType = RequestType.Launch;
+            Assert.False(intent.CanHandle(model));       
+        }
+        
+        [Fact]
         public void CanHandleIntentOneConditionMatch()
         {
             var intent =

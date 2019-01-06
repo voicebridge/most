@@ -21,8 +21,12 @@ namespace VoiceBridge.Most.VoiceModel
         {
             var jObject = JObject.Load(reader);
             var target = CreateInstance(jObject);
+            if (target == null)
+            {
+                return null;
+            }
+            
             serializer.Populate(jObject.CreateReader(), target);
- 
             return target;
         }
 
@@ -49,7 +53,7 @@ namespace VoiceBridge.Most.VoiceModel
             {
                 return new TextOnlyArgument();
             }
-
+            
             return null;
         }
 

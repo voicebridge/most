@@ -28,8 +28,8 @@ namespace VoiceBridge.Most
         FulfillmentQuery,
         
         /// <summary>
-        /// Request is a notification of state change when playing media on device
+        /// This request type is not yet natively support by Most
         /// </summary>
-        AudioPlayerActivity
+        Other
     }
 }

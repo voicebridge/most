@@ -30,9 +30,9 @@ namespace VoiceBridge.Most.Google
 
         private void TransferSession(ConversationContext context, AppResponse response)
         {
-            if (context.SessionStore.Count > 0)
+            if (context.SessionValues.Count > 0)
             {
-                response.Payload.Body.UserStorage = JsonConvert.SerializeObject(context.SessionStore);
+                response.Payload.Body.UserStorage = JsonConvert.SerializeObject(context.SessionValues);
             }
         }
     }

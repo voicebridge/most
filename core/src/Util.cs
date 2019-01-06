@@ -23,5 +23,10 @@ namespace VoiceBridge.Most
         {
             return JsonConvert.SerializeObject(obj);
         }
+
+        public static bool StringOrdinalEquals(string a, string b)
+        {
+            return string.Compare(a, b, StringComparison.InvariantCultureIgnoreCase) == 0;
+        }
     }
 }

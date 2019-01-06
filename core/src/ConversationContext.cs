@@ -14,7 +14,7 @@ namespace VoiceBridge.Most
         {
             this.OutputDirectives = new List<IVirtualDirective>();
             this.RequestModel = new RequestModel();
-            this.SessionStore = new Dictionary<string, string>();
+            this.SessionValues = new Dictionary<string, string>();
         }
         
         /// <summary>
@@ -30,7 +30,7 @@ namespace VoiceBridge.Most
         /// <summary>
         /// Session variables (persisted across requests)
         /// </summary>
-        public Dictionary<string, string> SessionStore { get; }
+        public Dictionary<string, string> SessionValues { get; }
         
         /// <summary>
         /// Type of request

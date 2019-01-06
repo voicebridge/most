@@ -22,8 +22,8 @@ namespace VoiceBridge.Most.Test.Alexa
         public void SessionIsTransferred()
         {
             var context = new ConversationContext();
-            context.SessionStore["s1"] = "v1";
-            context.SessionStore["s2"] = "v2";
+            context.SessionValues["s1"] = "v1";
+            context.SessionValues["s2"] = "v2";
             var factory = new AlexaResponseFactory();
             var response = factory.Create(context);
             Assert.Equal("v1", response.SessionAttributes["s1"]);

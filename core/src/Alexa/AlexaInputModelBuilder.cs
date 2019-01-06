@@ -8,9 +8,30 @@ namespace VoiceBridge.Most.Alexa
         public void Build(ConversationContext context, SkillRequest request)
         {
             ReadRequestType(context, request);
+            ReadSession(context, request);
             ReadRequestMetadata(context, request);
             ReadSlots(context, request);
             ReadIntent(context, request);
+        }
+
+        private void ReadSession(ConversationContext context, SkillRequest request)
+        { 
+            if (request.Session == null)
+            {
+                return;
+            }
+         
+            context.RequestModel.SessionId = request.Session.SessionId;
+            
+            if (request.Session.Attributes == null)
+            {
+                return;
+            }
+            
+            foreach (var key in request.Session.Attributes.Keys)
+            {
+                context.SessionValues[key] = request.Session.Attributes[key];
+            }
         }
 
         private void ReadIntent(ConversationContext context, SkillRequest request)
@@ -55,6 +76,10 @@ namespace VoiceBridge.Most.Alexa
                 case AlexaConstants.RequestType.CanFulfillIntentRequest:
                     context.RequestType = RequestType.FulfillmentQuery;
                     break;
+                
+                default:
+                    context.RequestType = RequestType.Other;
+                    break;
             }
         }
 
@@ -91,8 +116,7 @@ namespace VoiceBridge.Most.Alexa
         private static void ReadRequestMetadata(ConversationContext context, SkillRequest request)
         {
             context.RequestModel.RequestId = request.Content.RequestId;
-            context.RequestModel.SessionId = request.Session.SessionId;
-            context.RequestModel.UserId = request.Session.User.UserId;
+            context.RequestModel.UserId = request.Context.System.User.UserId;
         }
     }
 }

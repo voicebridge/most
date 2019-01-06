@@ -13,6 +13,27 @@ namespace VoiceBridge.Most.Test.Alexa
         private const string SessionId = "session-id";
         private const string UserId = "user-id";
         private const string IntentName = "some-intent";
+
+        [Fact]
+        public void SessionAttributesAreRead()
+        {
+            var context = BuildModel(preInvokeAction: request =>
+            {
+                request.Session.Attributes["p1"] = "v1";
+                request.Session.Attributes["p2"] = "v2";
+            });
+            
+            Assert.Equal("v1", context.SessionValues["p1"]);
+            Assert.Equal("v2", context.SessionValues["p2"]);
+        }
+
+        [Fact]
+        public void PlaybackFinishedRequest()
+        {
+            var request = Files.AlexaPlaybackFinished.FromJson<SkillRequest>();
+            var context = BuildModel(request);
+            Assert.Equal(RequestType.Other, context.RequestType);
+        }
         
         [Fact]
         public void RequestIdIsSet()
@@ -230,7 +251,8 @@ namespace VoiceBridge.Most.Test.Alexa
         }
 
         private static ConversationContext BuildModel(
-            SkillRequest request = null)
+            SkillRequest request = null,
+            Action<SkillRequest> preInvokeAction = null)
         {
             if (request == null)
             {
@@ -239,6 +261,7 @@ namespace VoiceBridge.Most.Test.Alexa
             
             var context = new ConversationContext();
             var builder = new AlexaInputModelBuilder();
+            preInvokeAction?.Invoke(request);
             builder.Build(context, request);
             return context;
         }
@@ -247,6 +270,16 @@ namespace VoiceBridge.Most.Test.Alexa
         {
             var request = new SkillRequest
             {
+                Context = new RequestContext
+                {
+                  System = new AlexaInfo
+                  {
+                      User = new UserInfo
+                      {
+                          UserId = UserId
+                      }
+                  }  
+                },
                 Content = new RequestContent
                 {
                     Type = AlexaConstants.RequestType.IntentRequest,
@@ -260,7 +293,8 @@ namespace VoiceBridge.Most.Test.Alexa
                 Session = new Session
                 {
                     User = new UserInfo {UserId = UserId},
-                    SessionId = SessionId
+                    SessionId = SessionId,
+                    Attributes = new Dictionary<string, string>()
                 }
             };
 

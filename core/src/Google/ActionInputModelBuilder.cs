@@ -22,24 +22,45 @@ namespace VoiceBridge.Most.Google
 
         private void ReadRequestType(ConversationContext context, AppRequest request)
         {
-            context.RequestType = RequestType.Intent;
-            var intents = GetIntents(request);
+            context.RequestType = RequestType.Other;
+            
             if (IsWelcomeIntent(request))
             {
                 context.RequestType = RequestType.Launch;
+                return;
             }
 
-            if (intents.Contains("actions.intent.CANCEL"))
+            if (IsUserInitiatedTermination(request))
             {
                 context.RequestType = RequestType.UserInitiatedTermination;
+                return;
             }
+
+            if (!this.IsGoogleActionEvent(request) && !string.IsNullOrWhiteSpace(request.Result.Intent.DisplayName))
+            {
+                context.RequestType = RequestType.Intent;
+            }
+        }
+
+        private bool IsGoogleActionEvent(AppRequest request)
+        {
+            if (request.Result.Text == null)
+            {
+                return false;
+            }
+            
+            return request.Result.Text.StartsWith("actions_intent_", StringComparison.InvariantCulture);
+        }
+
+        private bool IsUserInitiatedTermination(AppRequest request)
+        {
+            return Util.StringOrdinalEquals(request.Result.Text, "actions_intent_CANCEL");
         }
 
         private bool IsWelcomeIntent(AppRequest request)
         {
-            return string.Compare(request.Result?.Action, "input.welcome",
-                       StringComparison.InvariantCultureIgnoreCase) ==
-                   0;
+            return Util.StringOrdinalEquals(request.Result.Text, "GOOGLE_ASSISTANT_WELCOME") ||
+                   Util.StringOrdinalEquals(request.Result.Action, "input.welcome");
         }
 
         private void ReadIntent(ConversationContext context, AppRequest request)
@@ -63,7 +84,7 @@ namespace VoiceBridge.Most.Google
             var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
             foreach (var key in data.Keys)
             {
-                context.SessionStore[key] = data[key];
+                context.SessionValues[key] = data[key];
             }
         }
 

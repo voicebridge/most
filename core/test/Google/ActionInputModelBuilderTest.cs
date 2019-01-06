@@ -13,6 +13,15 @@ namespace VoiceBridge.Most.Test.Google
     {
 
         [Fact]
+        public void NoInputRequest()
+        {
+            var appRequest = Files.GoogleNoInputRequest.FromJson<AppRequest>();
+            var context = new ConversationContext();
+            new ActionInputModelBuilder().Build(context, appRequest);
+            Assert.Equal(RequestType.Other, context.RequestType);
+        }
+
+        [Fact]
         public void ImplicitIntentRequest()
         {
             var appRequest = JsonConvert.DeserializeObject<AppRequest>(Files.GoogleImplicitRequestSample);
@@ -36,6 +45,7 @@ namespace VoiceBridge.Most.Test.Google
         public void UserInitiatedTermination()
         {
             var appRequest = CreateRequestWithIntent("actions.intent.CANCEL");
+            appRequest.Result.Text = "actions_intent_CANCEL";
             var context = new ConversationContext();
             new ActionInputModelBuilder().Build(context, appRequest);
             Assert.Equal(RequestType.UserInitiatedTermination, context.RequestType);
@@ -81,8 +91,8 @@ namespace VoiceBridge.Most.Test.Google
             appRequest.OriginalDetectIntentRequest.Content.User.UserStorage = sessionJson;
             var context = new ConversationContext();
             new ActionInputModelBuilder().Build(context, appRequest);
-            Assert.Equal("v1", context.SessionStore["s1"]);
-            Assert.Equal("v2", context.SessionStore["s2"]);
+            Assert.Equal("v1", context.SessionValues["s1"]);
+            Assert.Equal("v2", context.SessionValues["s2"]);
         }
 
         private static AppRequest CreateRequestWithIntent(string intentName)

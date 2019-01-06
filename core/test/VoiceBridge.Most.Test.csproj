@@ -21,6 +21,10 @@
       <EmbeddedResource Include="TestFiles\HockeyScoreIntentRequest.json" />
       <None Remove="TestFiles\GoogleImplicitRequestSample.json" />
       <EmbeddedResource Include="TestFiles\GoogleImplicitRequestSample.json" />
+      <None Remove="TestFiles\AlexaPlaybackFinishedJson.json" />
+      <EmbeddedResource Include="TestFiles\AlexaPlaybackFinishedJson.json" />
+      <None Remove="TestFiles\GoogleNoInputRequest.json" />
+      <EmbeddedResource Include="TestFiles\GoogleNoInputRequest.json" />
     </ItemGroup>
 
 </Project>

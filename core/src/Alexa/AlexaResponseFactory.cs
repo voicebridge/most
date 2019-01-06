@@ -22,9 +22,9 @@ namespace VoiceBridge.Most.Alexa
 
         private void TransferSessionValues(ConversationContext context, SkillResponse response)
         {
-            foreach (var key in context.SessionStore.Keys)
+            foreach (var key in context.SessionValues.Keys)
             {
-                response.SessionAttributes[key] = context.SessionStore[key];
+                response.SessionAttributes[key] = context.SessionValues[key];
             }
         }
     }

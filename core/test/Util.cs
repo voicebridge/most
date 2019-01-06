@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Moq;
+using Newtonsoft.Json;
 using VoiceBridge.Most.VoiceModel.Alexa;
 
 namespace VoiceBridge.Most.Test
 {
     public static class Util
     {
+
+        public static T FromJson<T>(this string s)
+        {
+            return JsonConvert.DeserializeObject<T>(s);
+        }
+        
         public static T QuickStub<T>() where T : class
         {
             return new Mock<T>().Object;

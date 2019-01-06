@@ -24,8 +24,8 @@ namespace VoiceBridge.Most.Test.Google
         public void SessionIsTransferred()
         {
             var context = new ConversationContext();
-            context.SessionStore["s1"] = "v1";
-            context.SessionStore["s2"] = "v2";
+            context.SessionValues["s1"] = "v1";
+            context.SessionValues["s2"] = "v2";
             var response = new ActionResponseFactory().Create(context);
             var json = response.Payload.Body.UserStorage;
             var session = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
