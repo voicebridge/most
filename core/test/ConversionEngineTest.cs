@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
@@ -13,27 +15,63 @@ namespace VoiceBridge.Most.Test
     public class ConversionEngineTest : TestBase
     {
         private readonly string requestId = Generic.Id();
+        private const string SessionKey = "key";
 
         [Fact]
         public async Task HappyPath()
         {
+            var sessionStore = new FakeSessionStateStore();
+            sessionStore.Values[SessionKey] = "A";
+            
             var request = AlexaRequests.Boilerplate();
             request.Content.RequestId = requestId;
             var virtualDirective = Util.QuickStub<IVirtualDirective>();
             var builder = new EngineBuilder<SkillRequest, SkillResponse>();
+            
             builder
                 .SetLogger(this)
                 .SetResponseFactory(new AlexaResponseFactory())
+                .SetSessionStore(sessionStore)
                 .AddInputModelBuilder(new FakeInputModelBuilder())
                 .AddDirectiveProcessor(new FakeDirectiveProcessor(virtualDirective))
                 .AddRequestHandler(new FakeRequestHandler(requestId, virtualDirective));
+            
             var engine = builder.Build();
             var response = await engine.Evaluate(request);
+            
             Assert.Equal(requestId, ((PlainTextOutputSpeech)response.Content.OutputSpeech).Text);
+            Assert.Equal("ABCD", sessionStore.Values[SessionKey]);
         }
 
         public ConversionEngineTest(ITestOutputHelper output) : base(output)
         {
+        }
+
+        private class FakeSessionStateStore : ISessionStateStore
+        {
+            public readonly Dictionary<string, string> Values = new Dictionary<string, string>();
+            
+            public async Task SaveState(ConversationContext context)
+            {
+                await Task.Factory.StartNew(() =>
+                {
+                    foreach (var key in context.SessionValues.Keys)
+                    {
+                        this.Values[key] = context.SessionValues[key] + "D";
+                    }
+                });
+            }
+
+            public async Task RestoreState(ConversationContext context)
+            {
+                await Task.Factory.StartNew(() =>
+                {
+                    foreach (var key in this.Values.Keys)
+                    {
+                        context.SessionValues[key] = this.Values[key] + "B";
+                    }
+                });
+            }
         }
 
         private class FakeRequestHandler : IRequestHandler
@@ -60,6 +98,7 @@ namespace VoiceBridge.Most.Test
                 {
                     if (this.CanHandle(context))
                     {
+                        context.SessionValues[SessionKey] = context.SessionValues[SessionKey] + "C";
                         context.OutputDirectives.Add(this.directiveToOutput);
                     }
                 });

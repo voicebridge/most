@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using VoiceBridge.Most.Directives.Processors;
@@ -86,48 +87,46 @@ namespace VoiceBridge.Most
         }
 
         /// <summary>
+        /// Sets session state persistence
+        /// </summary>
+        /// <param name="store">Store instance</param>
+        /// <returns>Itself</returns>
+        public EngineBuilder<TRequest, TResponse> SetSessionStore(ISessionStateStore store)
+        {
+            this.components.AddTransient(p => store);
+            return this;
+        }
+
+        /// <summary>
         /// Builds a conversation engine
         /// </summary>
         /// <returns>Conversation Engine</returns>
         public IConversationEngine<TRequest, TResponse> Build()
         {
+            this.AddRequiredSupportComponents();
+            this.RegisterComposites();
             var provider = this.components.BuildServiceProvider();
-            var logger = provider.GetService<ILogger>() ?? new ConsoleLogger();
-            var compositeInputBuilder = CreateInputModelBuilder(provider);
-            var responseFactory = CreateResponseFactory(provider);
-            var compositeHandler = CreateCompositeHandler(provider, logger);
-            var directiveProcessor = CreateCompositeDirectiveProcessor(provider, logger);
-            var reporter = provider.GetService<IMetricsReporter>() ?? new ConsoleLogger();
-            
-            return new ConversationEngine<TRequest, TResponse>(
-                compositeInputBuilder, 
-                responseFactory,
-                compositeHandler,
-                directiveProcessor,
-                logger,
-                reporter);
+            return new ConversationEngine<TRequest, TResponse>(provider);
         }
 
-        private IDirectiveProcessor<TRequest, TResponse> CreateCompositeDirectiveProcessor(
-            IServiceProvider provider,
-            ILogger logger)
+        private void RegisterComposites()
         {
-            return new CompositeDirectiveProcessor<TRequest, TResponse>(provider.GetServices<IDirectiveProcessor<TRequest, TResponse>>(), logger);
+            this.components.AddTransient<CompositeInputModelBuilder<TRequest>>();
+            this.components.AddTransient<CompositeDirectiveProcessor<TRequest, TResponse>>();
+            this.components.AddTransient<CompositeHandler>();
         }
 
-        private IRequestHandler CreateCompositeHandler(IServiceProvider provider, ILogger logger)
+        private void AddRequiredSupportComponents()
         {
-            return new CompositeHandler(provider.GetServices<IRequestHandler>(), logger);
-        }
+            if (this.components.All(x => x.ServiceType != typeof(ILogger)))
+            {
+                this.components.AddTransient<ILogger, NullLoggerReporter>();
+            }
 
-        private IResponseFactory<TResponse> CreateResponseFactory(IServiceProvider provider)
-        {
-            return provider.GetService<IResponseFactory<TResponse>>();
-        }
-
-        private IInputModelBuilder<TRequest> CreateInputModelBuilder(IServiceProvider provider)
-        {
-            return new CompositeInputModelBuilder<TRequest>(provider.GetServices<IInputModelBuilder<TRequest>>());
+            if (this.components.All(x => x.ServiceType != typeof(IMetricsReporter)))
+            {
+                this.components.AddTransient<IMetricsReporter, NullLoggerReporter>();
+            }
         }
     }
 }

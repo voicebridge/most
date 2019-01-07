@@ -2,6 +2,8 @@ using System;
 using System.Threading.Tasks;
 using VoiceBridge.Most.Logging;
 using VoiceBridge.Most.VoiceModel;
+using Microsoft.Extensions.DependencyInjection;
+using VoiceBridge.Most.Directives.Processors;
 
 namespace VoiceBridge.Most
 {
@@ -13,66 +15,129 @@ namespace VoiceBridge.Most
         private readonly IResponseFactory<TResponse> responseFactory;
         private readonly IRequestHandler compositeHandler;
         private readonly IDirectiveProcessor<TRequest, TResponse> compositeProcessor;
-        private readonly ILogger logger;
+        private readonly ILogger baseLogger;
+        private readonly IMetricsReporter metricsReporter;
+        private readonly ISessionStateStore sessionStore;
 
-        public ConversationEngine(
-            IInputModelBuilder<TRequest> inputModelBuilder,
-            IResponseFactory<TResponse> responseFactory,
-            IRequestHandler compositeHandler,
-            IDirectiveProcessor<TRequest, TResponse> compositeProcessor,
-            ILogger logger,
-            IMetricsReporter metricsReporter)
+        public ConversationEngine(IServiceProvider serviceProvider)
         {
-            Util.AssertNotNull(inputModelBuilder, nameof(inputModelBuilder));
-            Util.AssertNotNull(responseFactory, nameof(responseFactory));
-            Util.AssertNotNull(compositeHandler, nameof(compositeHandler));
-            Util.AssertNotNull(compositeProcessor, nameof(compositeProcessor));
-            
-            this.inputModelBuilder = inputModelBuilder;
-            this.responseFactory = responseFactory;
-            this.compositeHandler = compositeHandler;
-            this.compositeProcessor = compositeProcessor;
-            this.logger = logger;
+            Util.AssertNotNull(serviceProvider, nameof(serviceProvider));
+            this.inputModelBuilder = serviceProvider.GetService<CompositeInputModelBuilder<TRequest>>();
+            this.responseFactory = serviceProvider.GetService<IResponseFactory<TResponse>>();
+            this.compositeHandler = serviceProvider.GetService<CompositeHandler>();
+            this.compositeProcessor = serviceProvider.GetService<CompositeDirectiveProcessor<TRequest, TResponse>>();
+            this.baseLogger = serviceProvider.GetService<ILogger>() ?? new NullLoggerReporter();
+            this.metricsReporter = serviceProvider.GetService<IMetricsReporter>() ?? new NullLoggerReporter();
+            this.sessionStore = serviceProvider.GetService<ISessionStateStore>();
+            this.metricsReporter = new SafeMetricsReporter(this.metricsReporter, this.baseLogger);
         }
         
         public async Task<TResponse> Evaluate(TRequest request)
         {
+            TResponse response;
             
-            this.logger.Debug("BEGIN REQUEST PROCESSING");
-            var context = CreateConversationContext(request);
-            await ProcessRequest(context);
-            var response = BuildResponse(context, request);
-            this.logger.Debug("END REQUEST PROCESSING");
+            using (this.metricsReporter.MeasureTime(MetricNames.FullEvaluationTime))
+            {
+                var logger = new ScopedLogger(this.baseLogger);
+                logger.Debug("BEGIN PROCESSING REQUEST");
+
+                var context = CreateConversationContext(request, logger);
+                logger.CurrentContext = context;
+
+                using (this.metricsReporter.MeasureTime(MetricNames.SessionRestoreTime))
+                {
+                    await this.RestoreState(context, logger);
+                }
+
+                using (this.metricsReporter.MeasureTime(MetricNames.ExecutingRequestHandlers))
+                {
+                    await this.ProcessRequest(context, logger);
+                }
+
+                using (this.metricsReporter.MeasureTime(MetricNames.ProcessingVirtualDirectives))
+                {
+                    response = this.BuildResponse(context, request, logger);
+                }
+
+                using (this.metricsReporter.MeasureTime(MetricNames.SessionSaveTime))
+                {
+                    await this.SaveState(context, logger);
+                }
+
+                logger.Debug("END REQUEST PROCESSING");
+            }
+
             return response;
         }
-        
-        private TResponse BuildResponse(ConversationContext context, TRequest request)
+
+        private async Task SaveState(ConversationContext context, ILogger logger)
         {
-            this.logger.Debug($"Building response. Number of virtual directives: {context.OutputDirectives.Count}");
+            if (this.sessionStore == null)
+            {
+                return;
+            }
+
+            try
+            {
+                logger.Debug("Attempting to save session state");
+                await this.sessionStore.SaveState(context);
+                logger.Debug("Session state saved!");
+            }
+            catch (Exception exception)
+            {
+                logger.Error($"An error has occured while saving session state: ${exception}");
+            }
+        }
+
+        private async Task RestoreState(ConversationContext context, ILogger logger)
+        {
+            if (this.sessionStore == null)
+            {
+                return;
+            }
+
+            try
+            {
+                using (this.metricsReporter.MeasureTime(MetricNames.SessionRestoreTime))
+                {
+                    logger.Debug("Attempting to restore session state");
+                    await this.sessionStore.RestoreState(context);
+                    logger.Debug("Session state restored!");
+                }
+            }
+            catch (Exception exception)
+            {
+                logger.Error($"An error has occured while restoring session state: ${exception}");
+            }
+        }
+
+        private TResponse BuildResponse(ConversationContext context, TRequest request, ILogger logger)
+        {
+            logger.Debug($"Building response. Number of virtual directives: {context.OutputDirectives.Count}");
             var response = this.responseFactory.Create(context);
 
             foreach (var virtualDirective in context.OutputDirectives)
             {
-                this.logger.Debug($"Processing virtual directive: {virtualDirective.GetType().FullName}");
+                logger.Debug($"Processing virtual directive: {virtualDirective.GetType().FullName}");
                 this.compositeProcessor.Process(virtualDirective, request, response);
             }
 
             return response;
         }
 
-        private async Task ProcessRequest(ConversationContext context)
+        private async Task ProcessRequest(ConversationContext context, ILogger logger)
         {
-            this.logger.Debug("Processing request: Invoking request handlers");
+            logger.Debug("Processing request: Invoking request handlers");
             await this.compositeHandler.Handle(context);
-            this.logger.Debug("Request handlers invocation step completed.");
+            logger.Debug("Request handlers invocation step completed.");
         }
 
-        private ConversationContext CreateConversationContext(TRequest request)
+        private ConversationContext CreateConversationContext(TRequest request, ILogger logger)
         {
             var context = new ConversationContext();
-            this.logger.Debug("Building conversation model...");
+            logger.Debug("Building conversation model...");
             this.inputModelBuilder.Build(context, request);
-            this.logger.Debug($"Conversation model: {context.ToJson()}");
+            logger.Debug($"Conversation model: {context.ToJson()}");
             return context;
         }
     }
