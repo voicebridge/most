@@ -4,8 +4,8 @@ namespace VoiceBridge.Most
 {
     public interface ISessionStateStore
     {
-        Task SaveState(ConversationContext context);
+        Task SaveAsync(ConversationContext context);
         
-        Task RestoreState(ConversationContext context);
+        Task LoadAsync(ConversationContext context);
     }
 }

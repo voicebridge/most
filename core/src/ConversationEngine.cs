@@ -80,7 +80,7 @@ namespace VoiceBridge.Most
             try
             {
                 logger.Debug("Attempting to save session state");
-                await this.sessionStore.SaveState(context);
+                await this.sessionStore.SaveAsync(context);
                 logger.Debug("Session state saved!");
             }
             catch (Exception exception)
@@ -101,7 +101,7 @@ namespace VoiceBridge.Most
                 using (this.metricsReporter.MeasureTime(MetricNames.SessionRestoreTime))
                 {
                     logger.Debug("Attempting to restore session state");
-                    await this.sessionStore.RestoreState(context);
+                    await this.sessionStore.LoadAsync(context);
                     logger.Debug("Session state restored!");
                 }
             }
