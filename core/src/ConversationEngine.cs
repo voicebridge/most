@@ -2,6 +2,8 @@ using System;
 using System.Threading.Tasks;
 using VoiceBridge.Most.Logging;
 using VoiceBridge.Most.VoiceModel;
+using Microsoft.Extensions.DependencyInjection;
+using VoiceBridge.Most.Directives.Processors;
 
 namespace VoiceBridge.Most
 {
@@ -14,25 +16,19 @@ namespace VoiceBridge.Most
         private readonly IRequestHandler compositeHandler;
         private readonly IDirectiveProcessor<TRequest, TResponse> compositeProcessor;
         private readonly ILogger logger;
+        private readonly IMetricsReporter metricsReporter;
+        private readonly ISessionStateStore sessionStore;
 
-        public ConversationEngine(
-            IInputModelBuilder<TRequest> inputModelBuilder,
-            IResponseFactory<TResponse> responseFactory,
-            IRequestHandler compositeHandler,
-            IDirectiveProcessor<TRequest, TResponse> compositeProcessor,
-            ILogger logger,
-            IMetricsReporter metricsReporter)
+        public ConversationEngine(IServiceProvider serviceProvider)
         {
-            Util.AssertNotNull(inputModelBuilder, nameof(inputModelBuilder));
-            Util.AssertNotNull(responseFactory, nameof(responseFactory));
-            Util.AssertNotNull(compositeHandler, nameof(compositeHandler));
-            Util.AssertNotNull(compositeProcessor, nameof(compositeProcessor));
-            
-            this.inputModelBuilder = inputModelBuilder;
-            this.responseFactory = responseFactory;
-            this.compositeHandler = compositeHandler;
-            this.compositeProcessor = compositeProcessor;
-            this.logger = logger;
+            Util.AssertNotNull(serviceProvider, nameof(serviceProvider));
+            this.inputModelBuilder = serviceProvider.GetService<CompositeInputModelBuilder<TRequest>>();
+            this.responseFactory = serviceProvider.GetService<IResponseFactory<TResponse>>();
+            this.compositeHandler = serviceProvider.GetService<CompositeHandler>();
+            this.compositeProcessor = serviceProvider.GetService<CompositeDirectiveProcessor<TRequest, TResponse>>();
+            this.logger = serviceProvider.GetService<ILogger>() ?? new NullLoggerReporter();
+            this.metricsReporter = serviceProvider.GetService<IMetricsReporter>() ?? new NullLoggerReporter();
+            this.sessionStore = serviceProvider.GetService<ISessionStateStore>();
         }
         
         public async Task<TResponse> Evaluate(TRequest request)
