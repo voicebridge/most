@@ -14,9 +14,19 @@ namespace VoiceBridge.Most
             }
         }
 
+        public static void Info(this ILogger logger, string message)
+        {
+            logger.Log(LogLevel.Information, message);
+        }
+
         public static void Debug(this ILogger logger, string message)
         {
             logger.Log(LogLevel.Debug, message);
+        }
+        
+        public static void Error(this ILogger logger, string message)
+        {
+            logger.Log(LogLevel.Error, message);
         }
 
         public static string ToJson<T>(this T obj)

@@ -36,6 +36,7 @@ namespace VoiceBridge.Most.Test
                 .OnIntent(TestIntents.Weather)
                 .When(x => x.RequestModel.ParameterHasValue("city"))
                 .Say(promptText.AsPrompt());
+            
             var engine = assistant.AlexaEngineBuilder().Build();
             
             var response = await engine.Evaluate(request);

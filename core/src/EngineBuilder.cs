@@ -87,6 +87,17 @@ namespace VoiceBridge.Most
         }
 
         /// <summary>
+        /// Sets session state persistence
+        /// </summary>
+        /// <param name="store">Store instance</param>
+        /// <returns>Itself</returns>
+        public EngineBuilder<TRequest, TResponse> SetSessionStore(ISessionStateStore store)
+        {
+            this.components.AddTransient(p => store);
+            return this;
+        }
+
+        /// <summary>
         /// Builds a conversation engine
         /// </summary>
         /// <returns>Conversation Engine</returns>
