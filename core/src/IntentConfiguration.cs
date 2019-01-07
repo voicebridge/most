@@ -12,7 +12,8 @@ namespace VoiceBridge.Most
     {
         private readonly List<string> intentNames = new List<string>();
         private readonly List<Func<ConversationContext, bool>> conditions = new List<Func<ConversationContext, bool>>();
-        private Func<ConversationContext, IVirtualDirective> actionToPerform;
+        private readonly List<Func<ConversationContext, IVirtualDirective>> actionsToPerform = new List<Func<ConversationContext, IVirtualDirective>>();
+        private readonly List<Func<ConversationContext, IEnumerable<IVirtualDirective>>> actionsToPerform2 = new List<Func<ConversationContext, IEnumerable<IVirtualDirective>>>();
         private readonly RequestType typeOfRequestToMatch = RequestType.Intent;
 
         /// <summary>
@@ -95,10 +96,21 @@ namespace VoiceBridge.Most
         /// <returns>Itself</returns>
         public IntentConfiguration Do(Func<ConversationContext, IVirtualDirective> func)
         {
-            this.actionToPerform = func;
+            this.actionsToPerform.Add(func);
             return this;
         } 
 
+        /// <summary>
+        /// Perform an action if all conditions match
+        /// </summary>
+        /// <param name="func">Function to execute (must return a an IEnumerable of virtual directives)</param>
+        /// <returns>Itself</returns>
+        public IntentConfiguration Do(Func<ConversationContext, IEnumerable<IVirtualDirective>> func)
+        {
+            this.actionsToPerform2.Add(func);
+            return this;
+        } 
+        
         /// <summary>
         /// Request Handler CanHandle
         /// </summary>
@@ -138,10 +150,15 @@ namespace VoiceBridge.Most
                 {
                     return;
                 }
-                
-                if (this.actionToPerform != null)
+
+                foreach (var action in this.actionsToPerform)
                 {
-                    context.OutputDirectives.Add(this.actionToPerform(context));
+                    context.OutputDirectives.Add(action(context));
+                }
+
+                foreach (var action in this.actionsToPerform2)
+                {
+                    context.OutputDirectives.AddRange(action(context));
                 }
             });
         }

@@ -109,17 +109,17 @@ namespace VoiceBridge.Most.Test
         }
         
         [Fact]
-        public async Task DoIgnoresOtherDirectives()
+        public async Task SupportsMultipleDirectives()
         {
-            var dir = Util.QuickStub<IVirtualDirective>();
-            var directive = await DynamicHandlerHelper.ExecuteHandle<IVirtualDirective>(intent =>
-            {
-                intent
-                    .Say("I should not be executed!".AsPrompt())
-                    .Do(context => dir);
-            });
-            
-            Assert.Same(dir, directive);
+            var ctx = new ConversationContext {RequestType = RequestType.Intent};
+            var dir1 = Util.QuickStub<IVirtualDirective>();
+            var dir2 = Util.QuickStub<IVirtualDirective>();
+            var handler = new IntentConfiguration();
+            handler.Do(c => dir1);
+            handler.Do(c => dir2);
+            await handler.Handle(ctx);
+            Assert.Contains(dir1, ctx.OutputDirectives);
+            Assert.Contains(dir2, ctx.OutputDirectives);
         }
     }
 }
