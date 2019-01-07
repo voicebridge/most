@@ -92,12 +92,12 @@ namespace VoiceBridge.Most
         public IConversationEngine<TRequest, TResponse> Build()
         {
             var provider = this.components.BuildServiceProvider();
-            var logger = provider.GetService<ILogger>() ?? new ConsoleLogger();
+            var logger = provider.GetService<ILogger>() ?? new NullLoggerReporter();
             var compositeInputBuilder = CreateInputModelBuilder(provider);
             var responseFactory = CreateResponseFactory(provider);
             var compositeHandler = CreateCompositeHandler(provider, logger);
             var directiveProcessor = CreateCompositeDirectiveProcessor(provider, logger);
-            var reporter = provider.GetService<IMetricsReporter>() ?? new ConsoleLogger();
+            var reporter = provider.GetService<IMetricsReporter>() ?? new NullLoggerReporter();
             
             return new ConversationEngine<TRequest, TResponse>(
                 compositeInputBuilder, 
