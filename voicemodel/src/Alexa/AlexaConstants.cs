@@ -1,4 +1,6 @@
+using System.Runtime.Serialization;
 using System.Security.Cryptography.X509Certificates;
+using VoiceBridge.Most.VoiceModel.Alexa.APL;
 
 namespace VoiceBridge.Most.VoiceModel.Alexa
 {
@@ -65,6 +67,84 @@ namespace VoiceBridge.Most.VoiceModel.Alexa
                 public const string Denied = "DENIED";
                 public const string Confirmed = "CONFIRMED";
                 public const string None = "NONE";
+            }
+        }
+
+        public static class Presentation
+        {
+            public static class Theme
+            {
+                public const string Auto = "auto";
+                public const string Light = "light";
+                public const string Dark = "dark";
+            }
+
+            public static class Directions
+            {
+                public const string Column = "column";
+                public const string Row = "row";
+            }
+
+            public static class Alignment
+            {
+                public const string Bottom = "bottom";
+                public const string BottomLeft = "bottom-left";
+                public const string BottomRight = "bottom-right";
+                public const string Center = "center";
+                public const string Left = "left";
+                public const string Right = "right";
+                public const string Top = "top";
+                public const string TopLeft = "top-left";
+                public const string TopRight = "top-right";
+            }
+
+            public static class Justification
+            {
+                public const string Start = "start";
+                public const string End = "end";
+                public const string Center = "center";
+
+                /*
+                 * TODO:
+                 *   The APL documentation hints at using the flexbox specification here, but the default is "start"
+                 *   (versus 'flex-start' in the CSS spec), so these values need testing on-device
+                 *   See here: https://developer.amazon.com/docs/alexa-presentation-language/apl-container.html#justifycontent
+                 */
+
+                //public const string Between = "space-between";
+                //public const string Around = "space-around";
+                //public const string Evenly = "space-evenly";
+            }
+
+            public static class Scale
+            {
+                public const string None = "none";
+                public const string Fill = "fill";
+                public const string BestFill = "best-fill";
+                public const string BestFit = "best-fit";
+                public const string BestFitDown = "best-fit-down";
+            }
+
+            public static class Directives
+            {
+                public const string RenderDocument = "Alexa.Presentation.APL.RenderDocument";
+            }
+
+            public static class TemplateItems
+            {
+                public static class ViewportClauses
+                {
+                    public const string SmallRound = "${@viewportProfile == @hubRoundSmall}";
+                    public const string MediumRectangle = "${@viewportProfile == @hubLandscapeMedium}";
+                    public const string LargeRectangle = "${@viewportProfile == @hubLandscapeLarge}";
+                    public const string ExtraLargeRectangle = "${@viewportProfile == @tvLandscapeXLarge}";
+                }
+
+                public static class Types
+                {
+                    public const string Container = "Container";
+                    public const string Image = "Image";
+                }
             }
         }
 

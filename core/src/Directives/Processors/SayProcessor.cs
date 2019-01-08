@@ -11,8 +11,8 @@ namespace VoiceBridge.Most.Directives.Processors
     {
         protected override void Process(SayDirective directive, SkillRequest request, SkillResponse response)
         {
-            response.Content.OutputSpeech = directive.Prompt.ToAlexaSpeech();
             response.Content.ShouldEndSession = !directive.KeepSessionOpen;
+            response.Content.OutputSpeech = directive.Prompt.ToAlexaSpeech();
         }
 
         protected override void Process(SayDirective directive, AppRequest request, AppResponse response)
