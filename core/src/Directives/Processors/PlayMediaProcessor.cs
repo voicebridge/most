@@ -31,7 +31,7 @@ namespace VoiceBridge.Most.Directives.Processors
                             ContentUrl = directive.Media.StreamUrl,
                             Description = directive.Media.Subtitle,
                             Name = directive.Media.Title,
-                            Image = new Image
+                            Image = new VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK.Image
                             {
                                 AccessibilityText = directive.Media.Title,
                                 Url = directive.Media.LargeImageUrl

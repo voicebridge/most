@@ -51,7 +51,7 @@ namespace VoiceBridge.Most.Test
         {
             public readonly Dictionary<string, string> Values = new Dictionary<string, string>();
             
-            public async Task SaveState(ConversationContext context)
+            public async Task SaveAsync(ConversationContext context)
             {
                 await Task.Factory.StartNew(() =>
                 {
@@ -62,7 +62,7 @@ namespace VoiceBridge.Most.Test
                 });
             }
 
-            public async Task RestoreState(ConversationContext context)
+            public async Task LoadAsync(ConversationContext context)
             {
                 await Task.Factory.StartNew(() =>
                 {

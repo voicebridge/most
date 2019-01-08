@@ -1,8 +1,12 @@
+using System;
 using VoiceBridge.Most.Directives;
 using VoiceBridge.Most.VoiceModel.Alexa.LanguageModel;
 
 namespace VoiceBridge.Most
 {
+    /// <summary>
+    /// Fluent methods to construct responses to intents
+    /// </summary>
     public static class Result
     {
         /// <summary>
@@ -22,6 +26,7 @@ namespace VoiceBridge.Most
             };
         }
         
+
         /// <summary>
         /// Should intent conditions be satisfied, a prompt is sent back to the user
         /// </summary>
@@ -36,6 +41,7 @@ namespace VoiceBridge.Most
         {
             return ApplyAction(intent, Say(prompt, keepSessionOpen));
         }
+
 
         /// <summary>
         /// Should intent conditions be satisfied, user will be asked to fill a slot with provided prompt
@@ -54,6 +60,7 @@ namespace VoiceBridge.Most
             return ApplyAction(intent, 
                 AskFor(parameterName, prompt, expectedIntentName));
         }
+
 
         /// <summary>
         /// Create a virtual directive to ask user to fill a slot (parameter)
@@ -74,6 +81,7 @@ namespace VoiceBridge.Most
             };
         }
 
+
         /// <summary>
         /// Should intent conditions be satisfied, audio media will be played on the user's device
         /// </summary>
@@ -91,6 +99,7 @@ namespace VoiceBridge.Most
             return ApplyAction(intent, PlayAudio(media, prompt, keepSessionOpen));
         }
         
+
         /// <summary>
         /// Create a virtual directive to play audio media
         /// </summary>
@@ -108,6 +117,39 @@ namespace VoiceBridge.Most
                 KeepSessionOpen = keepSessionOpen
             };
         }
+
+
+        /// <summary>
+        /// Should intent conditions be satisfied, display an image on the user's device (if supported)
+        /// </summary>
+        /// <param name="image">Either an Image or ResponsiveImage</param>
+        /// <param name="keepSessionOpen">False by default. If true, a response will be expected</param>
+        /// <returns>Itself</returns>
+        public static IntentConfiguration ShowImage(
+            this IntentConfiguration intent,
+            IImage image,
+            bool keepSessionOpen = false)
+        {
+            return ApplyAction(intent, ShowImage(image, keepSessionOpen));
+        }
+
+
+        /// <summary>
+        /// Create a virtual directive to display an image (if supported)
+        /// </summary>
+        /// <param name="image">Either an Image or ResponsiveImage</param>
+        /// <param name="keepSessionOpen">False by default. If true, a response will be expected</param>
+        /// <returns>ImageDirective</returns>
+        public static IVirtualDirective ShowImage(IImage image,
+            bool keepSessionOpen = false)
+        {
+            return new ImageDirective
+            {
+                Image = image,
+                KeepSessionOpen = keepSessionOpen
+            };
+        }
+
 
         private static IntentConfiguration ApplyAction(
             IntentConfiguration intent, 
