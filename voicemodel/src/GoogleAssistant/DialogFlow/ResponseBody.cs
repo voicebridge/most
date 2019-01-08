@@ -10,7 +10,7 @@ namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow
         private string userStorage;
 
         [JsonProperty("expectUserResponse")]
-        public bool ExpectUserResponse { get; set; }
+        public bool ExpectUserResponse { get; set; } = false;
 
         [JsonProperty("userStorage")]
         public string UserStorage

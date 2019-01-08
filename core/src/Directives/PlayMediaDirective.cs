@@ -8,8 +8,6 @@ namespace VoiceBridge.Most.Directives
             this.Media = media;
         }
 
-        public bool KeepSessionOpen { get; set; }
-        
         public Prompt Prompt { get; }
 
         public Media Media { get; }

@@ -94,11 +94,12 @@ namespace VoiceBridge.Most.Test
 
         private static void ConfigureWelcomeMessage(Assistant assistant)
         {
+            var text = "Hello! My name is Fakey, and I will give you fake scores for the NHL's pacific division";
+
             assistant
                 .OnLaunch()
-                .Say(
-                    "Hello! My name is Fakey, and I will give you fake scores for the NHL's pacific division"
-                        .AsPrompt(), keepSessionOpen: true);
+                .Say(text.AsPrompt())
+                .KeepSessionOpen();
         }
         
         private static Assistant ConfigureTeamNameIntent(Assistant assistant)
