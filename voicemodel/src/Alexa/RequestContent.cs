@@ -32,5 +32,11 @@ namespace VoiceBridge.Most.VoiceModel.Alexa
 
         [JsonProperty("error")]
         public AlexaError Error { get; set; }
+        
+        [JsonProperty("token")]
+        public string EventToken { get; set; }
+        
+        [JsonProperty("event")]
+        public UserEvent EventInfo { get; set; }
     }
 }

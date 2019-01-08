@@ -77,6 +77,10 @@ namespace VoiceBridge.Most.Alexa
                     context.RequestType = RequestType.FulfillmentQuery;
                     break;
                 
+                case AlexaConstants.RequestType.AlexaPresentationLanguageUserEvent:
+                    context.RequestType = RequestType.NonVoiceInputEvent;
+                    break;
+                
                 default:
                     context.RequestType = RequestType.Other;
                     break;

@@ -80,6 +80,12 @@ namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK
             public const string AskToRegisterForUpdates = "actions.intent.REGISTER_UPDATE";
         }
 
+        public static class EventNames
+        {
+            public const string DisplayElementSelection = "actions_intent_OPTION";
+            public const string MediaStatusChange = "actions_intent_MEDIA_STATUS";
+        }
+
         public static class SmartHomeIntents
         {
             public const string GetDeviceList = "action.devices.SYNC";

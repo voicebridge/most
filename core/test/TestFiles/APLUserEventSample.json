@@ -1,0 +1,61 @@
+{
+  "version": "1.0",
+  "session": {
+    "new": false,
+    "sessionId": "[SessionId]",
+    "application": {
+      "applicationId": "[ApplicationId]"
+    },
+    "attributes": {},
+    "user": {
+      "userId": "[UserId]"
+    }
+  },
+  "context": {
+    "AudioPlayer": {
+      "playerActivity": "IDLE"
+    },
+    "Display": {
+      "token": "listToken"
+    },
+    "System": {
+      "application": {
+        "applicationId": "[ApplicationId]"
+      },
+      "user": {
+        "userId": "[UserId]"
+      },
+      "device": {
+        "deviceId": "[DeviceId]",
+        "supportedInterfaces": {
+          "AudioPlayer": {},
+          "Alexa.Presentation.APL": {
+            "runtime": {
+              "maxVersion": "1.0"
+            }
+          }
+        }
+      },
+      "apiEndpoint": "https://api.amazonalexa.com",
+      "apiAccessToken": "[ApiAccessToken]"
+    }
+  },
+  "request": {
+    "type": "Alexa.Presentation.APL.UserEvent",
+    "requestId": "[RequestId]",
+    "timestamp": "2018-08-09T04:25:08Z",
+    "locale": "en-US",
+    "token": "[EventToken]",
+    "event": {
+      "source": {
+        "type": "TouchWrapper",
+        "handler": "onPress",
+        "id": "myTouchWrapper",
+        "value": null
+      },
+      "arguments": [
+        "orderDrink"
+      ]
+    }
+  }
+}
