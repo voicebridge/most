@@ -28,6 +28,11 @@ namespace VoiceBridge.Most
         FulfillmentQuery,
         
         /// <summary>
+        /// Non-Voice User Input Events (Button presses, touch events)
+        /// </summary>
+        NonVoiceInputEvent,
+        
+        /// <summary>
         /// This request type is not yet natively support by Most
         /// </summary>
         Other

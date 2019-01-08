@@ -36,10 +36,21 @@ namespace VoiceBridge.Most.Google
                 return;
             }
 
+            if (IsNonVoiceOptionSelection(request))
+            {
+                context.RequestType = RequestType.NonVoiceInputEvent;
+                return;
+            }
+
             if (!this.IsGoogleActionEvent(request) && !string.IsNullOrWhiteSpace(request.Result.Intent.DisplayName))
             {
                 context.RequestType = RequestType.Intent;
             }
+        }
+
+        private bool IsNonVoiceOptionSelection(AppRequest request)
+        {
+            return request.Result?.Text == "actions_intent_OPTION";
         }
 
         private bool IsGoogleActionEvent(AppRequest request)

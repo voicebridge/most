@@ -25,6 +25,12 @@
       <EmbeddedResource Include="TestFiles\AlexaPlaybackFinishedJson.json" />
       <None Remove="TestFiles\GoogleNoInputRequest.json" />
       <EmbeddedResource Include="TestFiles\GoogleNoInputRequest.json" />
+      <None Remove="TestFiles\APLUserEventSample.json" />
+      <EmbeddedResource Include="TestFiles\APLUserEventSample.json" />
+      <None Remove="TestFiles\DisplayElementSelectedSample.json" />
+      <EmbeddedResource Include="TestFiles\DisplayElementSelectedSample.json" />
+      <None Remove="TestFiles\GoogleOptionSelectSample.json" />
+      <EmbeddedResource Include="TestFiles\GoogleOptionSelectSample.json" />
     </ItemGroup>
 
 </Project>

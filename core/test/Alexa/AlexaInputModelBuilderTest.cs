@@ -34,6 +34,14 @@ namespace VoiceBridge.Most.Test.Alexa
             var context = BuildModel(request);
             Assert.Equal(RequestType.Other, context.RequestType);
         }
+
+        [Fact]
+        public void AplUserEventIsClassifiedCorrectly()
+        {
+            var request = Files.APLUserEventRequest.FromJson<SkillRequest>();
+            var context = BuildModel(request);
+            Assert.Equal(RequestType.NonVoiceInputEvent, context.RequestType);
+        }
         
         [Fact]
         public void RequestIdIsSet()

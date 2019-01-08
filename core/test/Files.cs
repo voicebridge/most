@@ -15,6 +15,12 @@ namespace VoiceBridge.Most.Test
 
         public static string GoogleNoInputRequest => GetFile("GoogleNoInputRequest.json");
 
+        public static string APLUserEventRequest => GetFile("APLUserEventSample.json");
+
+        public static string AlexaDisplayElementSelected => GetFile("DisplayElementSelectedSample.json");
+
+        public static string GoogleOptionSelected => GetFile("GoogleOptionSelectSample.json");
+
         private static string GetFile(string name)
         {
             return Assembly.GetExecutingAssembly().GetTextFile(Prefix + name);

@@ -68,12 +68,24 @@ namespace VoiceBridge.Most
         
         public EngineBuilder<SkillRequest, SkillResponse> AlexaEngineBuilder()
         {
-            return CreateBuilder(new AlexaResponseFactory(), new AlexaInputModelBuilder());
+            var compositeBuilder = new CompositeInputModelBuilder<SkillRequest>(
+                new IInputModelBuilder<SkillRequest>[]
+            {
+                new AlexaInputModelBuilder(), 
+                new NonVoiceEventsInputModelBuilder(),
+            });
+            return CreateBuilder(new AlexaResponseFactory(), compositeBuilder);
         }
 
         public EngineBuilder<AppRequest, AppResponse> GoogleEngineBuilder()
         {
-            return CreateBuilder(new ActionResponseFactory(), new ActionInputModelBuilder());
+            var compositeBuilder = new CompositeInputModelBuilder<AppRequest>(
+                new IInputModelBuilder<AppRequest>[]
+                {
+                    new ActionInputModelBuilder(), 
+                    new NonVoiceInputModelBuilder(),
+                });
+            return CreateBuilder(new ActionResponseFactory(), compositeBuilder);
         }
 
         private EngineBuilder<TRequest, TResponse> CreateBuilder<TRequest, TResponse>(

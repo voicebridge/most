@@ -40,6 +40,16 @@ namespace VoiceBridge.Most.Test.Google
             new ActionInputModelBuilder().Build(context, appRequest);
             Assert.Equal(RequestType.Launch, context.RequestType);
         }
+        
+        [Fact]
+        public void OptionSelected()
+        {
+            var appRequest = CreateRequestWithIntent("random");
+            appRequest.Result.Text = "actions_intent_OPTION";
+            var context = new ConversationContext();
+            new ActionInputModelBuilder().Build(context, appRequest);
+            Assert.Equal(RequestType.NonVoiceInputEvent, context.RequestType);
+        }
 
         [Fact]
         public void UserInitiatedTermination()

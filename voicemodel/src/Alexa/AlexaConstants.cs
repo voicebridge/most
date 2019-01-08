@@ -168,6 +168,8 @@ namespace VoiceBridge.Most.VoiceModel.Alexa
             public const string IntentRequest = "IntentRequest";
             public const string SessionEndedRequest = "SessionEndedRequest";
             public const string CanFulfillIntentRequest = "CanFulfillIntentRequest";
+            public const string AlexaPresentationLanguageUserEvent = "Alexa.Presentation.APL.UserEvent";
+            public const string AlexaDisplayElementSelected = "Display.ElementSelected";
         }
 
         public static class SlotResolutionStatus

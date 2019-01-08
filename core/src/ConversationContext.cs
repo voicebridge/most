@@ -15,6 +15,7 @@ namespace VoiceBridge.Most
             this.OutputDirectives = new List<IVirtualDirective>();
             this.RequestModel = new RequestModel();
             this.SessionValues = new Dictionary<string, string>();
+            this.Extensions = new ExtensionModel();
         }
         
         /// <summary>
@@ -23,9 +24,19 @@ namespace VoiceBridge.Most
         public RequestModel RequestModel { get; set; }
         
         /// <summary>
+        /// Describes device capabilities
+        /// </summary>
+        public IEnumerable<DeviceCapability> Capabilities { get; set; }
+        
+        /// <summary>
         /// Virtual directives describing what to send back to the user
         /// </summary>
         public List<IVirtualDirective> OutputDirectives { get; }
+        
+        /// <summary>
+        /// Extension Model
+        /// </summary>
+        public ExtensionModel Extensions { get; }
         
         /// <summary>
         /// Session variables (persisted across requests)
