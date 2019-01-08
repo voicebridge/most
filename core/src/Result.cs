@@ -13,16 +13,12 @@ namespace VoiceBridge.Most
         /// Creates a virtual directive to send a prompt back to the user
         /// </summary>
         /// <param name="prompt">Prompt</param>
-        /// <param name="keepSessionOpen">False by default. If true, a response will be expected</param>
         /// <returns>SayDirective</returns>
-        public static IVirtualDirective Say(
-            Prompt prompt, 
-            bool keepSessionOpen = false)
+        public static IVirtualDirective Say(Prompt prompt)
         {
             return new SayDirective
             {
-                Prompt = prompt,
-                KeepSessionOpen = keepSessionOpen
+                Prompt = prompt
             };
         }
         
@@ -32,14 +28,12 @@ namespace VoiceBridge.Most
         /// </summary>
         /// <param name="intent">IntentConfiguration</param>
         /// <param name="prompt">Prompt</param>
-        /// <param name="keepSessionOpen">False by default. If true, a response will be expected</param>
         /// <returns>SayDirective</returns>
         public static IntentConfiguration Say(
             this IntentConfiguration intent, 
-            Prompt prompt, 
-            bool keepSessionOpen = false)
+            Prompt prompt)
         {
-            return ApplyAction(intent, Say(prompt, keepSessionOpen));
+            return ApplyAction(intent, Say(prompt));
         }
 
 
@@ -88,15 +82,13 @@ namespace VoiceBridge.Most
         /// <param name="intent">IntentConfiguration</param>
         /// <param name="media">Audio Media</param>
         /// <param name="prompt">Prompt to play before the audio</param>
-        /// <param name="keepSessionOpen">False by default. If true, a response will be expected</param>
         /// <returns>Itself</returns>
         public static IntentConfiguration PlayAudio(
             this IntentConfiguration intent,
             Media media, 
-            Prompt prompt, 
-            bool keepSessionOpen = false)
+            Prompt prompt)
         {
-            return ApplyAction(intent, PlayAudio(media, prompt, keepSessionOpen));
+            return ApplyAction(intent, PlayAudio(media, prompt));
         }
         
 
@@ -105,17 +97,12 @@ namespace VoiceBridge.Most
         /// </summary>
         /// <param name="media">Media</param>
         /// <param name="prompt">Prompt to play before the audio</param>
-        /// <param name="keepSessionOpen">False by default. If true, a response will be expected</param>
         /// <returns>PlayAudioDirective</returns>
         public static IVirtualDirective PlayAudio(
             Media media, 
-            Prompt prompt, 
-            bool keepSessionOpen = false)
+            Prompt prompt)
         {
-            return new PlayMediaDirective(media, prompt)
-            {
-                KeepSessionOpen = keepSessionOpen
-            };
+            return new PlayMediaDirective(media, prompt);
         }
 
 
@@ -123,14 +110,12 @@ namespace VoiceBridge.Most
         /// Should intent conditions be satisfied, display an image on the user's device (if supported)
         /// </summary>
         /// <param name="image">Either an Image or ResponsiveImage</param>
-        /// <param name="keepSessionOpen">False by default. If true, a response will be expected</param>
         /// <returns>Itself</returns>
         public static IntentConfiguration ShowImage(
             this IntentConfiguration intent,
-            IImage image,
-            bool keepSessionOpen = false)
+            IImage image)
         {
-            return ApplyAction(intent, ShowImage(image, keepSessionOpen));
+            return ApplyAction(intent, ShowImage(image));
         }
 
 
@@ -138,16 +123,35 @@ namespace VoiceBridge.Most
         /// Create a virtual directive to display an image (if supported)
         /// </summary>
         /// <param name="image">Either an Image or ResponsiveImage</param>
-        /// <param name="keepSessionOpen">False by default. If true, a response will be expected</param>
         /// <returns>ImageDirective</returns>
-        public static IVirtualDirective ShowImage(IImage image,
-            bool keepSessionOpen = false)
+        public static IVirtualDirective ShowImage(IImage image)
         {
             return new ImageDirective
             {
-                Image = image,
-                KeepSessionOpen = keepSessionOpen
+                Image = image
             };
+        }
+
+        
+        /// <summary>
+        /// Controls whether to keep the session open or not
+        /// </summary>
+        /// <returns>SessionDirective</returns>
+        public static IVirtualDirective KeepSessionOpen()
+        {
+            return new SessionDirective();
+        }
+
+
+        /// <summary>
+        /// Controls whether to keep the session open or not
+        /// </summary>
+        /// <param name="keepSessionOpen">False by default. If true, a response will be expected</param>
+        /// <returns>Itself</returns>
+        public static IntentConfiguration KeepSessionOpen(
+            this IntentConfiguration intent)
+        {
+            return ApplyAction(intent, KeepSessionOpen());
         }
 
 

@@ -16,8 +16,6 @@ namespace VoiceBridge.Most.Directives.Processors
     {
         protected override void Process(ImageDirective directive, SkillRequest request, SkillResponse response)
         {
-            response.Content.ShouldEndSession = !directive.KeepSessionOpen;
-
             if (directive.Image is Image)
             {
                 var image = directive.Image as Image;

@@ -7,7 +7,5 @@ namespace VoiceBridge.Most.Directives
     public class ImageDirective : IVirtualDirective
     {
         public IImage Image { get; set; }
-
-        public bool KeepSessionOpen { get; set; }
     }
 }

@@ -13,11 +13,13 @@ namespace VoiceBridge.Most.Test.Google
         {
             var context = new ConversationContext();
             var response = new ActionResponseFactory().Create(context);
+
             Assert.Empty(response.Messages);
             Assert.NotNull(response.Payload.Body);
             Assert.Empty(response.Payload.Body.RichResponse.Items);
             Assert.False(response.Payload.Body.ExpectUserResponse);
             Assert.Null(response.Payload.Body.UserStorage);
+            Assert.False(response.Payload.Body.ExpectUserResponse);
         }
 
         [Fact]

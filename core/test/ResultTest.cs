@@ -10,19 +10,17 @@ namespace VoiceBridge.Most.Test
         public void Say()
         {
             var prompt = new Prompt();
-            var directive = Result.Say(prompt, true) as SayDirective;
+            var directive = Result.Say(prompt) as SayDirective;
             Assert.NotNull(directive);
             Assert.Same(prompt, directive.Prompt);
-            Assert.True(directive.KeepSessionOpen);
         }
 
         [Fact]
         public async Task SayOnIntent()
         {
             var prompt = new Prompt();
-            var directive = await DynamicHandlerHelper.ExecuteHandle<SayDirective>(intent => intent.Say(prompt, true));
+            var directive = await DynamicHandlerHelper.ExecuteHandle<SayDirective>(intent => intent.Say(prompt));
             Assert.Same(prompt, directive.Prompt);
-            Assert.True(directive.KeepSessionOpen);
         }
 
         [Fact]
@@ -56,10 +54,9 @@ namespace VoiceBridge.Most.Test
         {
             var prompt = new Prompt();
             var media = new Media();
-            var directive = (PlayMediaDirective) Result.PlayAudio(media, prompt, true);
+            var directive = (PlayMediaDirective) Result.PlayAudio(media, prompt);
             Assert.Same(prompt, directive.Prompt);
             Assert.Same(media, media);
-            Assert.True(directive.KeepSessionOpen);
         }
 
         [Fact]
@@ -70,6 +67,19 @@ namespace VoiceBridge.Most.Test
             var directive = await DynamicHandlerHelper.ExecuteHandle<PlayMediaDirective>(intent => intent.PlayAudio(media, prompt));
             Assert.Same(media, directive.Media);
             Assert.Same(prompt, directive.Prompt);
+        }
+
+
+        [Fact]
+        public void KeepSessionOpen()
+        {
+            var directive = (SessionDirective)Result.KeepSessionOpen();
+        }
+
+        [Fact]
+        public async Task KeepSessionOpenOnIntent()
+        {
+            var directive = await DynamicHandlerHelper.ExecuteHandle<SessionDirective>(intent => intent.KeepSessionOpen());
         }
     }
 }

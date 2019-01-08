@@ -16,8 +16,8 @@ namespace VoiceBridge.Most.VoiceModel.Alexa
 
         [JsonProperty("directives", NullValueHandling = NullValueHandling.Ignore)]
         public List<IAlexaDirective> Directives {get; set;} = new List<IAlexaDirective>();
-        
+
         [JsonProperty("shouldEndSession")]
-        public bool ShouldEndSession {get; set;}
+        public bool ShouldEndSession { get; set; } = true;
     }
 }
