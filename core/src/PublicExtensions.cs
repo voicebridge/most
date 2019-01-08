@@ -11,5 +11,14 @@ namespace VoiceBridge.Most
                 IsSSML = false
             };
         }
+
+        public static IImage AsImage(this string s, string caption = "")
+        {
+            return new Image
+            {
+                ImageUri = new System.Uri(s),
+                Caption = caption
+            };
+        }
     }
 }

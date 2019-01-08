@@ -120,38 +120,32 @@ namespace VoiceBridge.Most
 
 
         /// <summary>
-        /// Should intent conditions be satisfied, display an image on the user's device
+        /// Should intent conditions be satisfied, display an image on the user's device (if supported)
         /// </summary>
-        /// <param name="imageUri">The Uri of the image to display</param>
-        /// <param name="accessibilityText">A description of the image</param>
+        /// <param name="image">Either an Image or ResponsiveImage</param>
         /// <param name="keepSessionOpen">False by default. If true, a response will be expected</param>
         /// <returns>Itself</returns>
         public static IntentConfiguration ShowImage(
             this IntentConfiguration intent,
-            Uri imageUri,
-            string accessibilityText,
+            IImage image,
             bool keepSessionOpen = false)
         {
-            return ApplyAction(intent, ShowImage(imageUri, accessibilityText, keepSessionOpen));
+            return ApplyAction(intent, ShowImage(image, keepSessionOpen));
         }
 
 
         /// <summary>
-        /// Create a virtual directive to display an image
+        /// Create a virtual directive to display an image (if supported)
         /// </summary>
-        /// <param name="imageUri">The Uri of the image to display</param>
-        /// <param name="accessibilityText">A description of the image</param>
+        /// <param name="image">Either an Image or ResponsiveImage</param>
         /// <param name="keepSessionOpen">False by default. If true, a response will be expected</param>
         /// <returns>ImageDirective</returns>
-        public static IVirtualDirective ShowImage(
-            Uri imageUri,
-            string accessibilityText,
+        public static IVirtualDirective ShowImage(IImage image,
             bool keepSessionOpen = false)
         {
             return new ImageDirective
             {
-                AccessibilityText = accessibilityText,
-                Image = imageUri,
+                Image = image,
                 KeepSessionOpen = keepSessionOpen
             };
         }

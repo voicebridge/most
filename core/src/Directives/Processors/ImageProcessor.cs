@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using VoiceBridge.Most.Alexa;
 using VoiceBridge.Most.Google;
@@ -6,6 +7,8 @@ using VoiceBridge.Most.VoiceModel.Alexa.Directives;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
+using VoiceBridge.Most.VoiceModel.Alexa.APL;
+using System.Collections.Generic;
 
 namespace VoiceBridge.Most.Directives.Processors
 {
@@ -15,44 +18,53 @@ namespace VoiceBridge.Most.Directives.Processors
         {
             response.Content.ShouldEndSession = !directive.KeepSessionOpen;
 
-            /*
-            response.Content.Directives.Add(new ShowImageDirective
+            if (directive.Image is Image)
             {
-            });
-            */
+                var image = directive.Image as Image;
+                var output = new ShowImageDirective();
+
+                output.Document.MainTemplate.Items.Add(new TemplateContainer()
+                {
+                    Direction = AlexaConstants.Presentation.Directions.Column,
+                    Items = new List<ITemplateItem>()
+                    {
+                        new TemplateContainer()
+                        {
+                            Grow = 1,
+                            AlignItems = AlexaConstants.Presentation.Alignment.Center,
+                            JustifyContent = AlexaConstants.Presentation.Justification.Center,
+                            Items = new List<ITemplateItem>()
+                            {
+                                new TemplateImage()
+                                {
+                                    Source = image.ImageUri.AbsoluteUri,
+                                    Scale = AlexaConstants.Presentation.Scale.BestFill,
+                                    Width = "100vw",
+                                    Height = "100vh",
+                                    Align = AlexaConstants.Presentation.Alignment.Center
+                                }
+                            }
+                        }
+                    }
+                });
+
+                response.Content.Directives.Add(output);
+
+                // TODO: Handle Caption
+                return;
+            }
+
+            if (directive.Image is ResponsiveImage)
+            {
+                // TODO: Finish implementation
+            }
+
+            throw new NotImplementedException();
         }
 
         protected override void Process(ImageDirective directive, AppRequest request, AppResponse response)
         {
-            response.Payload.Body.ExpectUserResponse = directive.KeepSessionOpen;
-
-            /*
-            // If speech hasn't already been queued in the response, use the accessibility text
-            if (!response.Payload.Body.RichResponse.Items.Any(x => x.GetType().Equals(typeof(SimpleResponse))))
-            {
-                response.Payload.Body.RichResponse.Items.Add(new SimpleResponseItem
-                {
-                    Value = new SimpleResponse
-                    {
-                        TextToSpeech = directive.AccessibilityText
-                    }
-                });
-            }
-
-            // Show the image using a basic card
-            response.Payload.Body.RichResponse.Items.Add(new BasicCardItem
-            {
-                Value = new BasicCard
-                {
-                    Title = directive.AccessibilityText,
-                    Image = new Image
-                    {
-                        AccessibilityText = directive.AccessibilityText,
-                        Url = directive.Image,
-                    }
-                }
-            });
-            */
+            // At present, Google Home Hub doesn't support full-screen imagery
         }
     }
 }
