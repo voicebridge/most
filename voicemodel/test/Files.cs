@@ -17,6 +17,8 @@ namespace VoiceBridge.Most.VoiceModel.Test
 
         public static string SampleDialogFlowRequest => GetFile("DialogFlowRequest.json");
 
+        public static string AlexaSupportedInterfacesTestCase => GetFile("AlexaSupportedInterfacesTest.json");
+
         private static string GetFile(string name)
         {
             return Assembly.GetExecutingAssembly().GetTextFile(Prefix + name);

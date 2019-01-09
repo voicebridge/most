@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using VoiceBridge.Most.Alexa;
 using VoiceBridge.Most.Directives;
@@ -20,52 +21,80 @@ namespace VoiceBridge.Most
     /// </summary>
     public class Assistant
     {
-        private readonly List<IntentConfiguration> intents = new List<IntentConfiguration>();
+        private readonly List<IRequestHandlerBuilder> requestHandlerBuilders = new List<IRequestHandlerBuilder>();
 
         /// <summary>
         /// On first launch. This is the MAIN intent for Google Actions
         /// and Launch Request for Alexa
         /// </summary>
         /// <returns>Itself</returns>
-        public IntentConfiguration OnLaunch()
+        public IRequestHandlerBuilder OnLaunch()
         {
-            var intent = new IntentConfiguration(RequestType.Launch);
-            intents.Add(intent);
-            return intent;
+            return CreateHandlerBuilder(RequestType.Launch);
         }
 
         /// <summary>
         /// Triggered when the user quits (says quit, cancel, stop)
         /// </summary>
         /// <returns>Itself</returns>
-        public IntentConfiguration OnExit()
+        public IRequestHandlerBuilder OnExit()
         {
-            var intent = new IntentConfiguration(RequestType.UserInitiatedTermination);
-            intents.Add(intent);
-            return intent;
+            return CreateHandlerBuilder(RequestType.UserInitiatedTermination);
         }
         
-        public IntentConfiguration OnIntent(string intentName)
+        /// <summary>
+        /// Sets a handler to be triggered on a specific intent name
+        /// </summary>
+        /// <param name="intentName">Name of the intent to match (case-insensitive)</param>
+        /// <returns>IRequestHandlerBuilder</returns>
+        public IRequestHandlerBuilder OnIntent(string intentName)
         {
-            var intent = new IntentConfiguration(intentName);
-            intents.Add(intent);
-            return intent;
+            return CreateHandlerBuilder(RequestType.Intent)
+                .When(ctx => Util.StringOrdinalEquals(ctx.RequestModel.IntentName, intentName));
+        }
+
+        /// <summary>
+        /// Set a handler to be triggered when a request comes in notifying you of audio player status change
+        /// </summary>
+        /// <returns>IRequestHandlerBuilder</returns>
+        public IRequestHandlerBuilder OnAudioPlayerStatusChange()
+        {
+            return CreateHandlerBuilder(RequestType.AudioPlayerStatusChange);
+        }
+
+        /// <summary>
+        /// Set a handler to be triggered when a display element is triggered (List, Button, etc...)
+        /// </summary>
+        /// <returns>IRequestHandlerBuilder</returns>
+        public IRequestHandlerBuilder OnDisplayElementEvent()
+        {
+            return CreateHandlerBuilder(RequestType.NonVoiceInputEvent);
         }
         
-        public IntentConfiguration OnIntents(params string[] intentNames)
+        /// <summary>
+        /// Set a handler to be triggered when any intent in the list provided is detected.
+        /// </summary>
+        /// <param name="intentNames">Names of intents to match</param>
+        /// <returns>IRequestHandlerBuilder</returns>
+        public IRequestHandlerBuilder OnIntents(params string[] intentNames)
         {
-            var intent = new IntentConfiguration(intentNames);
-            intents.Add(intent);
-            return intent;
+            return CreateHandlerBuilder(RequestType.Intent)
+                .When(ctx => intentNames.Any(name => Util.StringOrdinalEquals(name, ctx.RequestModel.IntentName)));
         }
         
-        public IntentConfiguration OnAnyIntent()
+        /// <summary>
+        /// Set a handler to be triggered on any intent name
+        /// </summary>
+        /// <returns>IRequestHandlerBuilder</returns>
+        public IRequestHandlerBuilder OnAnyIntent()
         {
-            var intent = new IntentConfiguration();
-            intents.Add(intent);
-            return intent;
+            return CreateHandlerBuilder(RequestType.Intent);
         }
         
+        /// <summary>
+        /// Creates an Alexa Engine Builder
+        /// </summary>
+        /// <returns>Engine Builder</returns>
         public EngineBuilder<SkillRequest, SkillResponse> AlexaEngineBuilder()
         {
             var compositeBuilder = new CompositeInputModelBuilder<SkillRequest>(
@@ -73,10 +102,15 @@ namespace VoiceBridge.Most
             {
                 new AlexaInputModelBuilder(), 
                 new NonVoiceEventsInputModelBuilder(),
+                new AlexaCapabilitiesInputModelBuilder()
             });
             return CreateBuilder(new AlexaResponseFactory(), compositeBuilder);
         }
 
+        /// <summary>
+        /// Creates a Google Assistant Engine builder
+        /// </summary>
+        /// <returns>Engine Builder</returns>
         public EngineBuilder<AppRequest, AppResponse> GoogleEngineBuilder()
         {
             var compositeBuilder = new CompositeInputModelBuilder<AppRequest>(
@@ -84,8 +118,16 @@ namespace VoiceBridge.Most
                 {
                     new ActionInputModelBuilder(), 
                     new NonVoiceInputModelBuilder(),
+                    new GoogleCapabilitiesInputModelBuilder(),
                 });
             return CreateBuilder(new ActionResponseFactory(), compositeBuilder);
+        }
+
+        private IRequestHandlerBuilder CreateHandlerBuilder(RequestType requestType)
+        {
+            var builder = new RequestHandlerBuilder(requestType);
+            this.requestHandlerBuilders.Add(builder);
+            return builder;
         }
 
         private EngineBuilder<TRequest, TResponse> CreateBuilder<TRequest, TResponse>(
@@ -118,7 +160,7 @@ namespace VoiceBridge.Most
             where TRequest : IRequest 
             where TResponse : IResponse
         {
-            foreach (var intentCfg in this.intents)
+            foreach (var intentCfg in this.requestHandlerBuilders)
             {
                 engine.AddRequestHandler(intentCfg);
             }

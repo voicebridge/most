@@ -33,6 +33,11 @@ namespace VoiceBridge.Most
         NonVoiceInputEvent,
         
         /// <summary>
+        /// Request is a notification of audio player status
+        /// </summary>
+        AudioPlayerStatusChange,
+        
+        /// <summary>
         /// This request type is not yet natively support by Most
         /// </summary>
         Other

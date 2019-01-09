@@ -29,8 +29,8 @@ namespace VoiceBridge.Most
         /// <param name="intent">IntentConfiguration</param>
         /// <param name="prompt">Prompt</param>
         /// <returns>SayDirective</returns>
-        public static IntentConfiguration Say(
-            this IntentConfiguration intent, 
+        public static IRequestHandlerBuilder Say(
+            this IRequestHandlerBuilder intent, 
             Prompt prompt)
         {
             return ApplyAction(intent, Say(prompt));
@@ -45,8 +45,8 @@ namespace VoiceBridge.Most
         /// <param name="prompt">Prompt to use</param>
         /// <param name="expectedIntentName">Intent name hint (used by Google Actions)</param>
         /// <returns>Itself</returns>
-        public static IntentConfiguration AskFor(
-            this IntentConfiguration intent, 
+        public static IRequestHandlerBuilder AskFor(
+            this IRequestHandlerBuilder intent, 
             string parameterName,
             Prompt prompt, 
             string expectedIntentName = null)
@@ -79,16 +79,16 @@ namespace VoiceBridge.Most
         /// <summary>
         /// Should intent conditions be satisfied, audio media will be played on the user's device
         /// </summary>
-        /// <param name="intent">IntentConfiguration</param>
+        /// <param name="handlerBuilder">IntentConfiguration</param>
         /// <param name="media">Audio Media</param>
         /// <param name="prompt">Prompt to play before the audio</param>
         /// <returns>Itself</returns>
-        public static IntentConfiguration PlayAudio(
-            this IntentConfiguration intent,
+        public static IRequestHandlerBuilder PlayAudio(
+            this IRequestHandlerBuilder handlerBuilder,
             Media media, 
             Prompt prompt)
         {
-            return ApplyAction(intent, PlayAudio(media, prompt));
+            return ApplyAction(handlerBuilder, PlayAudio(media, prompt));
         }
         
 
@@ -109,13 +109,14 @@ namespace VoiceBridge.Most
         /// <summary>
         /// Should intent conditions be satisfied, display an image on the user's device (if supported)
         /// </summary>
+        /// <param name="handlerBuilder">Instance</param>
         /// <param name="image">Either an Image or ResponsiveImage</param>
         /// <returns>Itself</returns>
-        public static IntentConfiguration ShowImage(
-            this IntentConfiguration intent,
+        public static IRequestHandlerBuilder ShowImage(
+            this IRequestHandlerBuilder handlerBuilder,
             IImage image)
         {
-            return ApplyAction(intent, ShowImage(image));
+            return ApplyAction(handlerBuilder, ShowImage(image));
         }
 
 
@@ -146,17 +147,16 @@ namespace VoiceBridge.Most
         /// <summary>
         /// Controls whether to keep the session open or not
         /// </summary>
-        /// <param name="keepSessionOpen">False by default. If true, a response will be expected</param>
         /// <returns>Itself</returns>
-        public static IntentConfiguration KeepSessionOpen(
-            this IntentConfiguration intent)
+        public static IRequestHandlerBuilder KeepSessionOpen(
+            this IRequestHandlerBuilder intent)
         {
             return ApplyAction(intent, KeepSessionOpen());
         }
 
 
-        private static IntentConfiguration ApplyAction(
-            IntentConfiguration intent, 
+        private static IRequestHandlerBuilder ApplyAction(
+            IRequestHandlerBuilder intent, 
             IVirtualDirective directive)
         {
             intent.Do(context => directive);

@@ -19,6 +19,13 @@ namespace VoiceBridge.Most.VoiceModel.Alexa
             public const string DeviceCommunicationError = "DEVICE_COMMUNICATION_ERROR";
             public const string InternalError = "INTERNAL_ERROR";
         }
+
+        public static class DeviceInterfaceNames
+        {
+            public const string Display = "Display";
+            public const string AlexaPresentationLanguage = "Alexa.Presentation.APL";
+            public const string AudioPlayer = "AudioPlayer";
+        }
         
         public static class AudioPlayer
         {

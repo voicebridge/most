@@ -28,6 +28,7 @@
       "device": {
         "deviceId": "[DeviceId]",
         "supportedInterfaces": {
+          "Display": {},
           "AudioPlayer": {},
           "Alexa.Presentation.APL": {
             "runtime": {

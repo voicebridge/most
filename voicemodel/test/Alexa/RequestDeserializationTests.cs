@@ -1,4 +1,5 @@
 using System.Linq;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using VoiceBridge.Most.VoiceModel.Alexa;
 using Xunit;
@@ -12,6 +13,13 @@ namespace VoiceBridge.Most.VoiceModel.Test.Alexa
         {
             var request = GetTestRequest();
             Assert.Equal(AlexaConstants.AlexaVersion, request.Version);
+        }
+
+        [Fact]
+        public void VerifySupportedInterfaces()
+        {
+            var request = JsonConvert.DeserializeObject<SkillRequest>(Files.AlexaSupportedInterfacesTestCase);
+            Assert.True(request.Context.System.Device.SupportedInterfaces.ContainsKey("Alexa.Presentation.APL"));
         }
 
         [Fact]

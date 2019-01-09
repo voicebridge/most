@@ -1,0 +1,67 @@
+{
+  "version": "1.0",
+  "session": {
+    "new": true,
+    "sessionId": "amzn1.echo-api.session.6fc32bea-296c-44f9-80b6",
+    "application": {
+      "applicationId": "amzn1.ask.skill.8a5e7c66-9436-4683-add7"
+    },
+    "user": {
+      "userId": "amzn1.ask.account.uid"
+    }
+  },
+  "context": {
+    "System": {
+      "application": {
+        "applicationId": "amzn1.ask.skill.8a5e7c66-9436-4683-add7-61ebd6ed486f"
+      },
+      "user": {
+        "userId": "amzn1.ask.account.uid"
+      },
+      "device": {
+        "deviceId": "amzn1.ask.device.dvc",
+        "supportedInterfaces": {
+          "Alexa.Presentation.APL": {
+            "runtime": {
+              "maxVersion": "1.0"
+            }
+          },
+          "AudioPlayer": {},
+          "Display": {}
+        }
+      },
+      "apiEndpoint": "https://api.eu.amazonalexa.com",
+      "apiAccessToken": "..---"
+    },
+    "Viewport": {
+      "experiences": [
+        {
+          "arcMinuteWidth": 246,
+          "arcMinuteHeight": 144,
+          "canRotate": false,
+          "canResize": false
+        }
+      ],
+      "shape": "RECTANGLE",
+      "pixelWidth": 1024,
+      "pixelHeight": 600,
+      "dpi": 160,
+      "currentPixelWidth": 1024,
+      "currentPixelHeight": 600,
+      "touch": [
+        "SINGLE"
+      ],
+      "keyboard": []
+    }
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "amzn1.echo-api.request.50b01d3f-5e73-4ff7-9206",
+    "timestamp": "2019-01-08T23:10:55Z",
+    "locale": "en-GB",
+    "intent": {
+      "name": "SayHi",
+      "confirmationStatus": "NONE"
+    }
+  }
+}
