@@ -22,11 +22,13 @@ namespace VoiceBridge.Most.Test.TestData
         {
             var user = CreateUser();
             var app = CreateAppInfo();
+            var deviceInfo = CreateDeviceInfo(Guid.NewGuid().ToString());
+
             var request = new SkillRequest
             {
                 Version = AlexaConstants.AlexaVersion,
                 Session = CreateSession(user, app),
-                Context = CreateContext(user, app),
+                Context = CreateContext(user, app, deviceInfo),
                 Content = CreateContent()
             };
             return request;
@@ -46,14 +48,15 @@ namespace VoiceBridge.Most.Test.TestData
             return content;
         }
 
-        public static RequestContext CreateContext(UserInfo user, ApplicationInfo app)
+        public static RequestContext CreateContext(UserInfo user, ApplicationInfo app, DeviceInfo deviceInfo)
         {
             var context = new RequestContext
             {
                 System = new AlexaInfo
                 {
                     User = user, 
-                    Application = app
+                    Application = app,
+                    Device = deviceInfo,
                 }
             };
             return context;
@@ -89,6 +92,15 @@ namespace VoiceBridge.Most.Test.TestData
             return new ApplicationInfo
             {
                 ApplicationId = Known.ApplicationId
+            };
+        }
+
+        public static DeviceInfo CreateDeviceInfo(string id)
+        {
+            return new DeviceInfo
+            {
+                DeviceId = id,
+                SupportedInterfaces = new Dictionary<string, object>()
             };
         }
     }

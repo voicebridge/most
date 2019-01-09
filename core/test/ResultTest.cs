@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using VoiceBridge.Most.Directives;
 using Xunit;
@@ -6,6 +7,12 @@ namespace VoiceBridge.Most.Test
 {
     public class ResultTest
     {
+        private const string IMAGE_URL_1 = "https://images-na.ssl-images-amazon.com/images/I/61GcN5yX6XL._SL1000_.jpg";
+        private const string IMAGE_URL_2 = "https://images-na.ssl-images-amazon.com/images/I/6182S7MYC2L._SL1000_.jpg";
+        private const string IMAGE_URL_3 = "https://images-na.ssl-images-amazon.com/images/I/61yI7vWa83L._SL1000_.jpg";
+        private const string IMAGE_URL_4 = "https://images-na.ssl-images-amazon.com/images/I/51FQBzDZ3VL.jpg";
+
+
         [Fact]
         public void Say()
         {
@@ -69,6 +76,77 @@ namespace VoiceBridge.Most.Test
             Assert.Same(prompt, directive.Prompt);
         }
 
+        [Fact]
+        public void ShowImage()
+        {
+            var image = IMAGE_URL_1.AsImage();
+            var directive = Result.ShowImage(image) as ImageDirective;
+
+            Assert.NotNull(directive);
+            Assert.True(image is Image);
+            Assert.Same(image, directive.Image);
+
+            image = new Image() { ImageUri = new System.Uri(IMAGE_URL_1) };
+            directive = Result.ShowImage(image) as ImageDirective;
+
+            Assert.NotNull(directive);
+            Assert.True(directive.Image is Image);
+            Assert.Same(image, directive.Image);
+        }
+
+        [Fact]
+        public async Task ShowImageOnIntent()
+        {
+            var image = IMAGE_URL_1.AsImage();
+            var directive = await DynamicHandlerHelper.ExecuteHandle<ImageDirective>(intent => intent.ShowImage(image));
+            
+            Assert.NotNull(directive);
+            Assert.True(image is Image);
+            Assert.Same(image, directive.Image);
+
+            image = new Image() { ImageUri = new Uri(IMAGE_URL_1) };
+            directive = await DynamicHandlerHelper.ExecuteHandle<ImageDirective>(intent => intent.ShowImage(image));
+
+            Assert.NotNull(directive);
+            Assert.True(directive.Image is Image);
+            Assert.Same(image, directive.Image);
+        }
+
+        [Fact]
+        public void ShowImageResponsive()
+        {
+            var image = new ResponsiveImage()
+            {
+                SmallImageUri = new Uri(IMAGE_URL_1),
+                MediumImageUri = new Uri(IMAGE_URL_2),
+                LargeImageUri = new Uri(IMAGE_URL_3),
+                ExtraLargeImageUri = new Uri(IMAGE_URL_4)
+            };
+
+            var directive = Result.ShowImage(image) as ImageDirective;
+
+            Assert.NotNull(directive);
+            Assert.True(directive.Image is ResponsiveImage);
+            Assert.Same(image, directive.Image);
+        }
+
+        [Fact]
+        public async Task ShowImageResponsiveOnIntent()
+        {
+            var image = new ResponsiveImage()
+            {
+                SmallImageUri = new Uri(IMAGE_URL_1),
+                MediumImageUri = new Uri(IMAGE_URL_2),
+                LargeImageUri = new Uri(IMAGE_URL_3),
+                ExtraLargeImageUri = new Uri(IMAGE_URL_4)
+            };
+
+            var directive = await DynamicHandlerHelper.ExecuteHandle<ImageDirective>(intent => intent.ShowImage(image));
+
+            Assert.NotNull(directive);
+            Assert.True(directive.Image is ResponsiveImage);
+            Assert.Same(image, directive.Image as ResponsiveImage);
+        }
 
         [Fact]
         public void KeepSessionOpen()
