@@ -16,8 +16,8 @@ namespace VoiceBridge.Most
         {
             return new Image
             {
-                ImageUri = new System.Uri(s),
-                Caption = caption
+                ImageUri = new System.Uri(s)
+                // Caption = caption
             };
         }
     }
