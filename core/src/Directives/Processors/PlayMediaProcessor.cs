@@ -21,7 +21,7 @@ namespace VoiceBridge.Most.Directives.Processors
 
         protected override void Process(PlayMediaDirective directive, AppRequest request, AppResponse response)
         {
-            var item = new MediaResponseItem
+            var mediaResponseItem = new MediaResponseItem
             {
                 Value = new MediaResponse
                 {
@@ -43,15 +43,8 @@ namespace VoiceBridge.Most.Directives.Processors
                 }
             };
 
-            response.Payload.Body.RichResponse.Items.Add(new SimpleResponseItem
-            {
-                Value = new SimpleResponse
-                {
-                    TextToSpeech = directive.Prompt.Content
-                }
-            });
-
-            response.Payload.Body.RichResponse.Items.Add(item);
+            response.Payload.Body.RichResponse.Items.Add(directive.Prompt.ToAssistantSimpleResponse());
+            response.Payload.Body.RichResponse.Items.Add(mediaResponseItem);
         }
 
         private static PlayAudioDirective CreateAlexaPlayAudioDirective()
