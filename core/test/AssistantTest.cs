@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Timers;
 using Newtonsoft.Json;
+using VoiceBridge.Common;
 using VoiceBridge.Most.Test.TestData;
 using VoiceBridge.Most.VoiceModel.Alexa;
 using Xunit;
@@ -80,9 +81,9 @@ namespace VoiceBridge.Most.Test
             var media = new Media
             {
                 Author = "San Jose Sharks",
-                LargeImageUrl = new Uri("https://s3.amazonaws.com/voicebridge-assets/sharks_logo.png"),
-                SmallImageUrl = new Uri("https://s3.amazonaws.com/voicebridge-assets/sharks_logo.png"),
-                StreamUrl = new Uri("https://s3.amazonaws.com/voicebridge-assets/sample_file.mp3"),
+                LargeImageUrl = new SecureUri("https://s3.amazonaws.com/voicebridge-assets/sharks_logo.png"),
+                SmallImageUrl = new SecureUri("https://s3.amazonaws.com/voicebridge-assets/sharks_logo.png"),
+                StreamUrl = new SecureUri("https://s3.amazonaws.com/voicebridge-assets/sample_file.mp3"),
                 Title = "San Jose Goal Score Horn",
                 Subtitle = "This is a sample audio"
             };

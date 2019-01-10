@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Amazon.Lambda.Core;
 using Newtonsoft.Json;
+using VoiceBridge.Common;
 using VoiceBridge.Most;
 using VoiceBridge.Most.Directives;
 using VoiceBridge.Most.VoiceModel;
@@ -86,9 +87,9 @@ namespace Sample
             var media = new Media
             {
                 Author = "San Jose Sharks",
-                LargeImageUrl = new Uri("https://s3.amazonaws.com/voicebridge-assets/sharks_logo.png"),
-                SmallImageUrl = new Uri("https://s3.amazonaws.com/voicebridge-assets/sharks_logo.png"),
-                StreamUrl = new Uri("https://s3.amazonaws.com/voicebridge-assets/sample_file.mp3"),
+                LargeImageUrl = new SecureUri("https://s3.amazonaws.com/voicebridge-assets/sharks_logo.png"),
+                SmallImageUrl = new SecureUri("https://s3.amazonaws.com/voicebridge-assets/sharks_logo.png"),
+                StreamUrl = new SecureUri("https://s3.amazonaws.com/voicebridge-assets/sample_file.mp3"),
                 Title = "San Jose Goal Score Horn",
                 Subtitle = "This is a sample audio"
             };

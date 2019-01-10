@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using VoiceBridge.Common;
 
 namespace VoiceBridge.Most
 {
@@ -12,12 +13,12 @@ namespace VoiceBridge.Most
         // public string AccessibleText { get; set; }
         // public string Caption { get; set; }
 
-        public Uri SmallImageUri { get; set; }
+        public SecureUri SmallImageUri { get; set; }
 
-        public Uri MediumImageUri { get; set; }
+        public SecureUri MediumImageUri { get; set; }
 
-        public Uri LargeImageUri { get; set; }
+        public SecureUri LargeImageUri { get; set; }
 
-        public Uri ExtraLargeImageUri { get; set; }
+        public SecureUri ExtraLargeImageUri { get; set; }
     }
 }
