@@ -64,7 +64,7 @@ namespace VoiceBridge.Most.Test.Google
         [Fact]
         public void Metadata()
         {
-            var appRequest = AppRequests.CreateBoileRequest();
+            var appRequest = AppRequests.Boilerplate();
             appRequest.SessionId = "sid";
             appRequest.ResponseId = "rid";
             appRequest.Result.LanguageCode = "en-US";
@@ -83,7 +83,7 @@ namespace VoiceBridge.Most.Test.Google
         [Fact]
         public void Parameters()
         {
-            var appRequest = AppRequests.CreateBoileRequest();
+            var appRequest = AppRequests.Boilerplate();
             appRequest.Result.Parameters["p1"] = "v1";
             appRequest.Result.Parameters["p2"] = "v2";
             var context = new ConversationContext();
@@ -97,7 +97,7 @@ namespace VoiceBridge.Most.Test.Google
         {
             var session = new Dictionary<string, string> {["s1"] = "v1", ["s2"] = "v2"};
             var sessionJson = JsonConvert.SerializeObject(session);
-            var appRequest = AppRequests.CreateBoileRequest();
+            var appRequest = AppRequests.Boilerplate();
             appRequest.OriginalDetectIntentRequest.Content.User.UserStorage = sessionJson;
             var context = new ConversationContext();
             new ActionInputModelBuilder().Build(context, appRequest);
@@ -107,7 +107,7 @@ namespace VoiceBridge.Most.Test.Google
 
         private static AppRequest CreateRequestWithIntent(string intentName)
         {
-            var request = AppRequests.CreateBoileRequest();
+            var request = AppRequests.Boilerplate();
             var input = new Input
             {
                 Intent = intentName,

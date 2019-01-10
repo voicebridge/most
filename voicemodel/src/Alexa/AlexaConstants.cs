@@ -35,7 +35,15 @@ namespace VoiceBridge.Most.VoiceModel.Alexa
                 public const string Enqueue = "ENQUEUE";
                 public const string ReplaceEnqueued = "REPLACE_ENQUEUED";
             }
-            
+
+            public static class RequestTypes
+            {
+                public const string Finished = "PlaybackFinished";
+                public const string Finishing = "PlaybackNearlyFinished";
+                public const string Started = "PlaybackStarted";
+                public const string Stopped = "PlaybackStopped";
+                public const string Failed = "PlaybackFailed";
+            }
             public static class Status
             {
                 public const string Idle = "IDLE";
@@ -52,6 +60,8 @@ namespace VoiceBridge.Most.VoiceModel.Alexa
                 public const string Stop = "AudioPlayer.Stop";
                 public const string ClearQueue = "AudioPlayer.ClearQueue";
             }
+
+            public const string RequestTypePrefix = "AudioPlayer.";
         }
         
         

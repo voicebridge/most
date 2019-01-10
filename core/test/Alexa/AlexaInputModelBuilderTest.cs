@@ -32,7 +32,7 @@ namespace VoiceBridge.Most.Test.Alexa
         {
             var request = Files.AlexaPlaybackFinished.FromJson<SkillRequest>();
             var context = BuildModel(request);
-            Assert.Equal(RequestType.Other, context.RequestType);
+            Assert.Equal(RequestType.AudioPlayerStatusChange, context.RequestType);
         }
 
         [Fact]

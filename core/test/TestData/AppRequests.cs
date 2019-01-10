@@ -6,7 +6,7 @@ namespace VoiceBridge.Most.Test.TestData
 {
     public class AppRequests
     {
-        public static AppRequest CreateBoileRequest()
+        public static AppRequest Boilerplate()
         {
             var request = new AppRequest
             {

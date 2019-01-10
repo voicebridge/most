@@ -80,9 +80,17 @@ namespace VoiceBridge.Most.Alexa
                 case AlexaConstants.RequestType.AlexaPresentationLanguageUserEvent:
                     context.RequestType = RequestType.NonVoiceInputEvent;
                     break;
-                
+  
                 default:
-                    context.RequestType = RequestType.Other;
+                    if (request.Content.Type.StartsWith(AlexaConstants.AudioPlayer.RequestTypePrefix))
+                    {
+                        context.RequestType = RequestType.AudioPlayerStatusChange;
+                    }
+                    else
+                    {
+                        context.RequestType = RequestType.Other;
+                    }
+
                     break;
             }
         }

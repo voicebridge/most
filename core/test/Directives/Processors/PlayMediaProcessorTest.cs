@@ -38,7 +38,7 @@ namespace VoiceBridge.Most.Test.Directives.Processors
         [Fact]
         public void PlayMediaOnGoogleAssistant()
         {
-            var request = AppRequests.CreateBoileRequest();
+            var request = AppRequests.Boilerplate();
             var response = new ActionResponseFactory().Create(new ConversationContext());
             var media = ExecuteProcessor((virtualDirective, processor) => processor.Process(virtualDirective, request, response));
             

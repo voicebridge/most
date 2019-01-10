@@ -11,7 +11,7 @@ namespace VoiceBridge.Most.VoiceModel.Alexa
         [JsonProperty("sessionAttributes", NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, string> SessionAttributes {get; set;}
 
-        [JsonProperty("response")]
+        [JsonProperty("response", NullValueHandling = NullValueHandling.Ignore)]
         public ResponseContent Content {get; set;}
     }
 }

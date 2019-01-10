@@ -57,7 +57,7 @@ namespace VoiceBridge.Most
         /// Set a handler to be triggered when a request comes in notifying you of audio player status change
         /// </summary>
         /// <returns>IRequestHandlerBuilder</returns>
-        public IRequestHandlerBuilder OnAudioPlayerStatusChange()
+        public IRequestHandlerBuilder OnAudioStreamingFinished()
         {
             return CreateHandlerBuilder(RequestType.AudioPlayerStatusChange);
         }
@@ -102,7 +102,8 @@ namespace VoiceBridge.Most
             {
                 new AlexaInputModelBuilder(), 
                 new NonVoiceEventsInputModelBuilder(),
-                new AlexaCapabilitiesInputModelBuilder()
+                new AlexaCapabilitiesInputModelBuilder(),
+                new AlexaAudioStatusChangeInputBuilder()
             });
             return CreateBuilder(new AlexaResponseFactory(), compositeBuilder);
         }
@@ -154,6 +155,7 @@ namespace VoiceBridge.Most
             builder.AddDirectiveProcessor((IDirectiveProcessor<TRequest, TResponse>)new PlayMediaProcessor());
             builder.AddDirectiveProcessor((IDirectiveProcessor<TRequest, TResponse>)new ImageProcessor());
             builder.AddDirectiveProcessor((IDirectiveProcessor<TRequest, TResponse>)new SessionProcessor());
+            builder.AddDirectiveProcessor((IDirectiveProcessor<TRequest, TResponse>)new NoOpDirectiveProcessor());
         }
 
         private void RegisterIntents<TRequest, TResponse>(EngineBuilder<TRequest, TResponse> engine) 
