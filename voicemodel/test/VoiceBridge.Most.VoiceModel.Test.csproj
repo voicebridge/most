@@ -30,6 +30,8 @@
       <EmbeddedResource Include="TestFiles\DialogFlowResponse.json" />
       <None Remove="TestFiles\AlexaSupportedInterfacesTest.json" />
       <EmbeddedResource Include="TestFiles\AlexaSupportedInterfacesTest.json" />
+      <None Remove="TestFiles\GoogleFailedMediaStatusRequest.json" />
+      <EmbeddedResource Include="TestFiles\GoogleFailedMediaStatusRequest.json" />
     </ItemGroup>
 
     <ItemGroup>

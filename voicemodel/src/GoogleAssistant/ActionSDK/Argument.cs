@@ -15,5 +15,8 @@ namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK
         
         [JsonProperty("status")]
         public Status Status { get; set; }
+
+        [JsonProperty("extension")]
+        public ArgumentExtension Extension { get; set; }
     }
 }

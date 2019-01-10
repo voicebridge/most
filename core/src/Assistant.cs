@@ -120,6 +120,7 @@ namespace VoiceBridge.Most
                     new ActionInputModelBuilder(), 
                     new NonVoiceInputModelBuilder(),
                     new GoogleCapabilitiesInputModelBuilder(),
+                    new GoogleAudioStatusChangeInputBuilder() 
                 });
             return CreateBuilder(new ActionResponseFactory(), compositeBuilder);
         }

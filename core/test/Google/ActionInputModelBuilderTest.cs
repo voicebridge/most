@@ -11,6 +11,14 @@ namespace VoiceBridge.Most.Test.Google
 {
     public class ActionInputModelBuilderTest
     {
+        [Fact]
+        public void MediaStatusRequest()
+        {
+            var appRequest = Files.GoogleMediaStatusRequest.FromJson<AppRequest>();
+            var context = new ConversationContext();
+            new ActionInputModelBuilder().Build(context, appRequest);
+            Assert.Equal(RequestType.AudioPlayerStatusChange, context.RequestType);
+        }
 
         [Fact]
         public void NoInputRequest()
