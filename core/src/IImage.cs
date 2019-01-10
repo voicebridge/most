@@ -7,7 +7,6 @@ namespace VoiceBridge.Most
     public interface IImage
     {
         // string AccessibleText { get; set; }
-
-        string Caption { get; set; }
+        // string Caption { get; set; }
     }
 }

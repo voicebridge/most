@@ -26,5 +26,22 @@ namespace VoiceBridge.Most.VoiceModel.Alexa.APL
 
         [JsonProperty("items")]
         public List<ITemplateItem> Items { get; set; } = new List<ITemplateItem>();
+
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public TemplateContainer()
+        {
+        }
+
+
+        /// <summary>
+        /// Constructor (for convenience)
+        /// </summary>
+        public TemplateContainer(string direction)
+        {
+            Direction = direction;
+        }
     }
 }

@@ -10,8 +10,7 @@ namespace VoiceBridge.Most
     public class Image : IImage
     {
         // public string AccessibleText { get; set; }
-
-        public string Caption { get; set; }
+        // public string Caption { get; set; }
 
         public Uri ImageUri { get; set; }
     }

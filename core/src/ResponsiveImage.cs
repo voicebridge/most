@@ -10,8 +10,7 @@ namespace VoiceBridge.Most
     public class ResponsiveImage : IImage
     {
         // public string AccessibleText { get; set; }
-
-        public string Caption { get; set; }
+        // public string Caption { get; set; }
 
         public Uri SmallImageUri { get; set; }
 
