@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using VoiceBridge.Most.Alexa;
 using VoiceBridge.Most.VoiceModel.Alexa;
 using VoiceBridge.Most.VoiceModel.Alexa.Directives;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK;
@@ -14,6 +15,7 @@ namespace VoiceBridge.Most.Directives.Processors
             var alexaDirective = CreateAlexaPlayAudioDirective();   
             SetupStream(alexaDirective, directive);
             SetupStreamMetadata(alexaDirective, directive);
+            response.Content.OutputSpeech = directive.Prompt.ToAlexaSpeech();
             response.Content.Directives.Add(alexaDirective);
         }
 
@@ -45,7 +47,7 @@ namespace VoiceBridge.Most.Directives.Processors
             {
                 Value = new SimpleResponse
                 {
-                    TextToSpeech = "Here is the audio"
+                    TextToSpeech = directive.Prompt.Content
                 }
             });
 
