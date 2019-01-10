@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using VoiceBridge.Most.VoiceModel.Alexa.Directives.Dialog;
 
 namespace VoiceBridge.Most.VoiceModel.Alexa.Directives
 {

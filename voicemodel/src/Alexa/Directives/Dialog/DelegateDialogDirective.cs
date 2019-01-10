@@ -1,4 +1,4 @@
-namespace VoiceBridge.Most.VoiceModel.Alexa.Directives
+namespace VoiceBridge.Most.VoiceModel.Alexa.Directives.Dialog
 {
 
     public class DelegateDialogDirective : DialogDirectiveBase

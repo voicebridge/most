@@ -1,7 +1,6 @@
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
-namespace VoiceBridge.Most.VoiceModel.Alexa.Directives
+namespace VoiceBridge.Most.VoiceModel.Alexa.Directives.AudioPlayer
 {
     public class PlayAudioDirective : DirectiveBase
     {

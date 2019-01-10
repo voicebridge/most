@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using VoiceBridge.Most.Alexa;
 using VoiceBridge.Most.VoiceModel.Alexa;
 using VoiceBridge.Most.VoiceModel.Alexa.Directives;
+using VoiceBridge.Most.VoiceModel.Alexa.Directives.AudioPlayer;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 

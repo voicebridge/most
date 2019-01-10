@@ -14,8 +14,8 @@ namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK
         [JsonProperty("resetUserStorage")]
         public bool ResetUserStorage { get; set; }
         
-        [JsonProperty("expectUserResponse")]
-        public bool ExpectUserResponse { get; set; }
+        [JsonProperty("expectUserResponse", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? ExpectUserResponse { get; set; }
         
         [JsonProperty("isInSandbox")]
         public bool IsInSandbox { get; set; }

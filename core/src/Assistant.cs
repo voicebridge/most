@@ -59,7 +59,8 @@ namespace VoiceBridge.Most
         /// <returns>IRequestHandlerBuilder</returns>
         public IRequestHandlerBuilder OnAudioStreamingFinished()
         {
-            return CreateHandlerBuilder(RequestType.AudioPlayerStatusChange);
+            return CreateHandlerBuilder(RequestType.AudioPlayerStatusChange)
+                .When(x => x.Extensions.Get<AudioPlayerInfo>().State == AudioPlayerState.Finished);
         }
 
         /// <summary>

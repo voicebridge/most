@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace VoiceBridge.Most.VoiceModel.Alexa.Directives
+namespace VoiceBridge.Most.VoiceModel.Alexa.Directives.Dialog
 {
     public abstract class DialogDirectiveBase : DirectiveBase
     {

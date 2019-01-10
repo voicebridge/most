@@ -9,8 +9,8 @@ namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow
         private const int MaximumUserStorageSize = 10000;
         private string userStorage;
 
-        [JsonProperty("expectUserResponse")]
-        public bool ExpectUserResponse { get; set; } = false;
+        [JsonProperty("expectUserResponse", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? ExpectUserResponse { get; set; } = false;
 
         [JsonProperty("userStorage")]
         public string UserStorage

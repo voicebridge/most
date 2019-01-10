@@ -61,6 +61,12 @@ namespace VoiceBridge.Most.VoiceModel.Alexa
                 public const string ClearQueue = "AudioPlayer.ClearQueue";
             }
 
+            public static class ClearBehavior
+            {
+                public const string ClearAll = "CLEAR_ALL";
+                public const string ClearQueue = "CLEAR_ENQUEUED";
+            }
+
             public const string RequestTypePrefix = "AudioPlayer.";
         }
         

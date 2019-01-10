@@ -6,6 +6,7 @@ using VoiceBridge.Most.Google;
 using VoiceBridge.Most.Test.TestData;
 using VoiceBridge.Most.VoiceModel.Alexa;
 using VoiceBridge.Most.VoiceModel.Alexa.Directives;
+using VoiceBridge.Most.VoiceModel.Alexa.Directives.AudioPlayer;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 using Xunit;
