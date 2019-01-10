@@ -31,6 +31,8 @@
       <EmbeddedResource Include="TestFiles\DisplayElementSelectedSample.json" />
       <None Remove="TestFiles\GoogleOptionSelectSample.json" />
       <EmbeddedResource Include="TestFiles\GoogleOptionSelectSample.json" />
+        <None Remove="TestFiles\GoogleMediaStatus.json" />
+        <EmbeddedResource Include="TestFiles\GoogleMediaStatus.json" />
     </ItemGroup>
 
 </Project>

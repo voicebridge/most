@@ -21,6 +21,8 @@ namespace VoiceBridge.Most.Test
 
         public static string GoogleOptionSelected => GetFile("GoogleOptionSelectSample.json");
 
+        public static string GoogleMediaStatusRequest => GetFile("GoogleMediaStatus.json");
+
         private static string GetFile(string name)
         {
             return Assembly.GetExecutingAssembly().GetTextFile(Prefix + name);

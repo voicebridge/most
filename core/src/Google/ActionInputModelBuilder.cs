@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using Newtonsoft.Json;
+using VoiceBridge.Most.VoiceModel.Alexa;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
@@ -36,6 +37,12 @@ namespace VoiceBridge.Most.Google
                 return;
             }
 
+            if (IsMediaStatusChangeRequest(request))
+            {
+                context.RequestType = RequestType.AudioPlayerStatusChange;
+                return;
+            }
+
             if (IsNonVoiceOptionSelection(request))
             {
                 context.RequestType = RequestType.NonVoiceInputEvent;
@@ -46,6 +53,11 @@ namespace VoiceBridge.Most.Google
             {
                 context.RequestType = RequestType.Intent;
             }
+        }
+
+        private bool IsMediaStatusChangeRequest(AppRequest request)
+        {
+            return request.Result?.Text == "actions_intent_MEDIA_STATUS";
         }
 
         private bool IsNonVoiceOptionSelection(AppRequest request)

@@ -11,6 +11,14 @@ namespace VoiceBridge.Most.VoiceModel.Test.GoogleAssistant
     public class ActionRequestTests
     {
         [Fact]
+        public void VerifyMediaStatusArgument()
+        {
+            var request = GetRequest(Files.GoogleMediaStatusFailed);
+            var argument = request.Inputs[0].Arguments[0];
+            Assert.Equal("FAILED", argument.Extension.Status);
+        }
+        
+        [Fact]
         public void GeneralProperties()
         {
             var request = GetRequest();
@@ -85,9 +93,10 @@ namespace VoiceBridge.Most.VoiceModel.Test.GoogleAssistant
             throw new Exception("Failed to find capability: " + capabilityName);
         }
         
-        private static ActionRequest GetRequest()
+        private static ActionRequest GetRequest(string json = null)
         {
-            var app = JsonConvert.DeserializeObject<AppRequest>(Files.SampleDialogFlowRequest);
+            json = json ?? Files.SampleDialogFlowRequest;
+            var app = JsonConvert.DeserializeObject<AppRequest>(json);
             return app.OriginalDetectIntentRequest.Content;
         }
     }

@@ -63,6 +63,7 @@ namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK
 
         public static class CommonIntents
         {
+            public const string MediaStatusChange = "actions.intent.MEDIA_STATUS";
             public const string Text = "actions.intent.TEXT";
             public const string Main = "actions.intent.MAIN";
             public const string Cancel = "actions.intent.CANCEL";

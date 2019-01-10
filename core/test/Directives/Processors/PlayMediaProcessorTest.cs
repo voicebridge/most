@@ -15,6 +15,8 @@ namespace VoiceBridge.Most.Test.Directives.Processors
 {
     public class PlayMediaProcessorTest
     {
+        private const string PromptText = "hello";
+        
         [Fact]
         public void PlayMediaOnAlexa()
         {
@@ -22,7 +24,9 @@ namespace VoiceBridge.Most.Test.Directives.Processors
             var response = AlexaResponses.Boilerplate();
             var media = ExecuteProcessor((virtualDirective, processor) => processor.Process(virtualDirective, request, response));
             
-            var directive = (PlayAudioDirective) response.Content.Directives.Single(d => d is PlayAudioDirective);
+            var directive = (PlayAudioDirective) response.Content.Directives.FirstOrDefault(d => d is PlayAudioDirective);
+            var outputSpeech = (PlainTextOutputSpeech) response.Content.OutputSpeech;
+            
             Assert.NotNull(directive.Audio);
             Assert.Equal(AlexaConstants.AudioPlayer.AudioPlayerBehavior.ReplaceAll, directive.PlayBehavior);
             Assert.Equal(media.StreamUrl, directive.Audio.StreamInfo.Stream);
@@ -34,6 +38,7 @@ namespace VoiceBridge.Most.Test.Directives.Processors
             Assert.Equal(media.Subtitle, directive.Audio.Metadata.Subtitle);
             Assert.Equal(media.LargeImageUrl, directive.Audio.Metadata.Art.Sources.Single().Url);
             Assert.Null(directive.Audio.Metadata.BackgroundImages);
+            Assert.Equal(PromptText, outputSpeech.Text);
         }
         
         [Fact]
@@ -43,7 +48,7 @@ namespace VoiceBridge.Most.Test.Directives.Processors
             var response = new ActionResponseFactory().Create(new ConversationContext());
             var media = ExecuteProcessor((virtualDirective, processor) => processor.Process(virtualDirective, request, response));
             
-            Assert.NotNull(GetItem<SimpleResponseItem>(response).Value.TextToSpeech);
+            Assert.Equal(PromptText, GetItem<SimpleResponseItem>(response).Value.TextToSpeech);
             var mediaObject = GetItem<MediaResponseItem>(response).Value;
             Assert.NotNull(mediaObject);
             Assert.Equal(GoogleAssistantConstants.MediaType.Audio, mediaObject.MediaType);
@@ -72,7 +77,7 @@ namespace VoiceBridge.Most.Test.Directives.Processors
         private Media ExecuteProcessor(Action<IVirtualDirective, PlayMediaProcessor> action)
         {
             var media = CreateTestMedia();
-            var virtualDirective = new PlayMediaDirective(media, null);
+            var virtualDirective = new PlayMediaDirective(media, PromptText.AsPrompt());
             var processor = new PlayMediaProcessor();
             action(virtualDirective, processor);
             return media;

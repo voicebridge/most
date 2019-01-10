@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using VoiceBridge.Most.Alexa;
 using VoiceBridge.Most.VoiceModel.Alexa;
 using VoiceBridge.Most.VoiceModel.Alexa.Directives;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK;
@@ -14,12 +15,13 @@ namespace VoiceBridge.Most.Directives.Processors
             var alexaDirective = CreateAlexaPlayAudioDirective();   
             SetupStream(alexaDirective, directive);
             SetupStreamMetadata(alexaDirective, directive);
+            response.Content.OutputSpeech = directive.Prompt.ToAlexaSpeech();
             response.Content.Directives.Add(alexaDirective);
         }
 
         protected override void Process(PlayMediaDirective directive, AppRequest request, AppResponse response)
         {
-            var item = new MediaResponseItem
+            var mediaResponseItem = new MediaResponseItem
             {
                 Value = new MediaResponse
                 {
@@ -41,15 +43,8 @@ namespace VoiceBridge.Most.Directives.Processors
                 }
             };
 
-            response.Payload.Body.RichResponse.Items.Add(new SimpleResponseItem
-            {
-                Value = new SimpleResponse
-                {
-                    TextToSpeech = "Here is the audio"
-                }
-            });
-
-            response.Payload.Body.RichResponse.Items.Add(item);
+            response.Payload.Body.RichResponse.Items.Add(directive.Prompt.ToAssistantSimpleResponse());
+            response.Payload.Body.RichResponse.Items.Add(mediaResponseItem);
         }
 
         private static PlayAudioDirective CreateAlexaPlayAudioDirective()
