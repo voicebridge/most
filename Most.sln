@@ -1,16 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceBridge.Most.VoiceModel", "voicemodel\src\VoiceBridge.Most.VoiceModel.csproj", "{FB1A15E4-F59E-41B3-8EBF-11271059BFBE}"
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoiceBridge.Most.VoiceModel", "voicemodel\src\VoiceBridge.Most.VoiceModel.csproj", "{FB1A15E4-F59E-41B3-8EBF-11271059BFBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceBridge.Most.VoiceModel.Test", "voicemodel\test\VoiceBridge.Most.VoiceModel.Test.csproj", "{59149097-FF78-43DD-83DE-1A55616BB6E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoiceBridge.Most.VoiceModel.Test", "voicemodel\test\VoiceBridge.Most.VoiceModel.Test.csproj", "{59149097-FF78-43DD-83DE-1A55616BB6E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceBridge.Common", "common\src\VoiceBridge.Common.csproj", "{365B467A-53A3-4CF1-AC41-4EDDE6FD5C9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoiceBridge.Common", "common\src\VoiceBridge.Common.csproj", "{365B467A-53A3-4CF1-AC41-4EDDE6FD5C9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceBridge.Most", "core\src\VoiceBridge.Most.csproj", "{D2AF9697-CEAA-4130-920B-5D6E8A84C589}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoiceBridge.Most", "core\src\VoiceBridge.Most.csproj", "{D2AF9697-CEAA-4130-920B-5D6E8A84C589}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceBridge.Most.Test", "core\test\VoiceBridge.Most.Test.csproj", "{E3F3E679-F6BC-4538-B6FB-48FAF6A10F14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoiceBridge.Most.Test", "core\test\VoiceBridge.Most.Test.csproj", "{E3F3E679-F6BC-4538-B6FB-48FAF6A10F14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "example\Sample.csproj", "{1FD5C3BE-DCF0-4E6A-BC68-70DCA49B06FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample", "example\Sample.csproj", "{1FD5C3BE-DCF0-4E6A-BC68-70DCA49B06FA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{BE293CD5-664B-4399-A1C0-604661932884}"
 EndProject
@@ -19,9 +22,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{741EF23F-D918-443A-9F32-014BC6B4C9A9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{BA5D6B17-F869-4916-956E-83947D6BF278}"
-ProjectSection(SolutionItems) = preProject
-	README.md = README.md
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceBridge.Common.Test", "common\test\VoiceBridge.Common.Test\VoiceBridge.Common.Test.csproj", "{B7480DBD-D4A1-4F12-9D72-C71B647F777E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,13 +58,24 @@ Global
 		{1FD5C3BE-DCF0-4E6A-BC68-70DCA49B06FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FD5C3BE-DCF0-4E6A-BC68-70DCA49B06FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FD5C3BE-DCF0-4E6A-BC68-70DCA49B06FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7480DBD-D4A1-4F12-9D72-C71B647F777E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7480DBD-D4A1-4F12-9D72-C71B647F777E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7480DBD-D4A1-4F12-9D72-C71B647F777E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7480DBD-D4A1-4F12-9D72-C71B647F777E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{D2AF9697-CEAA-4130-920B-5D6E8A84C589} = {BE293CD5-664B-4399-A1C0-604661932884}
-		{E3F3E679-F6BC-4538-B6FB-48FAF6A10F14} = {BE293CD5-664B-4399-A1C0-604661932884}
 		{FB1A15E4-F59E-41B3-8EBF-11271059BFBE} = {07BF7BCF-F57F-4603-BAA9-278919E3B431}
 		{59149097-FF78-43DD-83DE-1A55616BB6E4} = {07BF7BCF-F57F-4603-BAA9-278919E3B431}
 		{365B467A-53A3-4CF1-AC41-4EDDE6FD5C9D} = {741EF23F-D918-443A-9F32-014BC6B4C9A9}
+		{D2AF9697-CEAA-4130-920B-5D6E8A84C589} = {BE293CD5-664B-4399-A1C0-604661932884}
+		{E3F3E679-F6BC-4538-B6FB-48FAF6A10F14} = {BE293CD5-664B-4399-A1C0-604661932884}
 		{1FD5C3BE-DCF0-4E6A-BC68-70DCA49B06FA} = {BA5D6B17-F869-4916-956E-83947D6BF278}
+		{B7480DBD-D4A1-4F12-9D72-C71B647F777E} = {741EF23F-D918-443A-9F32-014BC6B4C9A9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {164EA87C-1630-4A1B-AFEF-5A0AB6C6D98B}
 	EndGlobalSection
 EndGlobal

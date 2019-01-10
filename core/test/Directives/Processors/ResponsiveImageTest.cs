@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using VoiceBridge.Common;
 using VoiceBridge.Most.Directives;
 using VoiceBridge.Most.Directives.Processors;
 using VoiceBridge.Most.Google;
@@ -61,9 +62,9 @@ namespace VoiceBridge.Most.Test.Directives.Processors
             // LargeImageUri will "fall back" to ExtraLargeImageUri by the removal of the latter's "when" predicate
             var image = new ResponsiveImage()
             {
-                SmallImageUri = new Uri(IMAGE_URL_1),
-                MediumImageUri = new Uri(IMAGE_URL_2),
-                ExtraLargeImageUri = new Uri(IMAGE_URL_4),
+                SmallImageUri = new SecureUri(IMAGE_URL_1),
+                MediumImageUri = new SecureUri(IMAGE_URL_2),
+                ExtraLargeImageUri = new SecureUri(IMAGE_URL_4),
             };
 
             var response = AlexaResponses.Boilerplate();
@@ -117,7 +118,7 @@ namespace VoiceBridge.Most.Test.Directives.Processors
         [Fact]
         public void ShowImageOnGoogle()
         {
-            var request = AppRequests.CreateBoileRequest();
+            var request = AppRequests.Boilerplate();
             var response = new ActionResponseFactory().Create(new ConversationContext());
             var image = ExecuteProcessor((virtualDirective, processor) => processor.Process(virtualDirective, request, response));
 
@@ -130,10 +131,10 @@ namespace VoiceBridge.Most.Test.Directives.Processors
         {
             return new ResponsiveImage()
             {
-                SmallImageUri = new Uri(IMAGE_URL_1),
-                MediumImageUri = new Uri(IMAGE_URL_2),
-                LargeImageUri = new Uri(IMAGE_URL_3),
-                ExtraLargeImageUri = new Uri(IMAGE_URL_4),
+                SmallImageUri = new SecureUri(IMAGE_URL_1),
+                MediumImageUri = new SecureUri(IMAGE_URL_2),
+                LargeImageUri = new SecureUri(IMAGE_URL_3),
+                ExtraLargeImageUri = new SecureUri(IMAGE_URL_4),
             };
         }
     }

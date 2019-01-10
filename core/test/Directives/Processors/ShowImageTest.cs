@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using VoiceBridge.Common;
 using VoiceBridge.Most.Directives;
 using VoiceBridge.Most.Directives.Processors;
 using VoiceBridge.Most.Google;
@@ -67,7 +68,7 @@ namespace VoiceBridge.Most.Test.Directives.Processors
         {
             return new Image()
             {
-                ImageUri = new Uri(IMAGE_URL_1)
+                ImageUri = new SecureUri(IMAGE_URL_1)
             };
         }
     }

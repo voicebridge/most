@@ -1,3 +1,5 @@
+using VoiceBridge.Common;
+
 namespace VoiceBridge.Most
 {
     public static class PublicExtensions
@@ -16,7 +18,7 @@ namespace VoiceBridge.Most
         {
             return new Image
             {
-                ImageUri = new System.Uri(s)
+                ImageUri = new SecureUri(s)
                 // Caption = caption
             };
         }
