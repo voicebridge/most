@@ -1,4 +1,5 @@
 using System;
+using VoiceBridge.Common;
 using VoiceBridge.Most.VoiceModel;
 
 namespace VoiceBridge.Most
@@ -16,7 +17,7 @@ namespace VoiceBridge.Most
         /// <summary>
         /// Media file Url (must be https)
         /// </summary>
-        public Uri StreamUrl { get; set; }
+        public SecureUri StreamUrl { get; set; }
         
         /// <summary>
         /// Title
@@ -36,12 +37,12 @@ namespace VoiceBridge.Most
         /// <summary>
         /// Album Art Url
         /// </summary>
-        public Uri LargeImageUrl { get; set; }
+        public SecureUri LargeImageUrl { get; set; }
         
         /// <summary>
         /// Icon Album Art Url
         /// </summary>
-        public Uri SmallImageUrl { get; set; }
+        public SecureUri SmallImageUrl { get; set; }
         
         /// <summary>
         /// Opaque Token to identify content

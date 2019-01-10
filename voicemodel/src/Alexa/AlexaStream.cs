@@ -1,12 +1,13 @@
 using System;
 using Newtonsoft.Json;
+using VoiceBridge.Common;
 
 namespace VoiceBridge.Most.VoiceModel.Alexa
 {
     public class AlexaStream
     {
         [JsonProperty("url")]
-        public Uri Stream { get; set; }
+        public SecureUri Stream { get; set; }
         
         [JsonProperty("token")]
         public string Token { get; set; }

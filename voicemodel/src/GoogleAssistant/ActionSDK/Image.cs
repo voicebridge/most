@@ -1,12 +1,13 @@
 using System;
 using Newtonsoft.Json;
+using VoiceBridge.Common;
 
 namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK
 {
     public class Image
     {
         [JsonProperty("url")]
-        public Uri Url { get; set; }
+        public SecureUri Url { get; set; }
         
         [JsonProperty("accessibilityText")]
         public string AccessibilityText { get; set; }

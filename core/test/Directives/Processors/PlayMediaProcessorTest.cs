@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using VoiceBridge.Common;
 using VoiceBridge.Most.Directives;
 using VoiceBridge.Most.Directives.Processors;
 using VoiceBridge.Most.Google;
@@ -65,9 +66,9 @@ namespace VoiceBridge.Most.Test.Directives.Processors
             {
                 Author = "Popo The Clown",
                 Subtitle = "The Sequel",
-                StreamUrl = new Uri("https://www.awesome-sauce.com/most-podcast.mp3"),
-                LargeImageUrl = new Uri("https://awesomeness/most-logo-large.png"),
-                SmallImageUrl = new Uri("https://awesomeness/most-logo-small.png"),
+                StreamUrl = new SecureUri("https://www.awesome-sauce.com/most-podcast.mp3"),
+                LargeImageUrl = new SecureUri("https://awesomeness/most-logo-large.png"),
+                SmallImageUrl = new SecureUri("https://awesomeness/most-logo-small.png"),
                 Title = "Clown Life",
                 Token = Generic.Id()
             };
