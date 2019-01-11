@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using VoiceBridge.Most.Alexa;
 using VoiceBridge.Most.Directives;
+using VoiceBridge.Most.Directives.Processors;
 using VoiceBridge.Most.Test.TestData;
 using VoiceBridge.Most.VoiceModel.Alexa;
 using Xunit;
@@ -41,6 +43,24 @@ namespace VoiceBridge.Most.Test
             
             Assert.Equal(requestId, ((PlainTextOutputSpeech)response.Content.OutputSpeech).Text);
             Assert.Equal("ABCD", sessionStore.Values[SessionKey]);
+        }
+        
+        [Fact]
+        public async Task NoOp()
+        {
+            var request = AlexaRequests.Boilerplate();
+            var builder = new EngineBuilder<SkillRequest, SkillResponse>();
+
+            builder
+                .SetLogger(this)
+                .AddDirectiveProcessor(new NoOpDirectiveProcessor())
+                .SetResponseFactory(new AlexaResponseFactory());
+            
+            var engine = builder.Build();
+            var response = await engine.Evaluate(request);
+            
+            Assert.Null(response.Content);
+            Assert.Null(response.SessionAttributes);
         }
 
         public ConversionEngineTest(ITestOutputHelper output) : base(output)

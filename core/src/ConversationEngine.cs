@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using VoiceBridge.Most.Logging;
 using VoiceBridge.Most.VoiceModel;
 using Microsoft.Extensions.DependencyInjection;
+using VoiceBridge.Most.Directives;
 using VoiceBridge.Most.Directives.Processors;
 
 namespace VoiceBridge.Most
@@ -24,12 +26,17 @@ namespace VoiceBridge.Most
             Util.AssertNotNull(serviceProvider, nameof(serviceProvider));
             this.inputModelBuilder = serviceProvider.GetService<CompositeInputModelBuilder<TRequest>>();
             this.responseFactory = serviceProvider.GetService<IResponseFactory<TResponse>>();
-            this.compositeHandler = serviceProvider.GetService<CompositeHandler>();
-            this.compositeProcessor = serviceProvider.GetService<CompositeDirectiveProcessor<TRequest, TResponse>>();
             this.baseLogger = serviceProvider.GetService<ILogger>() ?? new NullLoggerReporter();
             this.metricsReporter = serviceProvider.GetService<IMetricsReporter>() ?? new NullLoggerReporter();
             this.sessionStore = serviceProvider.GetService<ISessionStateStore>();
             this.metricsReporter = new SafeMetricsReporter(this.metricsReporter, this.baseLogger);
+            
+            this.compositeProcessor = new CompositeDirectiveProcessor<TRequest, TResponse>(
+                serviceProvider.GetServices<IDirectiveProcessor<TRequest, TResponse>>(), this.baseLogger);
+            this.compositeHandler =
+                new CompositeHandler(serviceProvider.GetServices<IRequestHandler>(), this.baseLogger);
+            this.inputModelBuilder =
+                new CompositeInputModelBuilder<TRequest>(serviceProvider.GetServices<IInputModelBuilder<TRequest>>(), this.baseLogger);
         }
         
         public async Task<TResponse> Evaluate(TRequest request)
@@ -130,6 +137,11 @@ namespace VoiceBridge.Most
             logger.Debug("Processing request: Invoking request handlers");
             await this.compositeHandler.Handle(context);
             logger.Debug("Request handlers invocation step completed.");
+            if (context.OutputDirectives?.Count == 0)
+            {
+                logger.Debug("No directives have been emitted from handlers. Will treat this as a no-op");
+                context.OutputDirectives.Add(new NoOpDirective());
+            }
         }
 
         private ConversationContext CreateConversationContext(TRequest request, ILogger logger)

@@ -41,7 +41,7 @@ namespace VoiceBridge.Most.Test
             var engine = assistant.AlexaEngineBuilder().Build();
             
             var response = await engine.Evaluate(request);
-            Assert.True(response.Content.ShouldEndSession);
+            Assert.Null(response.Content.ShouldEndSession);
             Assert.Equal(promptText, ((PlainTextOutputSpeech)response.Content.OutputSpeech).Text);
         }
 

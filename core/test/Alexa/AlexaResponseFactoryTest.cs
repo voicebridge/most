@@ -16,7 +16,7 @@ namespace VoiceBridge.Most.Test.Alexa
             Assert.NotNull(response.Content);
             Assert.NotNull(response.Content.Directives);
             Assert.NotNull(response.SessionAttributes);
-            Assert.True(response.Content.ShouldEndSession);
+            Assert.Null(response.Content.ShouldEndSession);
         }
 
         [Fact]

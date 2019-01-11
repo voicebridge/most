@@ -100,12 +100,12 @@ namespace VoiceBridge.Most
         {
             var compositeBuilder = new CompositeInputModelBuilder<SkillRequest>(
                 new IInputModelBuilder<SkillRequest>[]
-            {
-                new AlexaInputModelBuilder(), 
-                new NonVoiceEventsInputModelBuilder(),
-                new AlexaCapabilitiesInputModelBuilder(),
-                new AlexaAudioStatusChangeInputBuilder()
-            });
+                {
+                    new AlexaInputModelBuilder(), 
+                    new NonVoiceEventsInputModelBuilder(),
+                    new AlexaCapabilitiesInputModelBuilder(),
+                    new AlexaAudioStatusChangeInputBuilder()
+                }, new NullLoggerReporter());
             return CreateBuilder(new AlexaResponseFactory(), compositeBuilder);
         }
 
@@ -121,8 +121,8 @@ namespace VoiceBridge.Most
                     new ActionInputModelBuilder(), 
                     new NonVoiceInputModelBuilder(),
                     new GoogleCapabilitiesInputModelBuilder(),
-                    new GoogleAudioStatusChangeInputBuilder() 
-                });
+                    new GoogleAudioStatusChangeInputBuilder()
+                }, new NullLoggerReporter());
             return CreateBuilder(new ActionResponseFactory(), compositeBuilder);
         }
 

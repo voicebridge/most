@@ -49,7 +49,7 @@ namespace VoiceBridge.Most
         /// <returns>Itself</returns>
         public EngineBuilder<TRequest, TResponse> AddRequestHandler(IRequestHandler handler)
         {
-            this.components.AddTransient(p => handler);
+            this.components.AddTransient<IRequestHandler>(p => handler);
             return this;
         }
 
@@ -60,7 +60,7 @@ namespace VoiceBridge.Most
         /// <returns>Itself</returns>
         public EngineBuilder<TRequest, TResponse> SetLogger(ILogger logger)
         {
-            this.components.AddTransient(p => logger);
+            this.components.AddTransient<ILogger>(p => logger);
             return this;
         }
 
@@ -71,7 +71,7 @@ namespace VoiceBridge.Most
         /// <returns>Itself</returns>
         public EngineBuilder<TRequest, TResponse> SetMetricsReporter(IMetricsReporter reporter)
         {
-            this.components.AddTransient(p => reporter);
+            this.components.AddTransient<IMetricsReporter>(p => reporter);
             return this;
         }
 
@@ -82,7 +82,7 @@ namespace VoiceBridge.Most
         /// <returns>Itself</returns>
         public EngineBuilder<TRequest, TResponse> AddDirectiveProcessor(IDirectiveProcessor<TRequest, TResponse> directiveProcessor)
         {
-            this.components.AddTransient(p => directiveProcessor);
+            this.components.AddTransient<IDirectiveProcessor<TRequest, TResponse>>(p => directiveProcessor);
             return this;
         }
 
@@ -93,7 +93,7 @@ namespace VoiceBridge.Most
         /// <returns>Itself</returns>
         public EngineBuilder<TRequest, TResponse> SetSessionStore(ISessionStateStore store)
         {
-            this.components.AddTransient(p => store);
+            this.components.AddTransient<ISessionStateStore>(p => store);
             return this;
         }
 
@@ -104,16 +104,8 @@ namespace VoiceBridge.Most
         public IConversationEngine<TRequest, TResponse> Build()
         {
             this.AddRequiredSupportComponents();
-            this.RegisterComposites();
             var provider = this.components.BuildServiceProvider();
             return new ConversationEngine<TRequest, TResponse>(provider);
-        }
-
-        private void RegisterComposites()
-        {
-            this.components.AddTransient<CompositeInputModelBuilder<TRequest>>();
-            this.components.AddTransient<CompositeDirectiveProcessor<TRequest, TResponse>>();
-            this.components.AddTransient<CompositeHandler>();
         }
 
         private void AddRequiredSupportComponents()
