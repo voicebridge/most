@@ -68,7 +68,7 @@ namespace VoiceBridge.Most.Test.Directives.Processors
         {
             return new Image()
             {
-                ImageUri = new SecureUri(IMAGE_URL_1)
+                ImageUri = new SecureUrl(IMAGE_URL_1)
             };
         }
     }

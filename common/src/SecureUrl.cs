@@ -7,7 +7,7 @@ namespace VoiceBridge.Common
     /// <summary>
     /// An immutable, sealed, Uri class that enforces a secure scheme
     /// </summary>
-    public sealed class SecureUri : Uri
+    public sealed class SecureUrl : Uri
     {
         /// <summary>
         /// For LOCAL use ONLY!
@@ -41,9 +41,9 @@ namespace VoiceBridge.Common
 
 
         /// <summary>
-        /// Construct a Secure Uri using the given string
+        /// Construct a secure url using the given string
         /// </summary>
-        public SecureUri(string uri)
+        public SecureUrl(string uri)
             : base(uri)
         {
             var exception = Validate();
@@ -55,9 +55,9 @@ namespace VoiceBridge.Common
 
 
         /// <summary>
-        /// Construct a Secure Uri using the given Uri
+        /// Construct a secure url using the given Uri
         /// </summary>
-        public SecureUri(Uri uri)
+        public SecureUrl(Uri uri)
             : base(uri.ToString())
         {
             var exception = Validate();
@@ -71,21 +71,21 @@ namespace VoiceBridge.Common
         /// <summary>
         /// Validates this Uri to determine it's security
         /// </summary>
-        private SecureUriException Validate()
+        private SecureUrlException Validate()
         {
             if (!IsWellFormedOriginalString())
-                return new SecureUriException("Uri is not well formed");
+                return new SecureUrlException("Uri is not well formed");
 
             if(IsFile)
-                return new SecureUriException("Uri is a local file");
+                return new SecureUrlException("Uri is a local file");
 
             if(IsLoopback)
-                return new SecureUriException("Uri is a loopback address");
+                return new SecureUrlException("Uri is a loopback address");
 
             if (!allowed.Contains(Scheme.ToLowerInvariant()))
-                return new SecureUriException("Protocol is insecure or unknown");
+                return new SecureUrlException("Protocol is insecure or unknown");
 
-            // Note. No need to check .IsAbsoluteUri or .IsUnc as the SecureUri constructor will consider
+            // Note. No need to check .IsAbsoluteUri or .IsUnc as the SecureUrl constructor will consider
             //       these types of Uri badly formed
             return null;
         }

@@ -13,6 +13,6 @@ namespace VoiceBridge.Most
         // public string AccessibleText { get; set; }
         // public string Caption { get; set; }
 
-        public SecureUri ImageUri { get; set; }
+        public SecureUrl ImageUri { get; set; }
     }
 }

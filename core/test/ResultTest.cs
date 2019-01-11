@@ -87,7 +87,7 @@ namespace VoiceBridge.Most.Test
             Assert.True(image is Image);
             Assert.Same(image, directive.Image);
 
-            image = new Image() { ImageUri = new SecureUri(IMAGE_URL_1) };
+            image = new Image() { ImageUri = new SecureUrl(IMAGE_URL_1) };
             directive = Result.ShowImage(image) as ImageDirective;
 
             Assert.NotNull(directive);
@@ -105,7 +105,7 @@ namespace VoiceBridge.Most.Test
             Assert.True(image is Image);
             Assert.Same(image, directive.Image);
 
-            image = new Image() { ImageUri = new SecureUri(IMAGE_URL_1) };
+            image = new Image() { ImageUri = new SecureUrl(IMAGE_URL_1) };
             directive = await DynamicHandlerHelper.ExecuteHandle<ImageDirective>(intent => intent.ShowImage(image));
 
             Assert.NotNull(directive);
@@ -118,10 +118,10 @@ namespace VoiceBridge.Most.Test
         {
             var image = new ResponsiveImage()
             {
-                SmallImageUri = new SecureUri(IMAGE_URL_1),
-                MediumImageUri = new SecureUri(IMAGE_URL_2),
-                LargeImageUri = new SecureUri(IMAGE_URL_3),
-                ExtraLargeImageUri = new SecureUri(IMAGE_URL_4)
+                SmallImageUri = new SecureUrl(IMAGE_URL_1),
+                MediumImageUri = new SecureUrl(IMAGE_URL_2),
+                LargeImageUri = new SecureUrl(IMAGE_URL_3),
+                ExtraLargeImageUri = new SecureUrl(IMAGE_URL_4)
             };
 
             var directive = Result.ShowImage(image) as ImageDirective;
@@ -136,10 +136,10 @@ namespace VoiceBridge.Most.Test
         {
             var image = new ResponsiveImage()
             {
-                SmallImageUri = new SecureUri(IMAGE_URL_1),
-                MediumImageUri = new SecureUri(IMAGE_URL_2),
-                LargeImageUri = new SecureUri(IMAGE_URL_3),
-                ExtraLargeImageUri = new SecureUri(IMAGE_URL_4)
+                SmallImageUri = new SecureUrl(IMAGE_URL_1),
+                MediumImageUri = new SecureUrl(IMAGE_URL_2),
+                LargeImageUri = new SecureUrl(IMAGE_URL_3),
+                ExtraLargeImageUri = new SecureUrl(IMAGE_URL_4)
             };
 
             var directive = await DynamicHandlerHelper.ExecuteHandle<ImageDirective>(intent => intent.ShowImage(image));

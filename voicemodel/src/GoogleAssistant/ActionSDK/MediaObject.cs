@@ -13,6 +13,6 @@ namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK
         public string Description { get; set; }
         
         [JsonProperty("contentUrl")]
-        public SecureUri ContentUrl { get; set; }
+        public SecureUrl ContentUrl { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK
     public class Image
     {
         [JsonProperty("url")]
-        public SecureUri Url { get; set; }
+        public SecureUrl Url { get; set; }
         
         [JsonProperty("accessibilityText")]
         public string AccessibilityText { get; set; }

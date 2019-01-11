@@ -5,14 +5,14 @@ using System.Text;
 namespace VoiceBridge.Common
 {
     /// <summary>
-    /// An Exception that occurs when constructing a SecureUri
+    /// An Exception that occurs when constructing a SecureUrl
     /// </summary>
-    public class SecureUriException : Exception
+    public class SecureUrlException : Exception
     {
         /// <summary>
         /// Constructor
         /// </summary>
-        public SecureUriException(string message)
+        public SecureUrlException(string message)
             : base(message)
         {
         }

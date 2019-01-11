@@ -62,9 +62,9 @@ namespace VoiceBridge.Most.Test.Directives.Processors
             // LargeImageUri will "fall back" to ExtraLargeImageUri by the removal of the latter's "when" predicate
             var image = new ResponsiveImage()
             {
-                SmallImageUri = new SecureUri(IMAGE_URL_1),
-                MediumImageUri = new SecureUri(IMAGE_URL_2),
-                ExtraLargeImageUri = new SecureUri(IMAGE_URL_4),
+                SmallImageUri = new SecureUrl(IMAGE_URL_1),
+                MediumImageUri = new SecureUrl(IMAGE_URL_2),
+                ExtraLargeImageUri = new SecureUrl(IMAGE_URL_4),
             };
 
             var response = AlexaResponses.Boilerplate();
@@ -131,10 +131,10 @@ namespace VoiceBridge.Most.Test.Directives.Processors
         {
             return new ResponsiveImage()
             {
-                SmallImageUri = new SecureUri(IMAGE_URL_1),
-                MediumImageUri = new SecureUri(IMAGE_URL_2),
-                LargeImageUri = new SecureUri(IMAGE_URL_3),
-                ExtraLargeImageUri = new SecureUri(IMAGE_URL_4),
+                SmallImageUri = new SecureUrl(IMAGE_URL_1),
+                MediumImageUri = new SecureUrl(IMAGE_URL_2),
+                LargeImageUri = new SecureUrl(IMAGE_URL_3),
+                ExtraLargeImageUri = new SecureUrl(IMAGE_URL_4),
             };
         }
     }
