@@ -66,9 +66,9 @@ namespace VoiceBridge.Most.Test.Directives.Processors
             {
                 Author = "Popo The Clown",
                 Subtitle = "The Sequel",
-                StreamUrl = new SecureUri("https://www.awesome-sauce.com/most-podcast.mp3"),
-                LargeImageUrl = new SecureUri("https://awesomeness/most-logo-large.png"),
-                SmallImageUrl = new SecureUri("https://awesomeness/most-logo-small.png"),
+                StreamUrl = new SecureUrl("https://www.awesome-sauce.com/most-podcast.mp3"),
+                LargeImageUrl = new SecureUrl("https://awesomeness/most-logo-large.png"),
+                SmallImageUrl = new SecureUrl("https://awesomeness/most-logo-small.png"),
                 Title = "Clown Life",
                 Token = Generic.Id()
             };

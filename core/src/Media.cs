@@ -17,7 +17,7 @@ namespace VoiceBridge.Most
         /// <summary>
         /// Media file Url (must be https)
         /// </summary>
-        public SecureUri StreamUrl { get; set; }
+        public SecureUrl StreamUrl { get; set; }
         
         /// <summary>
         /// Title
@@ -37,12 +37,12 @@ namespace VoiceBridge.Most
         /// <summary>
         /// Album Art Url
         /// </summary>
-        public SecureUri LargeImageUrl { get; set; }
+        public SecureUrl LargeImageUrl { get; set; }
         
         /// <summary>
         /// Icon Album Art Url
         /// </summary>
-        public SecureUri SmallImageUrl { get; set; }
+        public SecureUrl SmallImageUrl { get; set; }
         
         /// <summary>
         /// Opaque Token to identify content

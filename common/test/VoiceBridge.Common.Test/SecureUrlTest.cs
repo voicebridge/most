@@ -4,7 +4,7 @@ using Xunit;
 
 namespace VoiceBridge.Common.Test
 {
-    public class SecureUriTest
+    public class SecureUrlTest
     {
         // This is to prevent the static setting tests in the Override() method
         // from interrupting the Pass() and Fail() tests if run in parallel
@@ -31,9 +31,9 @@ namespace VoiceBridge.Common.Test
         /// <summary>
         /// Belts and braces on Test deconstruction
         /// </summary>
-        ~SecureUriTest()
+        ~SecureUrlTest()
         {
-            SecureUri.USE_UNSAFE_FOR_LOCAL_TESTING = false;
+            SecureUrl.USE_UNSAFE_FOR_LOCAL_TESTING = false;
         }
 
 
@@ -42,13 +42,13 @@ namespace VoiceBridge.Common.Test
         {
             lock (_lock)
             {
-                Assert.False(SecureUri.USE_UNSAFE_FOR_LOCAL_TESTING);
+                Assert.False(SecureUrl.USE_UNSAFE_FOR_LOCAL_TESTING);
 
-                var uri = new SecureUri(SECURE_URI_1);
+                var uri = new SecureUrl(SECURE_URI_1);
                 Assert.True(uri.IsSecure);
                 Assert.Equal(SECURE_URI_1, uri.AbsoluteUri);
 
-                uri = new SecureUri(SECURE_URI_2);
+                uri = new SecureUrl(SECURE_URI_2);
                 Assert.True(uri.IsSecure);
                 Assert.Equal(SECURE_URI_2, uri.AbsoluteUri);
             }
@@ -60,24 +60,24 @@ namespace VoiceBridge.Common.Test
         {
             lock (_lock)
             {
-                Assert.False(SecureUri.USE_UNSAFE_FOR_LOCAL_TESTING);
+                Assert.False(SecureUrl.USE_UNSAFE_FOR_LOCAL_TESTING);
 
-                var exception = Assert.Throws<SecureUriException>(() => { new SecureUri(INSECURE_URI); });
+                var exception = Assert.Throws<SecureUrlException>(() => { new SecureUrl(INSECURE_URI); });
                 Assert.Equal(EXCEPTION_MESSAGE_PROTOCOL, exception.Message);
 
-                exception = Assert.Throws<SecureUriException>(() => { new SecureUri(INSECURE_FTP_URI); });
+                exception = Assert.Throws<SecureUrlException>(() => { new SecureUrl(INSECURE_FTP_URI); });
                 Assert.Equal(EXCEPTION_MESSAGE_PROTOCOL, exception.Message);
 
-                exception = Assert.Throws<SecureUriException>(() => { new SecureUri(INSECURE_UNC_PATH); });
+                exception = Assert.Throws<SecureUrlException>(() => { new SecureUrl(INSECURE_UNC_PATH); });
                 Assert.Equal(EXCEPTION_MESSAGE_BADLY_FORMED, exception.Message);
 
-                exception = Assert.Throws<SecureUriException>(() => { new SecureUri(INSECURE_LOCAL_FILE); });
+                exception = Assert.Throws<SecureUrlException>(() => { new SecureUrl(INSECURE_LOCAL_FILE); });
                 Assert.Equal(EXCEPTION_MESSAGE_LOCAL_FILE, exception.Message);
 
-                exception = Assert.Throws<SecureUriException>(() => { new SecureUri(INSECURE_LOOPBACK_ADDRESS); });
+                exception = Assert.Throws<SecureUrlException>(() => { new SecureUrl(INSECURE_LOOPBACK_ADDRESS); });
                 Assert.Equal(EXCEPTION_MESSAGE_LOOPBACK_ADDRESS, exception.Message);
 
-                var uriFormatException = Assert.Throws<UriFormatException>(() => { new SecureUri(INSECURE_REALTIVE_URI); });
+                var uriFormatException = Assert.Throws<UriFormatException>(() => { new SecureUrl(INSECURE_REALTIVE_URI); });
                 Assert.Equal(EXCEPTION_INVALID_URI_FORMAT, uriFormatException.Message);
             }
         }
@@ -88,44 +88,44 @@ namespace VoiceBridge.Common.Test
         {
             lock (_lock)
             {
-                Assert.False(SecureUri.USE_UNSAFE_FOR_LOCAL_TESTING);
+                Assert.False(SecureUrl.USE_UNSAFE_FOR_LOCAL_TESTING);
 
                 // You should NEVER do this in production code
-                SecureUri.USE_UNSAFE_FOR_LOCAL_TESTING = true;
-                Assert.True(SecureUri.USE_UNSAFE_FOR_LOCAL_TESTING);
+                SecureUrl.USE_UNSAFE_FOR_LOCAL_TESTING = true;
+                Assert.True(SecureUrl.USE_UNSAFE_FOR_LOCAL_TESTING);
 
                 // Allow insecure Uris for the sake of testing
-                var uri = new SecureUri(SECURE_URI_1);
+                var uri = new SecureUrl(SECURE_URI_1);
                 Assert.True(uri.IsSecure);
 
-                uri = new SecureUri(SECURE_URI_2);
+                uri = new SecureUrl(SECURE_URI_2);
                 Assert.True(uri.IsSecure);
 
-                uri = new SecureUri(INSECURE_URI);
+                uri = new SecureUrl(INSECURE_URI);
                 Assert.False(uri.IsSecure);
 
-                uri = new SecureUri(INSECURE_FTP_URI);
+                uri = new SecureUrl(INSECURE_FTP_URI);
                 Assert.False(uri.IsSecure);
 
-                uri = new SecureUri(INSECURE_UNC_PATH);
+                uri = new SecureUrl(INSECURE_UNC_PATH);
                 Assert.False(uri.IsSecure);
 
-                uri = new SecureUri(INSECURE_LOCAL_FILE);
+                uri = new SecureUrl(INSECURE_LOCAL_FILE);
                 Assert.False(uri.IsSecure);
 
-                uri = new SecureUri(INSECURE_LOOPBACK_ADDRESS);
+                uri = new SecureUrl(INSECURE_LOOPBACK_ADDRESS);
                 Assert.False(uri.IsSecure);
 
                 
-                var uriFormatException = Assert.Throws<UriFormatException>(() => { new SecureUri(INSECURE_REALTIVE_URI); });
+                var uriFormatException = Assert.Throws<UriFormatException>(() => { new SecureUrl(INSECURE_REALTIVE_URI); });
                 Assert.Equal(EXCEPTION_INVALID_URI_FORMAT, uriFormatException.Message);
 
                 // Put things back to how they should be
-                SecureUri.USE_UNSAFE_FOR_LOCAL_TESTING = false;
-                Assert.False(SecureUri.USE_UNSAFE_FOR_LOCAL_TESTING);
+                SecureUrl.USE_UNSAFE_FOR_LOCAL_TESTING = false;
+                Assert.False(SecureUrl.USE_UNSAFE_FOR_LOCAL_TESTING);
 
                 // Sanity check
-                var exception = Assert.Throws<SecureUriException>(() => { new SecureUri(INSECURE_URI); });
+                var exception = Assert.Throws<SecureUrlException>(() => { new SecureUrl(INSECURE_URI); });
                 Assert.Equal(EXCEPTION_MESSAGE_PROTOCOL, exception.Message);
             }
         }

@@ -7,7 +7,7 @@ namespace VoiceBridge.Most.VoiceModel.Alexa
     public class AlexaStream
     {
         [JsonProperty("url")]
-        public SecureUri Stream { get; set; }
+        public SecureUrl Stream { get; set; }
         
         [JsonProperty("token")]
         public string Token { get; set; }

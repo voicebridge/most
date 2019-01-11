@@ -10,11 +10,11 @@ namespace VoiceBridge.Common.Extensions
     public static class UriExtensions
     {
         /// <summary>
-        /// Convert this Uri to a Secure Uri
+        /// Convert this Uri to a SecureUrl
         /// </summary>
-        public static SecureUri ToSecure(this Uri uri)
+        public static SecureUrl ToSecure(this Uri uri)
         {
-            return new SecureUri(uri);
+            return new SecureUrl(uri);
         }
     }
 }

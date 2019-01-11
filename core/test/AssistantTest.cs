@@ -81,9 +81,9 @@ namespace VoiceBridge.Most.Test
             var media = new Media
             {
                 Author = "San Jose Sharks",
-                LargeImageUrl = new SecureUri("https://s3.amazonaws.com/voicebridge-assets/sharks_logo.png"),
-                SmallImageUrl = new SecureUri("https://s3.amazonaws.com/voicebridge-assets/sharks_logo.png"),
-                StreamUrl = new SecureUri("https://s3.amazonaws.com/voicebridge-assets/sample_file.mp3"),
+                LargeImageUrl = new SecureUrl("https://s3.amazonaws.com/voicebridge-assets/sharks_logo.png"),
+                SmallImageUrl = new SecureUrl("https://s3.amazonaws.com/voicebridge-assets/sharks_logo.png"),
+                StreamUrl = new SecureUrl("https://s3.amazonaws.com/voicebridge-assets/sample_file.mp3"),
                 Title = "San Jose Goal Score Horn",
                 Subtitle = "This is a sample audio"
             };

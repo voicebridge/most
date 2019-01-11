@@ -13,12 +13,12 @@ namespace VoiceBridge.Most
         // public string AccessibleText { get; set; }
         // public string Caption { get; set; }
 
-        public SecureUri SmallImageUri { get; set; }
+        public SecureUrl SmallImageUri { get; set; }
 
-        public SecureUri MediumImageUri { get; set; }
+        public SecureUrl MediumImageUri { get; set; }
 
-        public SecureUri LargeImageUri { get; set; }
+        public SecureUrl LargeImageUri { get; set; }
 
-        public SecureUri ExtraLargeImageUri { get; set; }
+        public SecureUrl ExtraLargeImageUri { get; set; }
     }
 }
