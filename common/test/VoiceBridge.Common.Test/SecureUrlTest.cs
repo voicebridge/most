@@ -79,6 +79,8 @@ namespace VoiceBridge.Common.Test
 
                 var uriFormatException = Assert.Throws<UriFormatException>(() => { new SecureUrl(INSECURE_REALTIVE_URI); });
                 Assert.Equal(EXCEPTION_INVALID_URI_FORMAT, uriFormatException.Message);
+
+                Assert.False(SecureUrl.USE_UNSAFE_FOR_LOCAL_TESTING);
             }
         }
 

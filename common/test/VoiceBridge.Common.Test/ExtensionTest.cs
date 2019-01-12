@@ -33,7 +33,7 @@ namespace VoiceBridge.Common.Test
 
 
         [Fact]
-        public void SecureUrlTests()
+        public void SecureUrlTestsPass()
         {
             var uri = new Uri(SECURE_URI_1).ToSecure();
             var wss = new Uri(SECURE_URI_2).ToSecure();
@@ -45,9 +45,14 @@ namespace VoiceBridge.Common.Test
             Assert.True(wss is SecureUrl);
             Assert.True(wss.IsSecure);
             Assert.Equal(SECURE_URI_2, wss.AbsoluteUri);
+        }
 
-//            var exception = Assert.Throws<SecureUrlException>(() => { new Uri(INSECURE_URI).ToSecure(); });
-//            Assert.Equal(EXCEPTION_MESSAGE_PROTOCOL, exception.Message);
+
+        [Fact]
+        public void SecureUrlTestFail()
+        {
+            var exception = Assert.Throws<SecureUrlException>(() => { new Uri(INSECURE_URI).ToSecure(); });
+            Assert.Equal(EXCEPTION_MESSAGE_PROTOCOL, exception.Message);
         }
     }
 }
