@@ -68,8 +68,12 @@ namespace VoiceBridge.Common
             if (string.IsNullOrWhiteSpace(scheme) || !(scheme.Equals("https") || scheme.Equals("wss")))
                 return new SecureUrlException("Protocol is insecure or unknown");
 
-            // Note. No need to check .IsAbsoluteUri or .IsUnc as the SecureUrl constructor will consider
-            //       these types of Uri badly formed
+            if(!IsAbsoluteUri)
+                return new SecureUrlException("Uri is not absolute");
+
+            if (IsUnc)
+                return new SecureUrlException("Uri is a UNC path");
+
             return null;
         }
     }
