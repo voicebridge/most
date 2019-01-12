@@ -108,12 +108,13 @@ namespace VoiceBridge.Most.Security.Test
         }
 
 
-        private X509Certificate MakeSelfSignedCert(string commonName)
+        /// <summary>
+        /// Make a self-signed certificate for the sake of testing
+        /// </summary>
+        private X509Certificate2 MakeSelfSignedCert(string commonName)
         {
-            var req = new CertificateRequest($"cn={commonName}", elipticCurve, HashAlgorithmName.SHA256);
-            var cert = req.CreateSelfSigned(DateTimeOffset.Now, DateTimeOffset.Now.AddYears(5));
-
-            return cert as X509Certificate;
+            var request = new CertificateRequest($"cn={commonName}", elipticCurve, HashAlgorithmName.SHA256);
+            return request.CreateSelfSigned(DateTimeOffset.Now, DateTimeOffset.Now.AddYears(5));
         }
     }
 }

@@ -19,13 +19,13 @@ namespace VoiceBridge.Most.Security
         /// <summary>
         /// Attempt to get a X509Certificate using the given key
         /// </summary>
-        bool TryGet(string key, out X509Certificate certificate);
+        bool TryGet(string key, out X509Certificate2 certificate);
 
 
         /// <summary>
         /// Attempt to store a X509Certificate using the given key
         /// </summary>
-        bool TryAdd(string key, X509Certificate certificate);
+        bool TryAdd(string key, X509Certificate2 certificate);
 
 
         /// <summary>

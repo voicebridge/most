@@ -11,7 +11,7 @@ namespace VoiceBridge.Most.Security
     /// </summary>
     public class TransientCertificateCache : ICertificateCache
     {
-        private ConcurrentDictionary<string, X509Certificate> store = new ConcurrentDictionary<string, X509Certificate>();
+        private ConcurrentDictionary<string, X509Certificate2> store = new ConcurrentDictionary<string, X509Certificate2>();
 
 
         /// </inheritdoc>
@@ -25,7 +25,7 @@ namespace VoiceBridge.Most.Security
 
 
         /// </inheritdoc>
-        public bool TryAdd(string key, X509Certificate certificate)
+        public bool TryAdd(string key, X509Certificate2 certificate)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException(nameof(key));
@@ -39,7 +39,7 @@ namespace VoiceBridge.Most.Security
 
 
         /// </inheritdoc>
-        public bool TryGet(string key, out X509Certificate certificate)
+        public bool TryGet(string key, out X509Certificate2 certificate)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException(nameof(key));

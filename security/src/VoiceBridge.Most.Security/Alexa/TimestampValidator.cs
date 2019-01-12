@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Security;
-
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using VoiceBridge.Most.VoiceModel.Alexa;
 
@@ -54,32 +54,24 @@ namespace VoiceBridge.Most.Security.Alexa
         /// <summary>
         /// Verify the request
         /// </summary>
-        public bool Verify(HttpRequest http, SkillRequest payload, out Exception exception)
+        public Task VerifyAsync(HttpRequest http, SkillRequest payload)
         {
             if (http == null)
-            {
-                exception = new ArgumentNullException(nameof(http));
-                return false;
-            }
+                throw new ArgumentNullException(nameof(http));
 
             if ((payload?.Content ?? null) == null)
-            {
-                exception = new ArgumentNullException(nameof(payload));
-                return false;
-            }
+                throw new ArgumentNullException(nameof(payload));
 
             var offset = DateTime.Now.Subtract(payload.Content.Timestamp);
 
             // No time-travel for us!
             if (offset.TotalSeconds < 0)
-            {
-                exception = new SecurityException("Request was invalid");
-                return false;
-            }
+                throw new SecurityException("Request was invalid");
 
-            var isValid = offset.TotalSeconds <= tolerance;
-            exception = isValid ? null : new SecurityException("Request failed timestamp validation");
-            return isValid;
+            if (offset.TotalSeconds > tolerance)
+                throw new SecurityException("Request failed timestamp validation");
+
+            return Task.CompletedTask;
         }
     }
 }

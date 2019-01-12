@@ -14,5 +14,6 @@ namespace VoiceBridge.Most.Security.Alexa
 
         public const string SignatureRequestHeader = "Signature";
         public const string SignatureCertificateHeader = "SignatureCertChainUrl";
+        public const string SignatureDomainName = "echo-api.amazon.com";
     }
 }

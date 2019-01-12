@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 namespace VoiceBridge.Most.Security
@@ -11,6 +12,6 @@ namespace VoiceBridge.Most.Security
         /// <summary>
         /// Verify the request
         /// </summary>
-        bool Verify(HttpRequest http, TRequest payload, out Exception exception);
+        Task VerifyAsync(HttpRequest http, TRequest payload);
     }
 }
