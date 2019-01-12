@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\VoiceBridge.Most.Security\VoiceBridge.Most.Security.csproj" />
+    <ProjectReference Include="..\src\VoiceBridge.Most.Security.csproj" />
   </ItemGroup>
 
 </Project>

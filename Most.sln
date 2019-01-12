@@ -30,9 +30,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoiceBridge.Common.Test", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "security", "security", "{2CBFAE8A-26A7-478E-9CDF-E1B2336F6965}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceBridge.Most.Security", "security\src\VoiceBridge.Most.Security\VoiceBridge.Most.Security.csproj", "{775F3334-9580-472B-B3C6-9B91C696D399}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceBridge.Most.Security", "security\src\VoiceBridge.Most.Security.csproj", "{775F3334-9580-472B-B3C6-9B91C696D399}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceBridge.Most.Security.Test", "security\test\VoiceBridge.Most.Security.Test\VoiceBridge.Most.Security.Test.csproj", "{40A19A29-3E24-487C-A1D2-A787E3234DC6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceBridge.Most.Security.Test", "security\test\VoiceBridge.Most.Security.Test.csproj", "{40A19A29-3E24-487C-A1D2-A787E3234DC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
