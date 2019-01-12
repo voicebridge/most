@@ -23,7 +23,7 @@ namespace VoiceBridge.Most.Security.Alexa
         /// <summary>
         /// Constructor
         /// </summary>
-        internal SignatureValidator(ICertificateCache cache)
+        public SignatureValidator(ICertificateCache cache)
         {
             this.cache = cache;
         }
@@ -77,10 +77,7 @@ namespace VoiceBridge.Most.Security.Alexa
             }
 
             // TODO: Check the signature!
-
-            throw new NotImplementedException();
         }
-
 
     }
 }

@@ -30,7 +30,7 @@ namespace VoiceBridge.Most.Security.Alexa
         /// <summary>
         /// Constructor
         /// </summary>
-        internal TimestampValidator()
+        public TimestampValidator()
         {
         }
 
@@ -39,7 +39,7 @@ namespace VoiceBridge.Most.Security.Alexa
         /// Constructor
         /// </summary>
         /// <param name="skewInMilliseconds">The skew to tolerate in request timings (in milliseconds)</param>
-        internal TimestampValidator(int skewInSeconds)
+        public TimestampValidator(int skewInSeconds)
         {
             if (skewInSeconds < 0)
                 throw new ArgumentException($"Skew tolerance must be a positive number");
