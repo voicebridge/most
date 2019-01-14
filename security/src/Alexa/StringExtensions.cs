@@ -29,14 +29,14 @@ namespace VoiceBridge.Most.Security.Alexa
                 }
 
                 // Validate the hostname
-                if (!url.Host.Equals(SecurityConstants.SignatureCertificateHost, StringComparison.InvariantCulture))
+                if (!url.Host.Equals(SecurityConstants.Alexa.SignatureCertificateHost, StringComparison.InvariantCulture))
                 {
                     exception = new CertificateException("Signing certificate chain hostname is invalid");
                     return false;
                 }
 
                 // Validate the path prefix
-                if (!url.AbsolutePath.StartsWith(SecurityConstants.SignatureCertificateUrlPrefix, StringComparison.InvariantCulture))
+                if (!url.AbsolutePath.StartsWith(SecurityConstants.Alexa.SignatureCertificateUrlPrefix, StringComparison.InvariantCulture))
                 {
                     exception = new CertificateException("Signing certificate chain path is invalid");
                     return false;

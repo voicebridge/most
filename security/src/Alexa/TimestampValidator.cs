@@ -54,7 +54,7 @@ namespace VoiceBridge.Most.Security.Alexa
         /// <summary>
         /// Verify the request
         /// </summary>
-        public Task VerifyAsync(HttpRequest http, SkillRequest payload)
+        public Task VerifyAsync(HttpRequest http, SkillRequest payload, string input)
         {
             if (http == null)
                 throw new ArgumentNullException(nameof(http));

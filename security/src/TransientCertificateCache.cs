@@ -32,9 +32,8 @@ namespace VoiceBridge.Most.Security
 
             if (certificate == null)
                 throw new ArgumentNullException(nameof(certificate));
-
-            var result = store.AddOrUpdate(key, certificate, (k, v) => { return certificate; });
-            return (result != null);
+            
+            return store.TryAdd(key, certificate);
         }
 
 

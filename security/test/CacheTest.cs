@@ -41,8 +41,8 @@ namespace VoiceBridge.Most.Security.Test
             Assert.True(cache.ContainsKey(KEY_ONE));
             Assert.False(cache.ContainsKey(KEY_NONE));
 
-            // Overwrite the cache with the same item and key
-            Assert.True(cache.TryAdd(KEY_ONE, cert));
+            // Attempt to re-add an item with the same key
+            Assert.False(cache.TryAdd(KEY_ONE, cert));
             Assert.True(cache.ContainsKey(KEY_ONE));
 
             Assert.False(cache.ContainsKey(KEY_TWO));
@@ -70,11 +70,11 @@ namespace VoiceBridge.Most.Security.Test
             Assert.True(cache.TryGet(KEY_TWO, out var cert));
             Assert.Equal(two, cert);
 
-            Assert.True(cache.TryAdd(KEY_ONE, three));
+            Assert.False(cache.TryAdd(KEY_ONE, three));
             Assert.True(cache.ContainsKey(KEY_ONE));
 
             Assert.True(cache.TryGet(KEY_ONE, out cert));
-            Assert.Equal(three, cert);
+            Assert.Equal(one, cert);
 
             Assert.False(cache.TryGet(KEY_NONE, out cert));
             Assert.Null(cert);

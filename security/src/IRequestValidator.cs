@@ -12,6 +12,6 @@ namespace VoiceBridge.Most.Security
         /// <summary>
         /// Verify the request
         /// </summary>
-        Task VerifyAsync(HttpRequest http, TRequest payload);
+        Task VerifyAsync(HttpRequest http, TRequest payload, string input);
     }
 }
