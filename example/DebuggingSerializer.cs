@@ -1,24 +1,20 @@
 using System.IO;
 using Amazon.Lambda.Core;
-using Amazon.Lambda.Serialization.Json;
+using Newtonsoft.Json;
+using VoiceBridge.Most;
+using JsonSerializer = Amazon.Lambda.Serialization.Json.JsonSerializer;
 
 namespace Sample
 {
-    public class DebuggingSerializer : ILambdaSerializer
+    public class DebuggingSerializer : Amazon.Lambda.Serialization.Json.JsonSerializer
     {
         private JsonSerializer serializer = new JsonSerializer();
-        
-        public T Deserialize<T>(Stream requestStream)
-        {
-            var end = new StreamReader(requestStream).ReadToEnd();
-            LambdaLogger.Log(end);
-            
-            return serializer.Deserialize<T>(requestStream);
-        }
 
-        public void Serialize<T>(T response, Stream responseStream)
+        public DebuggingSerializer() : base(new[]
         {
-            serializer.Serialize<T>(response, responseStream);
+            new RequestJsonConverter()
+        })
+        {
         }
     }
 }
