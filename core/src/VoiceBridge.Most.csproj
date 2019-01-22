@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.1</TargetFramework>
         <PackageId>VoiceBridge.Most</PackageId>
-        <Version>0.1.0</Version>
+        <Version>0.1.1</Version>
         <Authors>Abdellah Elamiri</Authors>
         <Company>Voice Bridge Inc.</Company>
         <IsPackable>true</IsPackable>
