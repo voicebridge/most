@@ -11,7 +11,7 @@ namespace VoiceBridge.Most.Security.Test
         public const string KEY_TWO = "key 2";
         public const string KEY_NONE = "none";
 
-        private ECDsa elipticCurve = null;
+        private readonly ECDsa elipticCurve = null;
 
 
         /// <summary>

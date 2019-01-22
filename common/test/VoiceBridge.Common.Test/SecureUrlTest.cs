@@ -8,7 +8,7 @@ namespace VoiceBridge.Common.Test
     {
         // This is to prevent the static setting tests in the Override() method
         // from interrupting the Pass() and Fail() tests if run in parallel
-        private object _lock = new object();
+        private readonly object _lock = new object();
 
         private const string SECURE_URI_1 = "https://www.secure.com/";
         private const string SECURE_URI_2 = "wss://socket.com/";

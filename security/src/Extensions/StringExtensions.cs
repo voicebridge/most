@@ -4,7 +4,7 @@ using System.Security;
 using System.Text;
 using VoiceBridge.Common;
 
-namespace VoiceBridge.Most.Security.Alexa
+namespace VoiceBridge.Most.Security.Extensions
 {
     /// <summary>
     /// Extension methods that operate on strings
@@ -14,7 +14,7 @@ namespace VoiceBridge.Most.Security.Alexa
         /// <summary>
         /// Attempts to validate and form a valid Signing Certification Chain Url from the given text
         /// </summary>
-        public static bool IsCertificateChainUrl(this string text, out Exception exception)
+        public static bool IsAlexaCertificateChainUrl(this string text, out Exception exception)
         {
             try
             {

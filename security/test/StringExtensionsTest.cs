@@ -1,5 +1,4 @@
-using System;
-using VoiceBridge.Most.Security.Alexa;
+using VoiceBridge.Most.Security.Extensions;
 using Xunit;
 
 namespace VoiceBridge.Most.Security.Test
@@ -17,15 +16,15 @@ namespace VoiceBridge.Most.Security.Test
         /// Positive test cases from Amazon: https://developer.amazon.com/docs/custom-skills/host-a-custom-skill-as-a-web-service.html
         /// </summary>
         [Fact]
-        public void CertificateChainUrlPass()
+        public void AlexaCertificateChainUrlPass()
         {
-            Assert.True("https://s3.amazonaws.com/echo.api/echo-api-cert.pem".IsCertificateChainUrl(out var exception));
+            Assert.True("https://s3.amazonaws.com/echo.api/echo-api-cert.pem".IsAlexaCertificateChainUrl(out var exception));
             Assert.Null(exception);
 
-            Assert.True("https://s3.amazonaws.com:443/echo.api/echo-api-cert.pem".IsCertificateChainUrl(out exception));
+            Assert.True("https://s3.amazonaws.com:443/echo.api/echo-api-cert.pem".IsAlexaCertificateChainUrl(out exception));
             Assert.Null(exception);
 
-            Assert.True("https://s3.amazonaws.com/echo.api/../echo.api/echo-api-cert.pem".IsCertificateChainUrl(out exception));
+            Assert.True("https://s3.amazonaws.com/echo.api/../echo.api/echo-api-cert.pem".IsAlexaCertificateChainUrl(out exception));
             Assert.Null(exception);
         }
 
@@ -34,42 +33,42 @@ namespace VoiceBridge.Most.Security.Test
         /// Negative test cases from Amazon: https://developer.amazon.com/docs/custom-skills/host-a-custom-skill-as-a-web-service.html
         /// </summary>
         [Fact]
-        public void CertificateChainUrlFail()
+        public void AlexaCertificateChainUrlFail()
         {
-            Assert.False("http://s3.amazonaws.com/echo.api/echo-api-cert.pem".IsCertificateChainUrl(out var exception));
+            Assert.False("http://s3.amazonaws.com/echo.api/echo-api-cert.pem".IsAlexaCertificateChainUrl(out var exception));
             Assert.IsType<CertificateException>(exception);
             Assert.Equal(SIGNING_CERT_CHAIN_URL_MALFORMED, exception.Message);
 
-            Assert.False("https://notamazon.com/echo.api/echo-api-cert.pem".IsCertificateChainUrl(out exception));
+            Assert.False("https://notamazon.com/echo.api/echo-api-cert.pem".IsAlexaCertificateChainUrl(out exception));
             Assert.IsType<CertificateException>(exception);
             Assert.Equal(SIGNING_CERT_CHAIN_HOSTNAME_INVALID, exception.Message);
 
-            Assert.False("https://s3.amazonaws.com/EcHo.aPi/echo-api-cert.pem".IsCertificateChainUrl(out exception));
+            Assert.False("https://s3.amazonaws.com/EcHo.aPi/echo-api-cert.pem".IsAlexaCertificateChainUrl(out exception));
             Assert.IsType<CertificateException>(exception);
             Assert.Equal(SIGNING_CERT_CHAIN_PATH_INVALID, exception.Message);
 
-            Assert.False("https://s3.amazonaws.com/invalid.path/echo-api-cert.pem".IsCertificateChainUrl(out exception));
+            Assert.False("https://s3.amazonaws.com/invalid.path/echo-api-cert.pem".IsAlexaCertificateChainUrl(out exception));
             Assert.IsType<CertificateException>(exception);
             Assert.Equal(SIGNING_CERT_CHAIN_PATH_INVALID, exception.Message);
 
-            Assert.False("https://s3.amazonaws.com:563/echo.api/echo-api-cert.pem".IsCertificateChainUrl(out exception));
+            Assert.False("https://s3.amazonaws.com:563/echo.api/echo-api-cert.pem".IsAlexaCertificateChainUrl(out exception));
             Assert.IsType<CertificateException>(exception);
             Assert.Equal(SIGNING_CERT_CHAIN_PORT_INVALID, exception.Message);
         }
 
 
         [Fact]
-        public void CertificateChainUrlFailMisc()
+        public void AlexaCertificateChainUrlFailMisc()
         {
-            Assert.False("http://www.insecure.com".IsCertificateChainUrl(out var exception));
+            Assert.False("http://www.insecure.com".IsAlexaCertificateChainUrl(out var exception));
             Assert.IsType<CertificateException>(exception);
             Assert.Equal(SIGNING_CERT_CHAIN_URL_MALFORMED, exception.Message);
 
-            Assert.False("wss://www.insecure.com".IsCertificateChainUrl(out exception));
+            Assert.False("wss://www.insecure.com".IsAlexaCertificateChainUrl(out exception));
             Assert.IsType<CertificateException>(exception);
             Assert.Equal(SIGNING_CERT_CHAIN_PROTOCOL_INVALID, exception.Message);
 
-            Assert.False("https://www.some.domain.com".IsCertificateChainUrl(out exception));
+            Assert.False("https://www.some.domain.com".IsAlexaCertificateChainUrl(out exception));
             Assert.IsType<CertificateException>(exception);
             Assert.Equal(SIGNING_CERT_CHAIN_HOSTNAME_INVALID, exception.Message);
         }

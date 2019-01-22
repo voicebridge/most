@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>VoiceBridge.Most</id>
+    <version>0.1.2</version>
+    <title>Most Framework</title>
+    <authors>Voice Bridge Inc.</authors>
+    <owners>Voice Bridge Inc.</owners>
+    <licenseUrl>https://github.com/voicebridge/most/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/voicebridge/most</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Build applications that can run both as an Alexa Skill and Google Action</description>
+    <releaseNotes>Preview Release</releaseNotes>
+    <copyright>Copyright ® 2019 Voice Bridge Inc.</copyright>
+    <tags>Alexa GoogleAssistant</tags>
+    <dependencies>
+      <dependency id="VoiceBridge.Most.VoiceModel" version="0.1.1" />
+      <dependency id="Microsoft.Extensions.DependencyInjection" version="2.1.0" />
+    </dependencies>
+  </metadata>
+</package>

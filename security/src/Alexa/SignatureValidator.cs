@@ -58,7 +58,7 @@ namespace VoiceBridge.Most.Security.Alexa
             
             if(!cacheHit)
             {
-                if (!url[0].IsCertificateChainUrl(out var exception))
+                if (!url[0].IsAlexaCertificateChainUrl(out var exception))
                     throw exception;
 
                 certificate = await CertificateHelpers.DownloadAsync(url[0]);

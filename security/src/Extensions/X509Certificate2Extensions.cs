@@ -38,10 +38,10 @@ namespace VoiceBridge.Most.Security.Extensions
                 chain.ChainPolicy.RevocationFlag = X509RevocationFlag.EntireChain;
                 chain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(1000);
                 chain.ChainPolicy.VerificationTime = DateTime.Now;
-                return chain.Build(certificate);
+                return !chain.Build(certificate);
             }
 
-            return false;
+            return true;
         }
 
 
@@ -68,12 +68,9 @@ namespace VoiceBridge.Most.Security.Extensions
         /// </summary>
         public static bool VerifySignature(this X509Certificate2 certificate, string signature, string content)
         {
-            var start = DateTime.UtcNow;
             var sig = Convert.FromBase64String(signature);
             var rsa = certificate.GetRSAPublicKey();
-            var result = rsa.VerifyData(Encoding.UTF8.GetBytes(content), sig, HashAlgorithmName.SHA1, RSASignaturePadding.Pkcs1);
-            var span = DateTime.UtcNow.Subtract(start).TotalMilliseconds;
-            return result;
+            return rsa.VerifyData(Encoding.UTF8.GetBytes(content), sig, HashAlgorithmName.SHA1, RSASignaturePadding.Pkcs1);
         }
     }
 }
