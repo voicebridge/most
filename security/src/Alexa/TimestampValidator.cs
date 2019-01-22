@@ -62,13 +62,9 @@ namespace VoiceBridge.Most.Security.Alexa
             if ((payload?.Content ?? null) == null)
                 throw new ArgumentNullException(nameof(payload));
 
-            var offset = DateTime.Now.Subtract(payload.Content.Timestamp);
+            var offset = Math.Abs(DateTime.Now.Subtract(payload.Content.Timestamp).TotalSeconds);
 
-            // No time-travel for us!
-            if (offset.TotalSeconds < 0)
-                throw new SecurityException("Request was invalid");
-
-            if (offset.TotalSeconds > tolerance)
+            if (offset > tolerance)
                 throw new SecurityException("Request failed timestamp validation");
 
             return Task.CompletedTask;
