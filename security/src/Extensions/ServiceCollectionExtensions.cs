@@ -18,7 +18,7 @@ namespace VoiceBridge.Most.Security.Extensions
         /// <remarks>
         /// If ICertificateCache is null, an in-memory store will be used
         /// </remarks>
-        public static IServiceCollection AddAlexaValidation(this IServiceCollection services, ICertificateCache cache = null, Action<RequestValidatorOptions<SkillRequest>> options = null)
+        public static IServiceCollection AddAlexaValidation(this IServiceCollection services, string applicationId, ICertificateCache cache = null, Action<RequestValidatorOptions<SkillRequest>> options = null)
         {
             if (services == null)
                 throw new ArgumentNullException(nameof(services));
@@ -31,6 +31,7 @@ namespace VoiceBridge.Most.Security.Extensions
             services.Configure<RequestValidatorOptions<SkillRequest>>(o =>
             {
                 o.Validators.Add(new SignatureValidator(store));
+                o.Validators.Add(new TargetValidator(applicationId));
                 o.Validators.Add(new TimestampValidator());
 
                 options?.Invoke(o);
