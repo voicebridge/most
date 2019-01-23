@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using VoiceBridge.Most.Security.Alexa;
 using VoiceBridge.Most.VoiceModel.Alexa;
+using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 
 namespace VoiceBridge.Most.Security.Extensions
 {
@@ -11,7 +11,7 @@ namespace VoiceBridge.Most.Security.Extensions
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        /// Adds service to validate 
+        /// Adds service to validate Amazon Alexa requests
         /// </summary>
         /// <param name="cache">(Optional) Singleton instance of an ICertificateCache</param>
         /// <param name="options">(Optional) Delegate to expose the collection of IRequestValidators for Alexa</param>
@@ -30,9 +30,31 @@ namespace VoiceBridge.Most.Security.Extensions
 
             services.Configure<RequestValidatorOptions<SkillRequest>>(o =>
             {
-                o.Validators.Add(new SignatureValidator(store));
-                o.Validators.Add(new TargetValidator(applicationId));
-                o.Validators.Add(new TimestampValidator());
+                o.Validators.Add(new Alexa.SignatureValidator(store));
+                o.Validators.Add(new Alexa.TargetValidator(applicationId));
+                o.Validators.Add(new Alexa.TimestampValidator());
+
+                options?.Invoke(o);
+            });
+
+            return services;
+        }
+
+
+        /// <summary>
+        /// Adds service to validate Google Home requests
+        /// </summary>
+        /// <param name="options">(Optional) Delegate to expose the collection of IRequestValidators for Google Home</param>
+        public static IServiceCollection AddGoogleHomeValidation(this IServiceCollection services, string projectId, Action<RequestValidatorOptions<AppRequest>> options = null)
+        {
+            if (services == null)
+                throw new ArgumentNullException(nameof(services));
+
+            services.AddScoped<GoogleHomeValidator>();
+
+            services.Configure<RequestValidatorOptions<AppRequest>>(o =>
+            {
+                o.Validators.Add(new Google.TargetValidator(projectId));
 
                 options?.Invoke(o);
             });

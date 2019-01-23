@@ -9,10 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Google\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\voicemodel\src\VoiceBridge.Most.VoiceModel.csproj" />
   </ItemGroup>
 
