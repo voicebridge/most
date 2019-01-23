@@ -19,8 +19,7 @@ namespace VoiceBridge.Most.Test.Logging
             const string expectedLogMessage = "[MOST] " + Message;
             var logger = new ScopedLogger(fakeLogger);
             logger.Log(LogLevel.Debug, Message);
-            Assert.True(fakeLogger.Items.Any(x => x.Item1 == LogLevel.Debug && x.Item2 == expectedLogMessage));
-
+            Assert.Contains(fakeLogger.Items, x => x.Item1 == LogLevel.Debug && x.Item2 == expectedLogMessage);
         }
         
         [Fact]
@@ -56,8 +55,7 @@ namespace VoiceBridge.Most.Test.Logging
             };
             
             logger.Log(LogLevel.Debug, Message);
-            Assert.True(fakeLogger.Items.Any(x => x.Item1 == LogLevel.Debug && x.Item2 == expectedLogMessage));
-
+            Assert.Contains(fakeLogger.Items, x => x.Item1 == LogLevel.Debug && x.Item2 == expectedLogMessage);
         }
 
         private class FakeLogger : ILogger
