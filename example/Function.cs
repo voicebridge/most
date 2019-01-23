@@ -18,6 +18,9 @@ namespace Sample
 {  
     public class Function
     {
+        private IConversationEngine<SkillRequest, SkillResponse> alexaEngine;
+        private IConversationEngine<AppRequest, AppResponse> googleEngine;
+        
         private static class IntentNames
         {
             public const string Score = "GetScoreIntent";
@@ -30,25 +33,24 @@ namespace Sample
             public const string Team = "team_name";
             public const string City = "city_name";
         }
-        
-        public async Task<SkillResponse> FunctionHandler(SkillRequest input, ILambdaContext context)
+
+        public Function()
         {
-            var engine = GetAssistant()
-                .AlexaEngineBuilder()
-                .SetLogger(new Logger())
-                .Build();
-            
-            return await Process(engine, input, context);
+            var assistant = GetAssistant();
+            var logger = new Logger();
+            this.alexaEngine = assistant.AlexaEngineBuilder().SetLogger(logger).Build();
+            this.googleEngine = assistant.GoogleEngineBuilder().SetLogger(logger).Build();
+
         }
-        
-        public async Task<AppResponse> ActionHandler(AppRequest input, ILambdaContext context)
+
+        public async Task<IResponse> HandleRequest(IRequest request, ILambdaContext context)
         {
-            var engine = GetAssistant()
-                .GoogleEngineBuilder()
-                .SetLogger(new Logger())
-                .Build();
+            if (request.IsAlexaRequest())
+            {
+                return await Process(this.alexaEngine, (SkillRequest)request, context);
+            }
             
-            return await Process(engine, input, context);
+            return await Process(this.googleEngine, (AppRequest)request, context);
         }
 
         private async Task<TResponse> Process<TRequest, TResponse>(
@@ -97,7 +99,7 @@ namespace Sample
 
             assistant
                 .OnIntent(IntentNames.AudioSampleIntent)
-                .PlayAudio(media, null);
+                .PlayAudio(media, "Here is the sound!".AsPrompt());
             
             return assistant;
         }
