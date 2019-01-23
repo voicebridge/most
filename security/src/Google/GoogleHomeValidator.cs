@@ -5,25 +5,23 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 
-using VoiceBridge.Most.VoiceModel.Alexa;
+using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 
 namespace VoiceBridge.Most.Security
 {
     /// <summary>
-    /// ActionFilter attribute that enforces SkillRequest security validation (required by Amazon)
+    /// ActionFilter attribute that enforces basic AppRequest validation for Google Home
     /// </summary>
-    public sealed class AlexaValidator : ActionFilterAttribute
+    public sealed class GoogleHomeValidator : ActionFilterAttribute
     {
-        private ICertificateCache cache;
-        private RequestValidatorOptions<SkillRequest> options;
+        private RequestValidatorOptions<AppRequest> options;
 
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public AlexaValidator(ICertificateCache cache, IOptionsMonitor<RequestValidatorOptions<SkillRequest>> options)
+        public GoogleHomeValidator(IOptionsMonitor<RequestValidatorOptions<AppRequest>> options)
         {
-            this.cache = cache;
             this.options = options.CurrentValue;
         }
 
@@ -36,7 +34,7 @@ namespace VoiceBridge.Most.Security
             try
             {
                 var payload = new StreamReader(context.HttpContext.Request.Body).ReadToEnd();
-                var skill = JsonConvert.DeserializeObject<SkillRequest>(payload);
+                var skill = JsonConvert.DeserializeObject<AppRequest>(payload);
             
                 foreach (var validator in options.Validators)
                 {
@@ -44,7 +42,7 @@ namespace VoiceBridge.Most.Security
                     task.Wait();
                 }
 
-                context.HttpContext.Items.Add(SecurityConstants.Platform.Alexa, skill);
+                context.HttpContext.Items.Add(SecurityConstants.Platform.GoogleHome, skill);
 
                 base.OnActionExecuting(context);
             }
