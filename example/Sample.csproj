@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\lambdahelper\src\VoiceBridge.Most.LambdaHelper.csproj" />
       <ProjectReference Include="..\voicemodel\src\VoiceBridge.Most.VoiceModel.csproj" />
       <ProjectReference Include="..\core\src\VoiceBridge.Most.csproj" />
     </ItemGroup>

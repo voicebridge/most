@@ -126,6 +126,15 @@ namespace VoiceBridge.Most
             return CreateBuilder(new ActionResponseFactory(), compositeBuilder);
         }
 
+        /// <summary>
+        /// Builds a composite engine that supports both Alexa and Google
+        /// </summary>
+        /// <returns>Composite Engine Builder</returns>
+        public CompositeEngineBuilder CompositeEngineBuilder()
+        {
+            return new CompositeEngineBuilder(AlexaEngineBuilder(), GoogleEngineBuilder());
+        }
+
         private IRequestHandlerBuilder CreateHandlerBuilder(RequestType requestType)
         {
             var builder = new RequestHandlerBuilder(requestType);

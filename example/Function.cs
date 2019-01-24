@@ -6,20 +6,20 @@ using Sample;
 using VoiceBridge.Common;
 using VoiceBridge.Most;
 using VoiceBridge.Most.Directives;
+using VoiceBridge.Most.LambdaHelper;
 using VoiceBridge.Most.VoiceModel;
 using VoiceBridge.Most.VoiceModel.Alexa;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
-[assembly: LambdaSerializer(typeof(DebuggingSerializer))]
+[assembly: LambdaSerializer(typeof(MostSerializer))]
 
 namespace Sample
 {  
     public class Function
     {
-        private IConversationEngine<SkillRequest, SkillResponse> alexaEngine;
-        private IConversationEngine<AppRequest, AppResponse> googleEngine;
+        private ICompositeEngine compositeEngine;
         
         private static class IntentNames
         {
@@ -36,35 +36,18 @@ namespace Sample
 
         public Function()
         {
-            var assistant = GetAssistant();
             var logger = new Logger();
-            this.alexaEngine = assistant.AlexaEngineBuilder().SetLogger(logger).Build();
-            this.googleEngine = assistant.GoogleEngineBuilder().SetLogger(logger).Build();
+            this.compositeEngine = GetAssistant().CompositeEngineBuilder().SetLogger(logger).Build();
 
         }
 
         public async Task<IResponse> HandleRequest(IRequest request, ILambdaContext context)
         {
-            if (request.IsAlexaRequest())
-            {
-                return await Process(this.alexaEngine, (SkillRequest)request, context);
-            }
-            
-            return await Process(this.googleEngine, (AppRequest)request, context);
-        }
-
-        private async Task<TResponse> Process<TRequest, TResponse>(
-            IConversationEngine<TRequest, TResponse> engine,
-            TRequest request,
-            ILambdaContext context)
-            where TRequest : IRequest
-            where TResponse : IResponse
-        {
             Log(request);
 
             try
             {
-                var response = await engine.Evaluate(request);
+                var response = await this.compositeEngine.Evaluate(request);
                 Log(response);
                 return response;
             }
@@ -74,7 +57,7 @@ namespace Sample
                 throw;
             }
         }
-
+        
         private Assistant GetAssistant()
         {
             var assistant = new Assistant();

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>VoiceBridge.Most.VoiceModel</id>
+    <id>VoiceBridge.Most.LambdaHelper</id>
     <version>0.1.5</version>
-    <title>Most VoiceModel</title>
+    <title>LambdaHelper</title>
     <authors>Voice Bridge Inc.</authors>
     <owners>Voice Bridge Inc.</owners>
     <licenseUrl>https://github.com/voicebridge/most/blob/master/LICENSE</licenseUrl>
@@ -15,6 +15,9 @@
     <tags>Alexa GoogleAssistant</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="12.0.1" />
+      <dependency id="Amazon.Lambda.Serialization.Json" version="1.4.0" />
+      <dependency id="Amazon.Lambda.Core" version="1.0.0" />
+      <dependency id="VoiceBridge.Most" version="0.1.3"/>
     </dependencies>
   </metadata>
 </package>
