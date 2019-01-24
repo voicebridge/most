@@ -2,15 +2,10 @@ using System;
 using System.Threading.Tasks;
 using Amazon.Lambda.Core;
 using Newtonsoft.Json;
-using Sample;
 using VoiceBridge.Common;
 using VoiceBridge.Most;
-using VoiceBridge.Most.Directives;
 using VoiceBridge.Most.LambdaHelper;
 using VoiceBridge.Most.VoiceModel;
-using VoiceBridge.Most.VoiceModel.Alexa;
-using VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK;
-using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(MostSerializer))]

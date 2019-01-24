@@ -3,7 +3,7 @@ using Xunit;
 
 namespace VoiceBridge.Most.LambdaHelper.Test
 {
-    public class UnitTest1
+    public class MostSerializerTest
     {
         [Fact]
         public void Test1()
