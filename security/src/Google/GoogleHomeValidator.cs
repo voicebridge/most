@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.IO;
-
+using VoiceBridge.Most.Logging;
 using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 
 namespace VoiceBridge.Most.Security
@@ -15,14 +15,16 @@ namespace VoiceBridge.Most.Security
     public sealed class GoogleHomeValidator : ActionFilterAttribute
     {
         private RequestValidatorOptions<AppRequest> options;
+        private ILogger logger;
 
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public GoogleHomeValidator(IOptionsMonitor<RequestValidatorOptions<AppRequest>> options)
+        public GoogleHomeValidator(IOptionsMonitor<RequestValidatorOptions<AppRequest>> options, ILogger logger = null)
         {
             this.options = options.CurrentValue;
+            this.logger = logger;
         }
 
 
@@ -46,9 +48,9 @@ namespace VoiceBridge.Most.Security
 
                 base.OnActionExecuting(context);
             }
-            catch (Exception)
+            catch (Exception error)
             {
-                // TODO: Log errors
+                logger?.Log(LogLevel.Error, $"[{error.GetType().Name}] {error.Message}");
                 context.Result = new UnauthorizedResult();
             }
         }
