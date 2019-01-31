@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.IO;
-
+using VoiceBridge.Most.Logging;
 using VoiceBridge.Most.VoiceModel.Alexa;
 
 namespace VoiceBridge.Most.Security
@@ -15,15 +15,17 @@ namespace VoiceBridge.Most.Security
     public sealed class AlexaValidator : ActionFilterAttribute
     {
         private ICertificateCache cache;
+        private ILogger logger;
         private RequestValidatorOptions<SkillRequest> options;
 
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public AlexaValidator(ICertificateCache cache, IOptionsMonitor<RequestValidatorOptions<SkillRequest>> options)
+        public AlexaValidator(ICertificateCache cache, IOptionsMonitor<RequestValidatorOptions<SkillRequest>> options, ILogger logger = null)
         {
             this.cache = cache;
+            this.logger = logger;
             this.options = options.CurrentValue;
         }
 
@@ -48,9 +50,9 @@ namespace VoiceBridge.Most.Security
 
                 base.OnActionExecuting(context);
             }
-            catch (Exception)
+            catch (Exception error)
             {
-                // TODO: Log errors
+                logger?.Log(LogLevel.Error, $"[{error.GetType().Name}] {error.Message}");
                 context.Result = new UnauthorizedResult();
             }
         }

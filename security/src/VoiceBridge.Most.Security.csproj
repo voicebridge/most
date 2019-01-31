@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\core\src\VoiceBridge.Most.csproj" />
     <ProjectReference Include="..\..\voicemodel\src\VoiceBridge.Most.VoiceModel.csproj" />
   </ItemGroup>
 
