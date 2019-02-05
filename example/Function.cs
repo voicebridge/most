@@ -32,6 +32,7 @@ namespace Sample
         public Function()
         {
             var logger = new Logger();
+            var assistant = GetAssistant();
             this.compositeEngine = GetAssistant().CompositeEngineBuilder().SetLogger(logger).Build();
 
         }
