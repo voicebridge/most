@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using VoiceBridge.Most.Logging;
+using VoiceBridge.Most.VoiceModel;
 
 namespace VoiceBridge.Most
 {
-    public class CompositeInputModelBuilder<TRequest> : IInputModelBuilder<TRequest>
+    public class CompositeInputModelBuilder<TRequest> : IInputModelBuilder<TRequest> 
+        where TRequest : IRequest
     {
         private readonly IEnumerable<IInputModelBuilder<TRequest>> inputModelBuilders;
         private readonly ILogger logger;
