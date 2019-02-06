@@ -9,7 +9,7 @@ using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 
 namespace VoiceBridge.Most.Directives.Processors
 {
-    public class PlayMediaProcessor : DirectiveProcessorBase<PlayMediaDirective>
+    internal class PlayMediaProcessor : DirectiveProcessorBase<PlayMediaDirective>
     {
         protected override void Process(PlayMediaDirective directive, SkillRequest request, SkillResponse response)
         {

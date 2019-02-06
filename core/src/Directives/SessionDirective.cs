@@ -1,6 +1,6 @@
 namespace VoiceBridge.Most.Directives
 {
-    public class SessionDirective : IVirtualDirective
+    internal class SessionDirective : IVirtualDirective
     {
     }
 }

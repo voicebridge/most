@@ -5,7 +5,7 @@ using VoiceBridge.Most.VoiceModel;
 
 namespace VoiceBridge.Most
 {
-    public class CompositeInputModelBuilder<TRequest> : IInputModelBuilder<TRequest> 
+    internal class CompositeInputModelBuilder<TRequest> : IInputModelBuilder<TRequest> 
         where TRequest : IRequest
     {
         private readonly IEnumerable<IInputModelBuilder<TRequest>> inputModelBuilders;

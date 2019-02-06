@@ -5,7 +5,7 @@ using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 
 namespace VoiceBridge.Most.Google
 {
-    public class NonVoiceInputModelBuilder : IInputModelBuilder<AppRequest>
+    internal class NonVoiceInputModelBuilder : IInputModelBuilder<AppRequest>
     {
         public void Build(ConversationContext context, AppRequest request)
         {

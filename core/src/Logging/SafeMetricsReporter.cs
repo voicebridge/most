@@ -2,7 +2,7 @@ using System;
 
 namespace VoiceBridge.Most.Logging
 {
-    public class SafeMetricsReporter : IMetricsReporter
+    internal class SafeMetricsReporter : IMetricsReporter
     {
         private readonly IMetricsReporter reporter;
         private readonly ILogger logger;

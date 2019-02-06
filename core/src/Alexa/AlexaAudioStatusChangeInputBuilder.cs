@@ -2,7 +2,7 @@ using VoiceBridge.Most.VoiceModel.Alexa;
 
 namespace VoiceBridge.Most.Alexa
 {
-    public class AlexaAudioStatusChangeInputBuilder : IInputModelBuilder<SkillRequest>
+    internal class AlexaAudioStatusChangeInputBuilder : IInputModelBuilder<SkillRequest>
     {
         public void Build(ConversationContext context, SkillRequest request)
         {

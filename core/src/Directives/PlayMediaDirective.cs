@@ -1,6 +1,6 @@
 namespace VoiceBridge.Most.Directives
 {
-    public class PlayMediaDirective : IVirtualDirective
+    internal class PlayMediaDirective : IVirtualDirective
     {
         public PlayMediaDirective(Media media, Prompt prompt)
         {

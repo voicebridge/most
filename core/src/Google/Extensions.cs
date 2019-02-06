@@ -3,7 +3,7 @@ using VoiceBridge.Most.VoiceModel.GoogleAssistant.ActionSDK;
 
 namespace VoiceBridge.Most.Google
 {
-    public static class Extensions
+    internal static class Extensions
     {
         public static SimpleResponse ToSimpleResponse(this string s)
         {

@@ -9,7 +9,7 @@ using VoiceBridge.Most.Directives.Processors;
 
 namespace VoiceBridge.Most
 {
-    public class ConversationEngine<TRequest, TResponse> : IConversationEngine<TRequest, TResponse>
+    internal class ConversationEngine<TRequest, TResponse> : IConversationEngine<TRequest, TResponse>
         where TRequest : IRequest
         where TResponse : IResponse
     {

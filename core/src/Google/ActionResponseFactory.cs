@@ -6,7 +6,7 @@ using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 
 namespace VoiceBridge.Most.Google
 {
-    public class ActionResponseFactory : IResponseFactory<AppResponse>
+    internal class ActionResponseFactory : IResponseFactory<AppResponse>
     {
         public AppResponse Create(ConversationContext context)
         {
