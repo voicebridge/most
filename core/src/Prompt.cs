@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace VoiceBridge.Most
 {
     /// <summary>
-    /// Describes an utterance that the device will speak
+    /// Describes a response that the device will speak
     /// </summary>
     public class Prompt
     {
