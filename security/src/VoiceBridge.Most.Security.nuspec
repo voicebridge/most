@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>VoiceBridge.Most.Security</id>
+    <version>0.1.6</version>
+    <title>Most Security/ASP.NET Helpers</title>
+    <authors>Voice Bridge Inc.</authors>
+    <owners>Voice Bridge Inc.</owners>
+    <licenseUrl>https://github.com/voicebridge/most/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/voicebridge/most</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Build applications that can run both as an Alexa Skill and Google Action</description>
+    <releaseNotes>Preview Release</releaseNotes>
+    <copyright>Copyright ® 2019 Voice Bridge Inc.</copyright>
+    <tags>Alexa GoogleAssistant ASP.NET</tags>
+    <dependencies>
+      <dependency id="VoiceBridge.Most.VoiceModel" version="0.1.1" />
+      <dependency id="VoiceBridge.Most" version="0.1.1" />
+      <dependency id="Microsoft.AspNetCore.Mvc.Core" version="2.1.0" />
+    </dependencies>
+  </metadata>
+</package>

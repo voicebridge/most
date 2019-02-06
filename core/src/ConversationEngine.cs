@@ -24,7 +24,6 @@ namespace VoiceBridge.Most
         public ConversationEngine(IServiceProvider serviceProvider)
         {
             Util.AssertNotNull(serviceProvider, nameof(serviceProvider));
-            this.inputModelBuilder = serviceProvider.GetService<CompositeInputModelBuilder<TRequest>>();
             this.responseFactory = serviceProvider.GetService<IResponseFactory<TResponse>>();
             this.baseLogger = serviceProvider.GetService<ILogger>() ?? new NullLoggerReporter();
             this.metricsReporter = serviceProvider.GetService<IMetricsReporter>() ?? new NullLoggerReporter();

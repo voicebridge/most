@@ -28,24 +28,44 @@ namespace VoiceBridge.Most
             this.googleBuilder = googleBuilder;
         }
 
+        /// <summary>
+        /// Inject a logger into all engines hosted by the composite engine
+        /// </summary>
+        /// <param name="logger">Logger</param>
+        /// <returns>Self</returns>
         public CompositeEngineBuilder SetLogger(ILogger logger)
         {
             this.logger = logger;
             return this;
         }
 
+        /// <summary>
+        /// Inject metrics reporter into all engines hosted by the composite engine
+        /// </summary>
+        /// <param name="metricsReporter">Metrics Reporter</param>
+        /// <returns>Self</returns>
         public CompositeEngineBuilder SetMetricsReporter(IMetricsReporter metricsReporter)
         {
             this.metricsReporter = metricsReporter;
             return this;
         }
 
+        /// <summary>
+        /// Inject Session State Store into all engines hosted by the composite engine
+        /// </summary>
+        /// <param name="sessionStateStore"></param>
+        /// <returns></returns>
         public CompositeEngineBuilder SetSessionStore(ISessionStateStore sessionStateStore)
         {
             this.sessionStateStore = sessionStateStore;
             return this;
         }
 
+        /// <summary>
+        /// Configure Alexa Engine using the Engine Builder
+        /// </summary>
+        /// <param name="configureAction">Configuration Action</param>
+        /// <returns>Self</returns>
         public CompositeEngineBuilder ConfigureAlexaEngine(
             Action<EngineBuilder<SkillRequest, SkillResponse>> configureAction)
         {
@@ -53,6 +73,11 @@ namespace VoiceBridge.Most
             return this;
         }
         
+        /// <summary>
+        /// Configure Google Engine using the Engine Builder
+        /// </summary>
+        /// <param name="configureAction">Configuration Action</param>
+        /// <returns>Self</returns>
         public CompositeEngineBuilder ConfigureGoogleEngine(
             Action<EngineBuilder<AppRequest, AppResponse>> configureAction)
         {
@@ -60,6 +85,10 @@ namespace VoiceBridge.Most
             return this;
         }
 
+        /// <summary>
+        /// Create an instance of composite engine
+        /// </summary>
+        /// <returns>ICompositeEngine</returns>
         public ICompositeEngine Build()
         {
             this.RunExternalConfiguration();
