@@ -1,5 +1,9 @@
-﻿using System.Reflection;
+﻿using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
+
+using VoiceBridge.Most.Security.Extensions;
 
 namespace VoiceBridge.Most.Security.Test
 {
@@ -51,9 +55,20 @@ namespace VoiceBridge.Most.Security.Test
         {
             using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(Prefix + name))
             {
-                byte[] data = new byte[stream.Length];
-                stream.Read(data, 0, (int)stream.Length);
-                return new X509Certificate2(data);
+                var chain = stream.LoadChain();
+
+                //
+                // When parsing a byte[] that contains multiple certificates on macOS, X509Certificate2
+                // will throw an Exception (Interop+AppleCrypto+AppleCommonCryptoCryptographicException)
+                //
+                // Since the Windows and Ubuntu Interop only uses the first certificate in a chain
+                // in such a scenario, we'll do the same here to ensure consistent behaviour on macOS
+                //
+                // See here: https://stackoverflow.com/questions/54579288/unable-to-load-a-pem-from-a-resource-file-on-macos
+                //           https://github.com/dotnet/corefx/issues/35163
+                //
+
+                return chain[0];
             }
         }
 
@@ -65,10 +80,18 @@ namespace VoiceBridge.Most.Security.Test
         {
             using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(Prefix + name))
             {
-                byte[] data = new byte[stream.Length];
-                stream.Read(data, 0, (int)stream.Length);
+                byte[] data = stream.LoadBytes();
+
+                // Without this adjustment, we'll get a System.PlatformNotSupportedException
+                // (This platform does not support loading with EphemeralKeySet. Remove the flag to allow keys to be temporarily created on disk.)
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    return new X509Certificate2(data, password);
+                }
+
                 return new X509Certificate2(data, password, X509KeyStorageFlags.EphemeralKeySet);
             }
         }
+
     }
 }
