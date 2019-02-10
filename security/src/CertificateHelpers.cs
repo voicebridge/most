@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using VoiceBridge.Most.Security.Extensions;
 
 namespace VoiceBridge.Most.Security
 {
@@ -22,8 +23,12 @@ namespace VoiceBridge.Most.Security
         public static async Task<X509Certificate2> DownloadAsync(string uri)
         {
             var response = await client.GetAsync(uri);
-            var bytes = await response.Content.ReadAsByteArrayAsync();
-            return new X509Certificate2(bytes);
+
+            using (var stream = await response.Content.ReadAsStreamAsync())
+            {
+                var chain = stream.LoadChain();
+                return chain[0];
+            }
         }
     }
 }
