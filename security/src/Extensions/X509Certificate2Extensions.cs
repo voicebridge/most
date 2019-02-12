@@ -35,7 +35,13 @@ namespace VoiceBridge.Most.Security.Extensions
             {
                 X509Chain chain = new X509Chain();
                 chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
-                chain.ChainPolicy.RevocationFlag = X509RevocationFlag.EntireChain;
+
+                //
+                // Since we are only loading one certificate from the chain, it is not
+                // appropriate to do this. It will actually fail on Ubuntu (Windows and macOS is fine)
+                //
+                // chain.ChainPolicy.RevocationFlag = X509RevocationFlag.EntireChain;
+                //
                 chain.ChainPolicy.UrlRetrievalTimeout = new TimeSpan(1000);
                 chain.ChainPolicy.VerificationTime = DateTime.Now;
                 return !chain.Build(certificate);
