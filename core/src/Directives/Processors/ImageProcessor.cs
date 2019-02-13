@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace VoiceBridge.Most.Directives.Processors
 {
-    public  class ImageProcessor : DirectiveProcessorBase<ImageDirective>
+    public class ImageProcessor : DirectiveProcessorBase<ImageDirective>
     {
         protected override void Process(ImageDirective directive, SkillRequest request, SkillResponse response)
         {
