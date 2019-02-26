@@ -10,7 +10,7 @@ using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 
 namespace VoiceBridge.Most.Google
 {
-    public class ActionInputModelBuilder : IInputModelBuilder<AppRequest>
+    internal class ActionInputModelBuilder : IInputModelBuilder<AppRequest>
     {
         public void Build(ConversationContext context, AppRequest request)
         {

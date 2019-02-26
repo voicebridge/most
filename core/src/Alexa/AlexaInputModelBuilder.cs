@@ -3,7 +3,7 @@ using VoiceBridge.Most.VoiceModel.Alexa;
 
 namespace VoiceBridge.Most.Alexa
 {
-    public class AlexaInputModelBuilder : IInputModelBuilder<SkillRequest>
+    internal class AlexaInputModelBuilder : IInputModelBuilder<SkillRequest>
     {
         public void Build(ConversationContext context, SkillRequest request)
         {

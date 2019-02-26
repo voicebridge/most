@@ -7,7 +7,7 @@ using VoiceBridge.Most.Logging;
 
 namespace VoiceBridge.Most
 {
-    public class CompositeHandler : IRequestHandler
+    internal class CompositeHandler : IRequestHandler
     {
         private readonly IEnumerable<IRequestHandler> handlers;
         private readonly ILogger logger;

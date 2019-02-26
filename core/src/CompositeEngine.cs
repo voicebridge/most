@@ -30,7 +30,7 @@ namespace VoiceBridge.Most
         }
         
         /// <summary>
-        /// Evaluate and process request
+        /// Evaluate and process a request
         /// </summary>
         /// <param name="request">Request</param>
         /// <returns>Response</returns>

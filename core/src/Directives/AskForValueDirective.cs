@@ -1,6 +1,6 @@
 namespace VoiceBridge.Most.Directives
 {
-    public class AskForValueDirective : IVirtualDirective
+    internal class AskForValueDirective : IVirtualDirective
     {
         public string ParameterName { get; set; }
         

@@ -4,7 +4,7 @@ using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 
 namespace VoiceBridge.Most.Google
 {
-    public class GoogleAudioStatusChangeInputBuilder : IInputModelBuilder<AppRequest>
+    internal class GoogleAudioStatusChangeInputBuilder : IInputModelBuilder<AppRequest>
     {
         public void Build(ConversationContext context, AppRequest request)
         {

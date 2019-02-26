@@ -3,7 +3,7 @@ using VoiceBridge.Most.VoiceModel.Alexa;
 
 namespace VoiceBridge.Most.Alexa
 {
-    public class AlexaResponseFactory : IResponseFactory<SkillResponse>
+    internal class AlexaResponseFactory : IResponseFactory<SkillResponse>
     {
         public SkillResponse Create(ConversationContext context)
         {

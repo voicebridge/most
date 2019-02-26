@@ -7,7 +7,7 @@ using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 
 namespace VoiceBridge.Most.Directives.Processors
 {
-    public class SessionProcessor : DirectiveProcessorBase<SessionDirective>
+    internal class SessionProcessor : DirectiveProcessorBase<SessionDirective>
     {
         protected override void Process(SessionDirective directive, SkillRequest request, SkillResponse response)
         {

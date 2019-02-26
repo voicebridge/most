@@ -1,6 +1,6 @@
 namespace VoiceBridge.Most.Directives
 {
-    public class SayDirective : IVirtualDirective
+    internal class SayDirective : IVirtualDirective
     {
         public Prompt Prompt { get; set; }
     }

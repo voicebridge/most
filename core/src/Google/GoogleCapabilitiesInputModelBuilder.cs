@@ -5,9 +5,9 @@ using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 
 namespace VoiceBridge.Most.Google
 {
-    public class GoogleCapabilitiesInputModelBuilder : IInputModelBuilder<AppRequest>
+    internal class GoogleCapabilitiesInputModelBuilder : IInputModelBuilder<AppRequest>
     {
-        private Dictionary<string, DeviceCapability> mapping = new Dictionary<string, DeviceCapability>
+        private readonly Dictionary<string, DeviceCapability> mapping = new Dictionary<string, DeviceCapability>
         {
             {GoogleAssistantConstants.Capabilities.AudioOut, DeviceCapability.Audio},
             {GoogleAssistantConstants.Capabilities.ScreenOut, DeviceCapability.Display},

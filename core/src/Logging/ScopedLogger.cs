@@ -2,7 +2,7 @@ using System;
 
 namespace VoiceBridge.Most.Logging
 {
-    public class ScopedLogger : ILogger
+    internal class ScopedLogger : ILogger
     {
         private readonly ILogger logger;
 

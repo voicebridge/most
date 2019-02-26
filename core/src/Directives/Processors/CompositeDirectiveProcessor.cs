@@ -5,7 +5,7 @@ using VoiceBridge.Most.VoiceModel;
 
 namespace VoiceBridge.Most.Directives.Processors
 {
-    public class CompositeDirectiveProcessor<TRequest, TResponse> : IDirectiveProcessor<TRequest, TResponse>
+    internal class CompositeDirectiveProcessor<TRequest, TResponse> : IDirectiveProcessor<TRequest, TResponse>
         where TRequest : IRequest
         where TResponse : IResponse
     {

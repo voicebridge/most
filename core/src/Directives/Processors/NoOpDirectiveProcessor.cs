@@ -3,7 +3,7 @@ using VoiceBridge.Most.VoiceModel.GoogleAssistant.DialogFlow;
 
 namespace VoiceBridge.Most.Directives.Processors
 {
-    public class NoOpDirectiveProcessor : DirectiveProcessorBase<NoOpDirective>
+    internal class NoOpDirectiveProcessor : DirectiveProcessorBase<NoOpDirective>
     {
         protected override void Process(NoOpDirective directive, SkillRequest request, SkillResponse response)
         {
